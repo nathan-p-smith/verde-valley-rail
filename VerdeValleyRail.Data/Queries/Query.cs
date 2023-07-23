@@ -8,7 +8,7 @@ namespace VerdeValleyRail.Data.Queries
 {
     public interface IQuery
     {
-        IEnumerable<TripSearchResult> SearchTrips();
+        IEnumerable<TripSearchResult> SearchTrips(TripSearchFilter filter);
     }
 
     public partial class Query : IQuery, IDisposable

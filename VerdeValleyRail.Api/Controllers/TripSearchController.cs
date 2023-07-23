@@ -16,9 +16,9 @@ namespace VerdeValleyRail.Api.Controllers
         }
 
         [HttpGet("~/api/Trips/Search")]
-        public IActionResult Get()
+        public IActionResult Get([FromQuery] TripSearchFilter filter)
         {
-            var results = _query.SearchTrips().ToList();
+            var results = _query.SearchTrips(filter).ToList();
 
             return Ok(results);
         }
