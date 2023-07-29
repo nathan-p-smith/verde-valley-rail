@@ -58,13 +58,13 @@ CREATE TABLE `Booking` (
   `BookingId` int NOT NULL AUTO_INCREMENT,
   `TripId` int NOT NULL,
   `CustomerId` int NOT NULL,
-  `BookingGuid` char(16) DEFAULT 'uuid()',
+  `BookingGuid` char(36) DEFAULT 'uuid()',
   PRIMARY KEY (`BookingId`),
   KEY `FK_Trip_idx` (`TripId`),
   KEY `FK_Customer_idx` (`CustomerId`),
   CONSTRAINT `FK_Booking_Customer` FOREIGN KEY (`CustomerId`) REFERENCES `Customer` (`CustomerId`),
   CONSTRAINT `FK_Booking_Trip` FOREIGN KEY (`TripId`) REFERENCES `Trip` (`TripId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,6 +73,7 @@ CREATE TABLE `Booking` (
 
 LOCK TABLES `Booking` WRITE;
 /*!40000 ALTER TABLE `Booking` DISABLE KEYS */;
+INSERT INTO `Booking` VALUES (1,2,1,'uuid()'),(2,2,1,'uuid()');
 /*!40000 ALTER TABLE `Booking` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -87,12 +88,15 @@ CREATE TABLE `BookingSeat` (
   `BookingSeatId` int NOT NULL AUTO_INCREMENT,
   `BookingId` int NOT NULL,
   `SeatId` int NOT NULL,
+  `CarId` int NOT NULL,
   PRIMARY KEY (`BookingSeatId`),
   KEY `FK_BookingId_idx` (`BookingId`),
   KEY `FK_Seat_idx` (`SeatId`),
+  KEY `FK_BookingSeat_Car_idx` (`CarId`),
   CONSTRAINT `FK_BookingSeat_Booking` FOREIGN KEY (`BookingId`) REFERENCES `Booking` (`BookingId`),
+  CONSTRAINT `FK_BookingSeat_Car` FOREIGN KEY (`CarId`) REFERENCES `Car` (`CarId`),
   CONSTRAINT `FK_BookingSeat_Seat` FOREIGN KEY (`SeatId`) REFERENCES `Seat` (`SeatId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -101,6 +105,7 @@ CREATE TABLE `BookingSeat` (
 
 LOCK TABLES `BookingSeat` WRITE;
 /*!40000 ALTER TABLE `BookingSeat` DISABLE KEYS */;
+INSERT INTO `BookingSeat` VALUES (1,1,131055,4),(2,1,131056,4),(3,2,131061,4);
 /*!40000 ALTER TABLE `BookingSeat` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -165,10 +170,13 @@ CREATE TABLE `Customer` (
   `CustomerId` int NOT NULL AUTO_INCREMENT,
   `FirstName` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `LastName` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `Email` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `Email` varchar(100) NOT NULL,
   `Phone` varchar(10) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
-  PRIMARY KEY (`CustomerId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `PasswordHash` varchar(60) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `PasswordSalt` varchar(29) NOT NULL,
+  PRIMARY KEY (`CustomerId`),
+  UNIQUE KEY `Email_UNIQUE` (`Email`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -177,6 +185,7 @@ CREATE TABLE `Customer` (
 
 LOCK TABLES `Customer` WRITE;
 /*!40000 ALTER TABLE `Customer` DISABLE KEYS */;
+INSERT INTO `Customer` VALUES (1,'John','Doe','johndoe@sedonajoe.com','5551112222','$2a$10$twfhgLpn78./Jfbm4EftN.PoyMmq7MlvV7PnSlfT5TkL80f./YUC6','$2a$10$twfhgLpn78./Jfbm4EftN.');
 /*!40000 ALTER TABLE `Customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -378,12 +387,82 @@ INSERT INTO `Trip` VALUES (2,6,'2023-08-01 16:00:00',3.50,2),(3,11,'2023-08-01 1
 UNLOCK TABLES;
 
 --
+-- Temporary view structure for view `vw_BookingSeat`
+--
+
+DROP TABLE IF EXISTS `vw_BookingSeat`;
+/*!50001 DROP VIEW IF EXISTS `vw_BookingSeat`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `vw_BookingSeat` AS SELECT 
+ 1 AS `TripId`,
+ 1 AS `BookingId`,
+ 1 AS `BookingSeatId`,
+ 1 AS `SeatId`,
+ 1 AS `CarId`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `vw_TripSeat`
+--
+
+DROP TABLE IF EXISTS `vw_TripSeat`;
+/*!50001 DROP VIEW IF EXISTS `vw_TripSeat`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `vw_TripSeat` AS SELECT 
+ 1 AS `TripId`,
+ 1 AS `TrainId`,
+ 1 AS `CarId`,
+ 1 AS `SeatId`,
+ 1 AS `Row`,
+ 1 AS `Position`,
+ 1 AS `BookingSeatId`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Dumping events for database 'VerdeValleyRail'
 --
 
 --
 -- Dumping routines for database 'VerdeValleyRail'
 --
+
+--
+-- Final view structure for view `vw_BookingSeat`
+--
+
+/*!50001 DROP VIEW IF EXISTS `vw_BookingSeat`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `vw_BookingSeat` AS select `b`.`TripId` AS `TripId`,`b`.`BookingId` AS `BookingId`,`bs`.`BookingSeatId` AS `BookingSeatId`,`bs`.`SeatId` AS `SeatId`,`bs`.`CarId` AS `CarId` from (`Booking` `b` join `BookingSeat` `bs` on((`b`.`BookingId` = `bs`.`BookingId`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `vw_TripSeat`
+--
+
+/*!50001 DROP VIEW IF EXISTS `vw_TripSeat`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `vw_TripSeat` AS select `tp`.`TripId` AS `TripId`,`tr`.`TrainId` AS `TrainId`,`cr`.`CarId` AS `CarId`,`st`.`SeatId` AS `SeatId`,`st`.`Row` AS `Row`,`st`.`Position` AS `Position`,`vbs`.`BookingSeatId` AS `BookingSeatId` from (((((`Trip` `tp` join `Train` `tr` on((`tp`.`TrainId` = `tr`.`TrainId`))) join `TrainCar` `tc` on((`tr`.`TrainId` = `tc`.`TrainId`))) join `Car` `cr` on((`tc`.`CarId` = `cr`.`CarId`))) join `Seat` `st` on((`cr`.`CarTypeId` = `st`.`CarTypeId`))) left join `vw_BookingSeat` `vbs` on(((`tp`.`TripId` = `vbs`.`TripId`) and (`cr`.`CarId` = `vbs`.`CarId`) and (`st`.`SeatId` = `vbs`.`SeatId`)))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -394,4 +473,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-07-23 14:21:10
+-- Dump completed on 2023-07-29 17:14:43
