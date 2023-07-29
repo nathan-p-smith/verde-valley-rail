@@ -98,9 +98,7 @@ public partial class VerdeValleyRailContext : DbContext
             entity.HasIndex(e => e.TripId, "FK_Trip_idx");
 
             entity.Property(e => e.BookingGuid)
-                .HasMaxLength(16)
-                .HasDefaultValueSql("'uuid()'")
-                .IsFixedLength();
+                .HasMaxLength(36);                
 
             entity.HasOne(d => d.Customer).WithMany(p => p.Bookings)
                 .HasForeignKey(d => d.CustomerId)

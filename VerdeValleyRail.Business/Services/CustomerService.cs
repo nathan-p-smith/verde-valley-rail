@@ -13,6 +13,7 @@ namespace VerdeValleyRail.Business.Services
 {
     public interface ICustomerService
     {
+        R.Customer GetCustomer(int customerId);
         R.Customer CreateCustomer(CustomerCreate customerCreate);
         bool EmailExists(string email);
     }
@@ -24,6 +25,17 @@ namespace VerdeValleyRail.Business.Services
         public CustomerService(VerdeValleyRailContext db)
         {
             _db = db;
+        }
+
+        public R.Customer GetCustomer(int customerId)
+        {
+            var customerEntity = _db.Customers.Find(customerId);
+
+            var customer = new R.Customer();
+
+            customer.InjectFrom(customerEntity);
+
+            return customer;
         }
 
         public R.Customer CreateCustomer(CustomerCreate customerCreate)

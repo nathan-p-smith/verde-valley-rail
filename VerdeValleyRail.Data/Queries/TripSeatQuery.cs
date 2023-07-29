@@ -25,7 +25,8 @@ namespace VerdeValleyRail.Data.Queries
     {
         public int CarId { get; set; }
         public int SeatId { get; set; }
-        public string Row { get; set; }
+        public int Row { get; set; }
+        public string Position { get; set; }
         public bool Booked { get; set; }
     }
 }

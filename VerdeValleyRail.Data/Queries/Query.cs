@@ -8,6 +8,7 @@ namespace VerdeValleyRail.Data.Queries
 {
     public interface IQuery
     {
+        IEnumerable<BookingSeatResult> GetBookingSeats(int bookingId);
         IEnumerable<TripSeatResult> GetTripSeats(int tripId);
         IEnumerable<TripSearchResult> SearchTrips(TripSearchFilter filter);
     }

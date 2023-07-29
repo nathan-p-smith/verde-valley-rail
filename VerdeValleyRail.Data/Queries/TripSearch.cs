@@ -24,7 +24,7 @@ namespace VerdeValleyRail.Data.Queries
                         r.StartStationId = ss.StationId INNER JOIN Station es ON
                         r.EndStationId = es.StationId INNER JOIN vw_TripSeat vts ON
                         tp.TripId = vts.TripId")
-                .WHERE(@"vbs.SeatId IS NULL");
+                .WHERE(@"vts.BookingSeatId IS NULL");
 
             if (filter?.StartStationId != null)
                 query.WHERE("r.StartStationId = {0}", filter.StartStationId);
