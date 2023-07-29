@@ -23,5 +23,13 @@ namespace VerdeValleyRail.Api.Controllers
 
             return Ok(customer);
         }
+
+        [HttpGet("EmailExists")]
+        public IActionResult EmailExists(string email)
+        {
+            var emailExists = _customerService.EmailExists(email);
+
+            return Ok(emailExists);
+        }
     }
 }

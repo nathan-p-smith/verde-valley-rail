@@ -14,6 +14,7 @@ namespace VerdeValleyRail.Business.Services
     public interface ICustomerService
     {
         R.Customer CreateCustomer(CustomerCreate customerCreate);
+        bool EmailExists(string email);
     }
 
     public class CustomerService : ICustomerService
@@ -29,6 +30,9 @@ namespace VerdeValleyRail.Business.Services
         {
             var customerEntity = new E.Customer();
 
+            if(EmailExists(customerCreate.Email))            
+                throw new Exception($"Email {customerCreate.Email} is already in use.");
+            
             customerEntity.InjectFrom(customerCreate);
 
             customerEntity.PasswordSalt = BCrypt.Net.BCrypt.GenerateSalt();
@@ -41,6 +45,11 @@ namespace VerdeValleyRail.Business.Services
             customer.InjectFrom(customerEntity);
 
             return customer;
+        }
+
+        public bool EmailExists(string email)
+        {
+            return _db.Customers.Where(c => c.Email == email).Any();
         }
     }
 }
