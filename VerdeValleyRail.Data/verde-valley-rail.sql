@@ -58,7 +58,7 @@ CREATE TABLE `Booking` (
   `BookingId` int NOT NULL AUTO_INCREMENT,
   `TripId` int NOT NULL,
   `CustomerId` int NOT NULL,
-  `BookingGuid` char(36) DEFAULT 'uuid()',
+  `BookingGuid` varchar(36) NOT NULL,
   PRIMARY KEY (`BookingId`),
   KEY `FK_Trip_idx` (`TripId`),
   KEY `FK_Customer_idx` (`CustomerId`),
@@ -73,7 +73,7 @@ CREATE TABLE `Booking` (
 
 LOCK TABLES `Booking` WRITE;
 /*!40000 ALTER TABLE `Booking` DISABLE KEYS */;
-INSERT INTO `Booking` VALUES (1,2,1,'uuid()'),(2,2,1,'uuid()');
+INSERT INTO `Booking` VALUES (1,2,1,'9561947f-2e59-11ee-9224-0242ac120002'),(2,2,1,'99e83344-2e59-11ee-9224-0242ac120002');
 /*!40000 ALTER TABLE `Booking` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -399,7 +399,9 @@ SET @saved_cs_client     = @@character_set_client;
  1 AS `BookingId`,
  1 AS `BookingSeatId`,
  1 AS `SeatId`,
- 1 AS `CarId`*/;
+ 1 AS `CarId`,
+ 1 AS `Row`,
+ 1 AS `Position`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -441,7 +443,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `vw_BookingSeat` AS select `b`.`TripId` AS `TripId`,`b`.`BookingId` AS `BookingId`,`bs`.`BookingSeatId` AS `BookingSeatId`,`bs`.`SeatId` AS `SeatId`,`bs`.`CarId` AS `CarId` from (`Booking` `b` join `BookingSeat` `bs` on((`b`.`BookingId` = `bs`.`BookingId`))) */;
+/*!50001 VIEW `vw_BookingSeat` AS select `b`.`TripId` AS `TripId`,`b`.`BookingId` AS `BookingId`,`bs`.`BookingSeatId` AS `BookingSeatId`,`bs`.`SeatId` AS `SeatId`,`bs`.`CarId` AS `CarId`,`s`.`Row` AS `Row`,`s`.`Position` AS `Position` from ((`Booking` `b` join `BookingSeat` `bs` on((`b`.`BookingId` = `bs`.`BookingId`))) join `Seat` `s` on((`bs`.`SeatId` = `s`.`SeatId`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -473,4 +475,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-07-29 17:14:43
+-- Dump completed on 2023-07-29 18:06:25
