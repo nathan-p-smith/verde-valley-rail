@@ -1,6 +1,8 @@
 using DbExtensions;
 using System.Data.Common;
 using VerdeValleyRail.Api;
+using VerdeValleyRail.Api.Jwt;
+using VerdeValleyRail.Business;
 using VerdeValleyRail.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,7 +16,12 @@ builder.Services.AddSwaggerGen();
 
 var appSettings = builder.Configuration.Get<AppSettings>();
 
-builder.Services.BindDataDependencies(appSettings.ConnectionStrings.VerdeValleyRail);    
+builder.Services.BindDataDependencies(appSettings.ConnectionStrings.VerdeValleyRail)
+    .BindBusinessDependencies()
+    .AddSingleton<JwtMiddleware.Settings>(new JwtMiddleware.Settings()
+    {
+        JwtSecret = appSettings.JwtSecret
+    });
 
 var app = builder.Build();
 
