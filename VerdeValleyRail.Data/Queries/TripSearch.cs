@@ -12,7 +12,7 @@ namespace VerdeValleyRail.Data.Queries
         public IEnumerable<TripSearchResult> SearchTrips(TripSearchFilter filter)
         {
             var query = SQL.SELECT(@"tp.TripId, 
-                                    tr.TrainId, 
+                                    vts.TrainId, 
                                     tp.Departure, 
                                     ss.Name as StartingStationName, 
                                     es.Name as EndingStationName, 
@@ -22,13 +22,9 @@ namespace VerdeValleyRail.Data.Queries
                 .FROM(@"Trip tp INNER JOIN Route r ON
                         tp.RouteId = r.RouteId INNER JOIN Station ss ON
                         r.StartStationId = ss.StationId INNER JOIN Station es ON
-                        r.EndStationId = es.StationId INNER JOIN Train tr ON
-                        tp.TrainId = tr.TrainId INNER JOIN TrainCar tc ON
-                        tr.TrainId = tc.TrainId INNER JOIN Car cr ON
-                        tc.CarId = cr.CarId INNER JOIN Seat st ON
-                        cr.CarTypeId = st.CarTypeId LEFT JOIN BookingSeat bs ON
-                        st.SeatId = bs.SeatId AND cr.CarId = bs.CarId")
-                .WHERE(@"bs.SeatId IS NULL");
+                        r.EndStationId = es.StationId INNER JOIN vw_TripSeat vts ON
+                        tp.TripId = vts.TripId")
+                .WHERE(@"vbs.SeatId IS NULL");
 
             if (filter?.StartStationId != null)
                 query.WHERE("r.StartStationId = {0}", filter.StartStationId);
@@ -36,7 +32,7 @@ namespace VerdeValleyRail.Data.Queries
             if (filter?.EndStationId != null)
                 query.WHERE("r.EndStationId = {0}", filter.EndStationId);
 
-            query.GROUP_BY(@"tp.TripId, tr.TrainId, tp.Departure, ss.Name, es.Name, tp.PricePerSeat, r.Minutes")
+            query.GROUP_BY(@"tp.TripId, vts.TrainId, tp.Departure, ss.Name, es.Name, tp.PricePerSeat, r.Minutes")
                 .ORDER_BY("tp.Departure");
 
             return _db.Map<TripSearchResult>(query);

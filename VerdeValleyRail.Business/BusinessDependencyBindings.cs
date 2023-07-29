@@ -17,6 +17,7 @@ namespace VerdeValleyRail.Business
             //Services            
             services.AddTransient<IAuthenticationService, AuthenticationService>();
             services.AddTransient<ICustomerService, CustomerService>();
+            services.AddTransient<ITripService, TripService>();
 
             return services;
         }
