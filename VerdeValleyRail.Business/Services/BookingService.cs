@@ -8,6 +8,7 @@ using VerdeValleyRail.Data.Entities;
 using E = VerdeValleyRail.Data.Entities;
 using Omu.ValueInjecter;
 using VerdeValleyRail.Data.Queries;
+using VerdeValleyRail.Business.Resources;
 
 namespace VerdeValleyRail.Business.Services
 {
@@ -15,6 +16,7 @@ namespace VerdeValleyRail.Business.Services
     {
         R.Booking GetBooking(string bookingGuid);
         R.Booking GetBooking(int bookingId);
+        R.Booking CreateBooking(BookingCreate bookingCreate);
     }
 
     public class BookingService : IBookingService
@@ -44,6 +46,28 @@ namespace VerdeValleyRail.Business.Services
                 return null;
 
             return GetBooking((int)bookingId);
+        }
+
+        public R.Booking CreateBooking(BookingCreate bookingCreate)
+        {
+            var bookingEntity = new E.Booking();
+
+            bookingEntity.InjectFrom(bookingCreate);
+            bookingEntity.BookingGuid = Guid.NewGuid().ToString();
+
+            _db.Bookings.Add(bookingEntity);
+
+            foreach(var bookingSeat in bookingCreate.BookingSeats)
+            {
+                var bookingSeatEntity = new E.BookingSeat();
+
+                bookingSeatEntity.InjectFrom(bookingSeat);
+                bookingEntity.BookingSeats.Add(bookingSeatEntity);
+            }
+
+            _db.SaveChanges();
+
+            return GetBooking(bookingEntity.BookingId);
         }
 
         public R.Booking GetBooking(int bookingId)

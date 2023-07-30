@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using VerdeValleyRail.Business.Resources;
 using VerdeValleyRail.Business.Services;
 
 namespace VerdeValleyRail.Api.Controllers
@@ -22,5 +23,14 @@ namespace VerdeValleyRail.Api.Controllers
 
             return Ok(booking);
         }
+
+        [HttpPost]
+        public ActionResult CreateBooking([FromBody] BookingCreate bookingCreate)
+        {
+            var booking = _bookingService.CreateBooking(bookingCreate);
+
+            return Ok(booking);
+        }
+
     }
 }
