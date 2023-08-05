@@ -13,7 +13,7 @@ namespace VerdeValleyRail.Business.Services
 {
     public interface ITripService
     {
-        R.Trip GetTrip(int tripId);
+        R.Trip GetTrip(int tripId, bool withSeats = false);
     }
 
     public class TripService : ITripService
@@ -27,7 +27,7 @@ namespace VerdeValleyRail.Business.Services
             _query = query;
         }
 
-        public R.Trip GetTrip(int tripId)
+        public R.Trip GetTrip(int tripId, bool withSeats = false)
         {
             var tripEntity = _db.Trips.Find(tripId);
 
@@ -44,12 +44,13 @@ namespace VerdeValleyRail.Business.Services
 
             trip.Route = route;
 
-            trip.Seats = _query.GetTripSeats(tripId).ToList().Select((s) =>
-            {
-                var tripSeat = new R.TripSeat();
-                tripSeat.InjectFrom(s);
-                return tripSeat;
-            });
+            if(withSeats)
+                trip.Seats = _query.GetTripSeats(tripId).ToList().Select((s) =>
+                {
+                    var tripSeat = new R.TripSeat();
+                    tripSeat.InjectFrom(s);
+                    return tripSeat;
+                });
 
             return trip;
         }
