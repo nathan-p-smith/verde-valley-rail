@@ -1,8 +1,10 @@
 ﻿using DbExtensions;
+using Google.Protobuf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace VerdeValleyRail.Data.Queries
@@ -32,6 +34,9 @@ namespace VerdeValleyRail.Data.Queries
             if (filter?.EndStationId != null)
                 query.WHERE("r.EndStationId = {0}", filter.EndStationId);
 
+            if (filter?.Departure != null)
+                query.WHERE("Date(tp.Departure) = {0}", filter.Departure?.ToString("yyyy-MM-dd"));
+
             query.GROUP_BY(@"tp.TripId, vts.TrainId, tp.Departure, ss.Name, es.Name, tp.PricePerSeat, r.Minutes")
                 .ORDER_BY("tp.Departure");
 
@@ -41,6 +46,7 @@ namespace VerdeValleyRail.Data.Queries
 
     public class TripSearchFilter
     {
+        public DateTime? Departure { get; set; }
         public int? StartStationId { get; set; }
         public int? EndStationId { get; set; }
     }

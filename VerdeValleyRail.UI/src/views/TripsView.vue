@@ -2,15 +2,23 @@
 
 import api from '../services/VerdeValleyRailApi';
 import { ref } from 'vue';
-import Button from "primevue/button"
-import Calendar from "primevue/calendar"
+import Button from 'primevue/button'
+import Calendar from 'primevue/calendar'
+import DataTable from 'primevue/datatable'
+import Column from 'primevue/column'
 
 var trips = ref([]);
 
 var departure = ref(new Date())
 
+var filter = ref({
+    departure: new Date(),
+    startingStationId: null,
+    endingStationId: null
+})
+
 async function searchTrips() {
-    trips.value = (await api.searchTrips(null)).data;
+    trips.value = (await api.searchTrips(filter.value)).data;
 }
 
 searchTrips();
@@ -22,45 +30,18 @@ searchTrips();
 
         <Button label="Submit" />
 
-        {{ departure }}
+        {{ filter.departure }}
 
-        <Calendar v-model="departure" />
+        <Calendar v-model="filter.departure" @update:modelValue="searchTrips" />
 
-        
-        <table>
-            <thead>
-                <tr>
-                    <th class="text-left">
-                        Departure
-                    </th>
-                    <th class="text-left">
-                        From
-                    </th>
-                    <th class="text-left">
-                        To
-                    </th>
-                    <th class="text-center">
-                        Minutes
-                    </th>
-                    <th class="text-center">
-                        Price
-                    </th>
-                    <th class="text-center">
-                        Available Seats
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="trip in trips" :key="trip.tripId">
-                    <td class="text-left">{{ trip.departure }}</td>
-                    <td class="text-left">{{ trip.startingStationName }}</td>
-                    <td class="text-left">{{ trip.endingStationName }}</td>
-                    <td class="text-center">{{ trip.minutes }}</td>
-                    <td class="text-center">{{ trip.pricePerSeat }}</td>
-                    <td class="text-center">{{ trip.availableSeats }}</td>
-                </tr>
-            </tbody>
-        </table>
+        <DataTable :value="trips" tableStyle="min-width: 50rem">
+            <Column field="departure" header="Date"></Column>
+            <Column field="startingStationName" header="From"></Column>
+            <Column field="endingStationName" header="To"></Column>
+            <Column field="minutes" header="Duration"></Column>
+            <Column field="pricePerSeat" header="Price"></Column>
+            <Column field="availableSeats" header="Available Seats"></Column>
+        </DataTable>
         
     </div>
 </template>
