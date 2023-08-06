@@ -22,6 +22,10 @@ var filter = ref({
 
 var stationOptions = ref([]);
 
+function onTripSelected(trip){
+    console.log(trip.data);
+}
+
 async function searchTrips() {
     trips.value = (await api.searchTrips(filter.value)).data;    
 }
@@ -64,7 +68,7 @@ var testDate = new Date();
             placeholder="Select Destination" 
             class="w-full md:w-14rem" />
 
-        <DataTable v-if="trips.length > 0" :value="trips" tableStyle="min-width: 50rem">            
+        <DataTable v-if="trips.length > 0" :value="trips" tableStyle="min-width: 50rem" data-key="tripId" @row-click="onTripSelected">            
             <Column field="departure" header="Departs">
                 <template #body="slotProps">{{formatDateTime(slotProps.data.departure) }}</template>
             </Column>
