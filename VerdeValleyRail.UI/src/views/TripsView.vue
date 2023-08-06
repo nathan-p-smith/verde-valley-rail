@@ -6,7 +6,8 @@ import Button from 'primevue/button'
 import Calendar from 'primevue/calendar'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
-import { formatDateTime } from '../filters/FormatDateTime';
+import { formatDateTime } from '../helpers/FormatDateTime';
+import { formatCurrency } from '../helpers/FormatCurrency';
 
 var trips = ref([]);
 
@@ -40,14 +41,16 @@ var testDate = new Date();
         <Calendar v-model="filter.departure" @update:modelValue="searchTrips" />
 
         <DataTable :value="trips" tableStyle="min-width: 50rem">            
-            <Column field="departure">
+            <Column field="departure" header="Departs">
                 <template #body="slotProps">{{formatDateTime(slotProps.data.departure) }}</template>
             </Column>
             <Column field="startingStationName" header="From"></Column>
             <Column field="endingStationName" header="To"></Column>
-            <Column field="minutes" header="Duration"></Column>
-            <Column field="pricePerSeat" header="Price"></Column>
-            <Column field="availableSeats" header="Available Seats"></Column>
+            <Column field="minutes" header="Duration" style="text-align: center;"></Column>            
+            <Column field="pricePerSeat" header="Price" style="text-align: center;">
+                <template #body="slotProps">{{formatCurrency(slotProps.data.pricePerSeat) }}</template>
+            </Column>
+            <Column field="availableSeats" header="Available Seats" style="text-align: center;"></Column>
         </DataTable>
         
     </div>
