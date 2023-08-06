@@ -22,6 +22,10 @@ var api = {
         return vvrApi.get(`/Customers/EmailExists`, { params: { email: email } });
     },
 
+    listStationOptions: async() => {
+        return vvrApi.get(`/Stations/Options`);
+    },
+
     getTrip: async (id) => {
         return vvrApi.get(`/Trips/${id}`);
     },
