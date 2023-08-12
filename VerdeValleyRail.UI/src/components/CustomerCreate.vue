@@ -43,8 +43,21 @@ var rules = {
                     return !resp.data;                
                 })),
         },
-        password: { required, min: minLength(6) },
-        confirmPassword: { required }
+        password: { 
+            required, 
+            min: minLength(6)            
+        },
+        confirmPassword: { 
+            required,
+            matches: helpers.withMessage("Passwords do not match.", (value) => {
+
+                if(value === customerCreate.password)
+                    return true;
+
+                return false;
+
+            })
+        }
     };
 
 const $v = useVuelidate(rules, customerCreate)
@@ -57,8 +70,6 @@ async function onSubmit(){
         return;
     
     var customerResult = await api.createCustomer(customerCreate);
-
-    localStorage.setItem("vv-customer-jwt", customerResult.data.jwt);
 
     emit('onCustomerCreated', customerResult.data.jwt);
 }
