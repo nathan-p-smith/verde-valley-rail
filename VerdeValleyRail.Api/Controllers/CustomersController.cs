@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using VerdeValleyRail.Api.Attributes;
 using VerdeValleyRail.Api.Jwt;
 using VerdeValleyRail.Business.Helpers;
 using VerdeValleyRail.Business.Resources;
@@ -9,7 +10,7 @@ namespace VerdeValleyRail.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomersController : ControllerBase
+    public class CustomersController : AuthorizedControllerBase
     {
         ICustomerService _customerService;
         JwtMiddleware.Settings _settings;
@@ -18,6 +19,20 @@ namespace VerdeValleyRail.Api.Controllers
         {
             _customerService = customerService;
             _settings = settings;
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult Get()
+        {
+            int? customerId = base.GetCustomerId();
+
+            if (customerId == null)
+                return BadRequest();
+
+            var customer = _customerService.GetCustomer((int)customerId);
+
+            return Ok(customer);
         }
 
         [HttpPost]

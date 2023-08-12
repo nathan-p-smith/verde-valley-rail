@@ -5,25 +5,53 @@ import { ref } from 'vue';
 import Button from 'primevue/button'
 import { formatDateTime } from '../helpers/FormatDateTime';
 import { formatCurrency } from '../helpers/FormatCurrency';
+import CustomerName from '../components/CustomerName.vue';
+import { useRoute, useRouter, RouterLink } from 'vue-router';
 
-var trips = ref([]);
 
-var filter = ref({
-    departure: new Date(),
-    startStationId: null,
-    endStationId: null
-})
+var route = useRoute();
+var router = useRouter();
+
+var loaded = ref(false);
+
+var availableSeats = ref(0);
+
+var trip = ref({});
+
+async function setData(){
+
+    trip.value = (await api.getTrip(route.params.tripId)).data;
+    
+    availableSeats.value = (trip.value.seats.filter((s) => { return !s.booked })).length;
+
+    loaded.value = true;
+}
+
+setData();
 
 
 </script>
 
 <template>
-    <div>
+    <div v-if="loaded">
 
         
-        This is the TRIP vue.
-        {{ $route.params.tripId }}
 
+        Hello <CustomerName></CustomerName>
+
+        <div>Departure: {{ formatDateTime(trip.departure) }}</div>
+        <div>
+            {{ trip.route.startStation.name }} to {{ trip.route.endStation.name }}
+        </div>
+        <div>
+            {{ trip.route.minutes }} minutes
+        </div>
+        <div>
+            {{ formatCurrency(trip.pricePerSeat) }} per seat
+        </div>
+        <div>
+            {{ availableSeats }} available seats
+        </div>
         
     </div>
 </template>

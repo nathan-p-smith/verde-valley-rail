@@ -4,6 +4,17 @@ const vvrApi = axios.create({
     baseURL: '/api'
 });
 
+vvrApi.interceptors.request.use((config) => {
+    
+    const jwt = localStorage.getItem("vv-customer-jwt");
+
+    if (jwt)
+        config.headers.Authorization = jwt;
+
+    return config;
+});
+
+
 var api = {
 
     authenticate: async (authenticateRequest) => {
@@ -16,6 +27,10 @@ var api = {
 
     createBooking: async (bookingCreate) => {
         return vvrApi.post(`/Bookings`, bookingCreate);
+    },
+
+    getCustomer: async () => {
+        return vvrApi.get(`/Customers`);
     },
 
     createCustomer: async (customerCreate) => {
