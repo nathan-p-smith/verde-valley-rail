@@ -10,24 +10,35 @@ import InputMask from 'primevue/inputmask';
 import ErrorMessage from '../components/ErrorMessage.vue';
 import useVuelidate from '@vuelidate/core'
 import { required, email, minLength, sameAs } from '@vuelidate/validators'
+import { helpers } from '@vuelidate/validators'
 
 //https://stackoverflow.com/questions/74648823/vue3-composition-api-vuevalidate
 
 var customerCreate = reactive({
     firstName: null,
     lastName: null,
-    email: '',
+    email: null,
     phone: null,
     password: null,
     confirmPassword: null    
 });
 
-
+const { withAsync } = helpers;
 
 var rules = {              
-        firstName: { required },
+        firstName: { 
+            data: { required, email }
+         },
         lastName: { required },
-        email: { required, email },
+        email: { 
+            required, 
+            email,            
+            isUnique: helpers.withMessage("This email is already in use.", 
+                withAsync(async (value) => {
+                    const resp = await api.customerEmailExists(value);
+                    return !resp.data;                
+                })),
+        },
         password: { required, min: minLength(6) },
         confirmPassword: { required }
     };
@@ -60,12 +71,13 @@ defineExpose({
             <InputText type="text" v-model="customerCreate.firstName" placeholder="First" /> <InputText type="text" v-model="customerCreate.lastName" placeholder="Last" />
         </div>
         <div>
+            <ErrorMessage :v="$v" fieldName="firstName" label="First name"></ErrorMessage>
+            <ErrorMessage :v="$v" fieldName="lastName" label="Last name"></ErrorMessage>
+        </div>
+        <div>
             <label for="username">Email</label> 
-            <InputText type="text" v-model="customerCreate.email" />            
-            <div class="input-errors" v-for="error of $v.email.$errors" :key="error.$uid">
-              <div class="error-msg">{{ error.$message }}</div>
-            </div>
-            <ErrorMessage :v="$v" fieldName="email"></ErrorMessage>
+            <InputText type="text" v-model="customerCreate.email" />                             
+            <ErrorMessage :v="$v" fieldName="email" label="Email"></ErrorMessage>
         </div>
         <div>
             <label for="username">Phone (optional) {{ customerCreate.phone }}</label>             
@@ -74,10 +86,12 @@ defineExpose({
         <div>
             <label for="username">Password</label> 
             <InputText type="password" v-model="customerCreate.password" placeholder="At least 6 characters" />
+            <ErrorMessage :v="$v" fieldName="password"></ErrorMessage>
         </div>
         <div>
             <label for="username">Re-enter password</label> 
             <InputText type="password" v-model="customerCreate.confirmPassword" />
+            <ErrorMessage :v="$v" fieldName="confirmPassword"></ErrorMessage>
         </div>        
 
 
