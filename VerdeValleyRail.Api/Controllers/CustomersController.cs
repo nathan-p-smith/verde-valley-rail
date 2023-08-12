@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VerdeValleyRail.Api.Jwt;
+using VerdeValleyRail.Business.Helpers;
 using VerdeValleyRail.Business.Resources;
 using VerdeValleyRail.Business.Services;
 
@@ -22,6 +23,8 @@ namespace VerdeValleyRail.Api.Controllers
         [HttpPost]
         public IActionResult CreateCustomer([FromBody] CustomerCreate customerCreate)
         {
+            customerCreate.Phone = customerCreate.Phone.StripNonNumeric();
+
             var customer = _customerService.CreateCustomer(customerCreate);
 
             string jwt = JwtHelper.CreateToken(customer.CustomerId, _settings.JwtSecret);
