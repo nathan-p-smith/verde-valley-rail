@@ -1,12 +1,13 @@
 <script setup>
 
 import api from '../services/VerdeValleyRailApi';
-import { ref, reactive } from 'vue';
+import { ref, reactive, defineExpose } from 'vue';
 import Button from 'primevue/button'
 import { formatDateTime } from '../helpers/FormatDateTime';
 import { formatCurrency } from '../helpers/FormatCurrency';
 import InputText from 'primevue/inputtext';
 import InputMask from 'primevue/inputmask';
+import ErrorMessage from '../components/ErrorMessage.vue';
 import useVuelidate from '@vuelidate/core'
 import { required, email, minLength, sameAs } from '@vuelidate/validators'
 
@@ -18,23 +19,34 @@ var customerCreate = reactive({
     email: '',
     phone: null,
     password: null,
-    reenterPassword: null    
+    confirmPassword: null    
 });
 
 
 
 var rules = {              
+        firstName: { required },
+        lastName: { required },
         email: { required, email },
-        password: { required, min: minLength(6) }              
+        password: { required, min: minLength(6) },
+        confirmPassword: { required }
     };
 
-const v$ = useVuelidate(rules, customerCreate)
+const $v = useVuelidate(rules, customerCreate)
 
-function onSubmit(){
+async function onSubmit(){
 
+    const result = await $v.value.$validate();
+    console.log(result);
+    // var correct = await $v.$validate();
+
+    // console.log(correct);
 }
 
-
+defineExpose({
+  $v,
+  customerCreate
+})
 
 
 </script>
@@ -49,11 +61,11 @@ function onSubmit(){
         </div>
         <div>
             <label for="username">Email</label> 
-            <InputText type="text" v-model="customerCreate.email" />
-            {{ v$.email.$errors }}
-            <div class="input-errors" v-for="error of v$.email.$errors" :key="error.$uid">
+            <InputText type="text" v-model="customerCreate.email" />            
+            <div class="input-errors" v-for="error of $v.email.$errors" :key="error.$uid">
               <div class="error-msg">{{ error.$message }}</div>
             </div>
+            <ErrorMessage :v="$v" fieldName="email"></ErrorMessage>
         </div>
         <div>
             <label for="username">Phone (optional) {{ customerCreate.phone }}</label>             
@@ -65,10 +77,11 @@ function onSubmit(){
         </div>
         <div>
             <label for="username">Re-enter password</label> 
-            <InputText type="password" v-model="customerCreate.reenterPassword" />
-        </div>
-        {{ v$.$invalid }}
-        <Button :disabled="v$.$invalid" @click="onSubmit" label="Continue" />
+            <InputText type="password" v-model="customerCreate.confirmPassword" />
+        </div>        
+
+
+        <Button @click="onSubmit" label="Continue" />
     </form>
         
 
