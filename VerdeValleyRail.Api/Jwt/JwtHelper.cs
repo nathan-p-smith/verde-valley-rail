@@ -5,7 +5,7 @@ using System.Text;
 
 namespace VerdeValleyRail.Api.Jwt
 {
-    public static class JankyCoinJwtHelper
+    public static class JwtHelper
     {
         public static string CreateToken(int customerId, string jwtSecret)
         {

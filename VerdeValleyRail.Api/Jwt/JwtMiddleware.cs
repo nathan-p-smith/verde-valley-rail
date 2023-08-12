@@ -17,7 +17,7 @@
 
             int? customerId = null;
 
-            JankyCoinJwtHelper.TryValidateToken(token, _settings.JwtSecret, out customerId);
+            JwtHelper.TryValidateToken(token, _settings.JwtSecret, out customerId);
 
             context.Items["customerId"] = customerId;
 

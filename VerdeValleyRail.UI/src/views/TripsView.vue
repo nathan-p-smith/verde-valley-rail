@@ -2,6 +2,7 @@
 
 import api from '../services/VerdeValleyRailApi';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import Button from 'primevue/button'
 import Calendar from 'primevue/calendar'
 import DataTable from 'primevue/datatable'
@@ -10,9 +11,13 @@ import Dropdown from 'primevue/dropdown';
 import { formatDateTime } from '../helpers/FormatDateTime';
 import { formatCurrency } from '../helpers/FormatCurrency';
 
+var self = this;
+
 var trips = ref([]);
 
 var departure = ref(new Date())
+
+var router = useRouter();
 
 var filter = ref({
     departure: new Date(),
@@ -23,7 +28,13 @@ var filter = ref({
 var stationOptions = ref([]);
 
 function onTripSelected(trip){
-    console.log(trip.data);
+
+    if(!localStorage.getItem("vv-customer-jwt")){
+        router.push(`/Register`);
+        return;
+    }        
+
+    router.push(`/trip/${trip.data.tripId}`);    
 }
 
 async function searchTrips() {

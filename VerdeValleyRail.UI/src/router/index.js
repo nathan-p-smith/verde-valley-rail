@@ -21,6 +21,16 @@ const router = createRouter({
       path: '/Trips',
       name: 'Trips',      
       component: () => import('../views/TripsView.vue')
+    },
+    {
+      path: '/Trip/:tripId',
+      name: 'Trip',      
+      component: () => import('../views/TripView.vue')
+    },
+    {
+      path: '/Register',
+      name: 'Register',      
+      component: () => import('../views/RegisterView.vue')
     }
   ]
 })

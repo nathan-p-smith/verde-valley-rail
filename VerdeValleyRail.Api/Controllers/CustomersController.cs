@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using VerdeValleyRail.Api.Jwt;
 using VerdeValleyRail.Business.Resources;
 using VerdeValleyRail.Business.Services;
 
@@ -10,10 +11,12 @@ namespace VerdeValleyRail.Api.Controllers
     public class CustomersController : ControllerBase
     {
         ICustomerService _customerService;
+        JwtMiddleware.Settings _settings;
 
-        public CustomersController(ICustomerService customerService)
+        public CustomersController(ICustomerService customerService, JwtMiddleware.Settings settings)
         {
             _customerService = customerService;
+            _settings = settings;
         }
 
         [HttpPost]
@@ -21,7 +24,9 @@ namespace VerdeValleyRail.Api.Controllers
         {
             var customer = _customerService.CreateCustomer(customerCreate);
 
-            return Ok(customer);
+            string jwt = JwtHelper.CreateToken(customer.CustomerId, _settings.JwtSecret);
+
+            return Ok(new { jwt });
         }
 
         [HttpGet("EmailExists")]

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VerdeValleyRail.Business.Resources;
 using VerdeValleyRail.Business.Services;
@@ -25,8 +26,13 @@ namespace VerdeValleyRail.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult CreateBooking([FromBody] BookingCreate bookingCreate)
         {
+            int customerId = Int32.Parse(HttpContext.Items["customerId"]!.ToString()!);
+
+            bookingCreate.CustomerId = customerId; //Set CustomerId from JWT
+
             var booking = _bookingService.CreateBooking(bookingCreate);
 
             return Ok(booking);
