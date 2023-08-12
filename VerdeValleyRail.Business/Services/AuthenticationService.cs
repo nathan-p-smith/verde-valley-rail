@@ -38,6 +38,8 @@ namespace VerdeValleyRail.Business.Services
             if (passwordHash != customerEntity.PasswordHash)
                 return false;
 
+            customer = new R.Customer();
+
             customer.InjectFrom(customerEntity);
 
             return true;

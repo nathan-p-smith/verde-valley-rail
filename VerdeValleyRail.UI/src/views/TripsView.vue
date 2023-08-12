@@ -30,11 +30,11 @@ var stationOptions = ref([]);
 function onTripSelected(trip){
 
     if(!localStorage.getItem("vv-customer-jwt")){
-        router.push(`/Register`);
+        router.push(`/SignIn?continue=/Trip/${trip.data.tripId}`);
         return;
     }        
 
-    router.push(`/trip/${trip.data.tripId}`);    
+    router.push(`/Trip/${trip.data.tripId}`);    
 }
 
 async function searchTrips() {

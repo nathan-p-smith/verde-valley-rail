@@ -6,8 +6,9 @@ import Button from 'primevue/button'
 import { formatDateTime } from '../helpers/FormatDateTime';
 import { formatCurrency } from '../helpers/FormatCurrency';
 import InputText from 'primevue/inputtext';
-import CustomerCreate from '../components/CustomerCreate.vue';
-import { useRoute, useRouter } from 'vue-router';
+import SignIn from '../components/SignIn.vue';
+import { useRoute, useRouter, RouterLink } from 'vue-router';
+
 
 var trips = ref([]);
 
@@ -16,13 +17,14 @@ var router = useRouter();
 
 const continueRoute = route.query.continue;
 
+const signUpRoute = `/Register?continue=${continueRoute}`;
 
-function onCustomerCreated(jwt){
+function onAuthenticated(jwt){
 
     localStorage.setItem("vv-customer-jwt", jwt);
 
     if(continueRoute)
-        router.push(continueRoute);    
+        router.push(continueRoute);   
 
 }
 
@@ -31,10 +33,13 @@ function onCustomerCreated(jwt){
 
 <template>
     <div>
-
+        <div>SIGN IN</div>
         {{ $route.query.continue }}
-        <CustomerCreate @onCustomerCreated="onCustomerCreated"></CustomerCreate>
+        <SignIn @onAuthenticated="onAuthenticated"></SignIn>
 
+        <div>OR</div>
+
+        <RouterLink :to="signUpRoute" :queryParams="{ continue: continueRoute }">Create Account</RouterLink>
         
     </div>
 </template>

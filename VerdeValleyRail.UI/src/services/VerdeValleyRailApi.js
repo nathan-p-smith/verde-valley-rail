@@ -6,6 +6,10 @@ const vvrApi = axios.create({
 
 var api = {
 
+    authenticate: async (authenticateRequest) => {
+        return vvrApi.post(`/Authentication`, authenticateRequest);
+    },
+
     getBooking: async (guid) => {
         return vvrApi.get(`/Bookings/${guid}`);
     },

@@ -1,7 +1,7 @@
 <script setup>
 
 import api from '../services/VerdeValleyRailApi';
-import { ref, reactive, defineExpose } from 'vue';
+import { ref, reactive, defineExpose, defineEmits } from 'vue';
 import Button from 'primevue/button'
 import { formatDateTime } from '../helpers/FormatDateTime';
 import { formatCurrency } from '../helpers/FormatCurrency';
@@ -25,16 +25,20 @@ var customerCreate = reactive({
 
 const { withAsync } = helpers;
 
+const emit = defineEmits(['onCustomerCreated'])
+
 var rules = {              
-        firstName: { 
-            data: { required, email }
-         },
+        firstName: { required },
         lastName: { required },
         email: { 
             required, 
             email,            
             isUnique: helpers.withMessage("This email is already in use.", 
                 withAsync(async (value) => {
+
+                    if(!value)
+                        return true;
+
                     const resp = await api.customerEmailExists(value);
                     return !resp.data;                
                 })),
@@ -47,11 +51,16 @@ const $v = useVuelidate(rules, customerCreate)
 
 async function onSubmit(){
 
-    const result = await $v.value.$validate();
-    console.log(result);
-    // var correct = await $v.$validate();
+    const validationResult = await $v.value.$validate();
+    
+    if(!validationResult)
+        return;
+    
+    var customerResult = await api.createCustomer(customerCreate);
 
-    // console.log(correct);
+    localStorage.setItem("vv-customer-jwt", customerResult.data.jwt);
+
+    emit('onCustomerCreated', customerResult.data.jwt);
 }
 
 defineExpose({
