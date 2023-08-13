@@ -3,6 +3,7 @@
 import api from '../services/VerdeValleyRailApi';
 import { ref, defineProps, defineEmits } from 'vue';
 import Dialog from 'primevue/dialog';
+import Button from 'primevue/button';
 
 var props = defineProps({
     seats: Object, 
@@ -18,6 +19,7 @@ var seats = props.seats;
 
 var selectedSeats = ref([...(props.modelValue)]);
 
+var dialogVisible = ref(false);
 
 var cars = {};
 
@@ -58,7 +60,9 @@ function onSeatSelected(seatId){
 </script>
 
 <template>
+<div>
 
+<Dialog v-model:visible="dialogVisible" modal header="Choose Seats" :style="{ width: '50vw' }">
     <div>        
         <div v-for="carId in carIds">
             <h3>{{ carId }}</h3>
@@ -71,6 +75,15 @@ function onSeatSelected(seatId){
             </div>
         </div>
     </div>
+    <template #footer>
+        <Button label="Done" icon="pi pi-times" @click="dialogVisible = false" text />            
+    </template>  
+</Dialog>
+
+<Button label="Pick Seats" icon="pi pi-external-link" @click="dialogVisible = true" />
+
+</div>
+
 </template>
 
 <style lang="scss">
@@ -91,6 +104,8 @@ function onSeatSelected(seatId){
         padding: 15px 0;
 
         user-select: none;
+        margin: 0 auto;
+
 
         .row{
 

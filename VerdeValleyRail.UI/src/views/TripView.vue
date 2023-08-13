@@ -66,6 +66,9 @@ setData();
             {{ availableSeats }} available seats
         </div>
         <div>
+            {{ selectedSeats.length }} Seats Selected
+        </div>
+        <div>
             Total: {{ formatCurrency(totalCost) }}
         </div>
         
