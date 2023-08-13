@@ -1,7 +1,7 @@
 <script setup>
 
 import api from '../services/VerdeValleyRailApi';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import Button from 'primevue/button'
 import { formatDateTime } from '../helpers/FormatDateTime';
 import { formatCurrency } from '../helpers/FormatCurrency';
@@ -19,7 +19,17 @@ var availableSeats = ref(0);
 
 var trip = ref({});
 
-var selectedSeats = ref([1, 2, 3]);
+var selectedSeats = ref([]);
+
+var totalCost = computed(() => {
+
+    if(!loaded.value)
+        return 0;
+
+    return selectedSeats.value.length * trip.value.pricePerSeat;
+});
+
+
 
 async function setData(){
 
@@ -38,7 +48,7 @@ setData();
 <template>
     <div v-if="loaded">
 
-        {{ selectedSeats }}
+        
 
         Hello <CustomerName></CustomerName>
 
@@ -54,6 +64,9 @@ setData();
         </div>
         <div>
             {{ availableSeats }} available seats
+        </div>
+        <div>
+            Total: {{ formatCurrency(totalCost) }}
         </div>
         
         <SeatPicker :seats="trip.seats" v-model="selectedSeats"></SeatPicker>

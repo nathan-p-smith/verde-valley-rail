@@ -2,6 +2,7 @@
 
 import api from '../services/VerdeValleyRailApi';
 import { ref, defineProps, defineEmits } from 'vue';
+import Dialog from 'primevue/dialog';
 
 var props = defineProps({
     seats: Object, 
@@ -37,8 +38,20 @@ function getRowSeats(row, seats){
         .sort((a, b) => { return a.position.localeCompare(b.position); });
 }
 
-function addSeat(seatId){
-    selectedSeats.value.push(seatId);
+function onSeatSelected(seatId){
+
+    var indexOfSeat = selectedSeats.value.indexOf(seatId);
+
+    var seat = seats.find((s) => s.seatId == seatId);
+
+    if(seat.booked)
+        return;
+
+    if(indexOfSeat >= 0)
+        selectedSeats.value.splice(indexOfSeat, 1);
+    else
+        selectedSeats.value.push(seatId);
+
     emit('update:modelValue', selectedSeats.value);
 }
 
@@ -47,13 +60,11 @@ function addSeat(seatId){
 <template>
 
     <div>        
-        <h1>pick your seats {{ selectedSeats }}</h1>
-        {{ carIds }}
         <div v-for="carId in carIds">
             <h3>{{ carId }}</h3>
             <div class="car" :set="carSeats = getCarSeats(carId)">
                 <div class="row" v-for="row in getRows(carSeats)">
-                    <div class="seat" v-for="s in getRowSeats(row, carSeats)" @click="addSeat(s.seatId)">
+                    <div class="seat" :class="{ selected: selectedSeats.indexOf(s.seatId) >= 0, booked: s.booked }" v-for="s in getRowSeats(row, carSeats)" @click="onSeatSelected(s.seatId)">
                         {{ s.row }}-{{ s.position }}
                     </div>
                 </div>                
@@ -79,6 +90,8 @@ function addSeat(seatId){
 
         padding: 15px 0;
 
+        user-select: none;
+
         .row{
 
             text-align: center;
@@ -92,9 +105,11 @@ function addSeat(seatId){
                 font-size: 15px;
                 border: solid black 1px;
                 text-align: center;
+                cursor: pointer;
 
                 &.booked{
                     background-color: blue;
+                    cursor: default;
                 }
 
                 &.selected{
