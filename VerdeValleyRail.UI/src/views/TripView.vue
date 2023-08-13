@@ -19,6 +19,8 @@ var availableSeats = ref(0);
 
 var trip = ref({});
 
+var selectedSeats = ref([1, 2, 3]);
+
 async function setData(){
 
     trip.value = (await api.getTrip(route.params.tripId)).data;
@@ -36,7 +38,7 @@ setData();
 <template>
     <div v-if="loaded">
 
-        
+        {{ selectedSeats }}
 
         Hello <CustomerName></CustomerName>
 
@@ -54,7 +56,7 @@ setData();
             {{ availableSeats }} available seats
         </div>
         
-        <SeatPicker :seats="trip.seats"></SeatPicker>
+        <SeatPicker :seats="trip.seats" v-model="selectedSeats"></SeatPicker>
 
     </div>
 </template>

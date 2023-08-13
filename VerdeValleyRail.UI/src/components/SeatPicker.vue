@@ -1,12 +1,21 @@
 <script setup>
 
 import api from '../services/VerdeValleyRailApi';
-import { ref, defineProps } from 'vue';
+import { ref, defineProps, defineEmits } from 'vue';
 
-var props = defineProps({seats: Object})
+var props = defineProps({
+    seats: Object, 
+    modelValue: {
+        type: Array,
+        default: []
+    }
+})
+
+var emit = defineEmits(['update:modelValue'])
 
 var seats = props.seats;
 
+var selectedSeats = ref([...(props.modelValue)]);
 
 
 var cars = {};
@@ -28,18 +37,23 @@ function getRowSeats(row, seats){
         .sort((a, b) => { return a.position.localeCompare(b.position); });
 }
 
+function addSeat(seatId){
+    selectedSeats.value.push(seatId);
+    emit('update:modelValue', selectedSeats.value);
+}
+
 </script>
 
 <template>
 
     <div>        
-        <h1>pick your seats</h1>
+        <h1>pick your seats {{ selectedSeats }}</h1>
         {{ carIds }}
         <div v-for="carId in carIds">
             <h3>{{ carId }}</h3>
             <div class="car" :set="carSeats = getCarSeats(carId)">
                 <div class="row" v-for="row in getRows(carSeats)">
-                    <div class="seat" v-for="s in getRowSeats(row, carSeats)">
+                    <div class="seat" v-for="s in getRowSeats(row, carSeats)" @click="addSeat(s.seatId)">
                         {{ s.row }}-{{ s.position }}
                     </div>
                 </div>                
@@ -81,6 +95,10 @@ function getRowSeats(row, seats){
 
                 &.booked{
                     background-color: blue;
+                }
+
+                &.selected{
+                    background-color: greenyellow;
                 }
             }
 
