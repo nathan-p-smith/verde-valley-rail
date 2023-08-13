@@ -40,21 +40,32 @@ function getRowSeats(row, seats){
         .sort((a, b) => { return a.position.localeCompare(b.position); });
 }
 
-function onSeatSelected(seatId){
+function onSeatSelected(seat){
 
-    var indexOfSeat = selectedSeats.value.indexOf(seatId);
-
-    var seat = seats.find((s) => s.seatId == seatId);
-
+    var seat = seats.find((s) => { return whereSeatsMatch(s, seat) });
+    
     if(seat.booked)
         return;
+
+    var indexOfSeat = selectedSeats.value.findIndex((s) => { return whereSeatsMatch(s, seat); });
 
     if(indexOfSeat >= 0)
         selectedSeats.value.splice(indexOfSeat, 1);
     else
-        selectedSeats.value.push(seatId);
+        selectedSeats.value.push({ 
+            seatId: seat.seatId, 
+            carId: seat.carId 
+        });
 
     emit('update:modelValue', selectedSeats.value);
+}
+
+function whereSeatsMatch(a, b){
+    return a.carId == b.carId && a.seatId == b.seatId;
+}
+
+function seatIsSelected(seat){
+    return selectedSeats.value.findIndex((s) => { return whereSeatsMatch(s, seat); }) >= 0;
 }
 
 </script>
@@ -68,7 +79,7 @@ function onSeatSelected(seatId){
             <h3>{{ carId }}</h3>
             <div class="car" :set="carSeats = getCarSeats(carId)">
                 <div class="row" v-for="row in getRows(carSeats)">
-                    <div class="seat" :class="{ selected: selectedSeats.indexOf(s.seatId) >= 0, booked: s.booked }" v-for="s in getRowSeats(row, carSeats)" @click="onSeatSelected(s.seatId)">
+                    <div class="seat" :class="{ selected: seatIsSelected(s), booked: s.booked }" v-for="s in getRowSeats(row, carSeats)" @click="onSeatSelected(s)">
                         {{ s.row }}-{{ s.position }}
                     </div>
                 </div>                
