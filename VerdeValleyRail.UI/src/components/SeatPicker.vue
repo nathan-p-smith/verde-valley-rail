@@ -13,7 +13,7 @@ var props = defineProps({
     }
 })
 
-var emit = defineEmits(['update:modelValue'])
+var emit = defineEmits(['update:modelValue', 'close'])
 
 var seats = props.seats;
 
@@ -68,12 +68,16 @@ function seatIsSelected(seat){
     return selectedSeats.value.findIndex((s) => { return whereSeatsMatch(s, seat); }) >= 0;
 }
 
+function onDialogHidden(){
+    emit('close');
+}
+
 </script>
 
 <template>
 <div>
 
-<Dialog v-model:visible="dialogVisible" modal header="Choose Seats" :style="{ width: '50vw' }">
+<Dialog v-model:visible="dialogVisible" modal header="Choose Seats" @hide="onDialogHidden" :style="{ width: '50vw' }">
     <div>        
         <div v-for="carId in carIds">
             <h3>{{ carId }}</h3>
