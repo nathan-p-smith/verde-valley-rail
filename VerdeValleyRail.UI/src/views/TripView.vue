@@ -7,6 +7,7 @@ import { formatDateTime } from '../helpers/FormatDateTime';
 import { formatCurrency } from '../helpers/FormatCurrency';
 import CustomerName from '../components/CustomerName.vue';
 import { useRoute, useRouter, RouterLink } from 'vue-router';
+import SeatPicker from '../components/SeatPicker.vue';
 
 
 var route = useRoute();
@@ -53,6 +54,8 @@ setData();
             {{ availableSeats }} available seats
         </div>
         
+        <SeatPicker :seats="trip.seats"></SeatPicker>
+
     </div>
 </template>
 
