@@ -8,7 +8,7 @@ import { formatCurrency } from '../helpers/FormatCurrency';
 import CustomerName from '../components/CustomerName.vue';
 import { useRoute, useRouter, RouterLink } from 'vue-router';
 import shoppingCartService from '../services/ShoppingCartService';
-
+import InvoiceItem from '../components/InvoiceItem.vue';
 
 var route = useRoute();
 var router = useRouter();
@@ -27,8 +27,18 @@ async function getInvoice(){
 
     var bookingCreates = shoppingCartService.getCart();
 
-    invoice.value = await api.previewInvoice(bookingCreates);
+    invoice.value = (await api.previewInvoice(bookingCreates)).data;
 
+}
+
+async function pay(){
+    var result = (await api.payInvoice(invoice.value)).data;
+
+    if(result){
+        alert("success");
+
+        shoppingCartService.emptyCart();
+    }
 }
 
 getInvoice();
@@ -39,9 +49,18 @@ getInvoice();
 <template>
     <div>
 
-        {{ invoice }}
+        <div v-for="i in invoice.items">
+            <InvoiceItem :item="i"></InvoiceItem>
+        </div>
 
-        
+        <div>
+            Tax: {{ formatCurrency(invoice.tax) }}            
+        </div>
+        <div>
+            Total: {{ formatCurrency(invoice.grandTotal) }}
+        </div>
+
+        <Button @click="pay" >Book Trips</Button>
 
     </div>
 </template>

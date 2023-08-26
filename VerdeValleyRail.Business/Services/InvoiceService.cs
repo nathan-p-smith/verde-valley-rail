@@ -41,7 +41,8 @@ namespace VerdeValleyRail.Business.Services
 
                 invoiceItem.Trip = trip;
                 invoiceItem.Price = trip.PricePerSeat * bookingCreate.BookingSeats.Count();
-                
+                invoiceItem.Booking = bookingCreate;
+
                 invoiceItems.Add(invoiceItem);
             });
 
@@ -60,6 +61,7 @@ namespace VerdeValleyRail.Business.Services
         {
             foreach(var item in invoice.Items)
             {
+                item.Booking.CustomerId = invoice.CustomerId;
                 _bookService.CreateBooking(item.Booking);
             }
 

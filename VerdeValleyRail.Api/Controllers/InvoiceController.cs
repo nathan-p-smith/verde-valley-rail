@@ -8,7 +8,7 @@ namespace VerdeValleyRail.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class InvoiceController : ControllerBase
+    public class InvoiceController : AuthorizedControllerBase
     {
         IInvoiceService _invoiceService;
 
@@ -28,8 +28,12 @@ namespace VerdeValleyRail.Api.Controllers
 
         [HttpPost("Pay")]
         [Authorize]
-        public IActionResult Preview([FromBody] Invoice invoice)
+        public IActionResult Pay([FromBody] Invoice invoice)
         {
+            int? customerId = base.GetCustomerId();
+
+            invoice.CustomerId = (int)customerId;
+
             if (_invoiceService.PayInvoice(invoice))
                 return Ok(invoice);
 

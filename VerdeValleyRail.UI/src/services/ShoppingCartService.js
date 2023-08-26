@@ -52,6 +52,12 @@ var shoppingCartService = {
 
         localStorage.setItem(LOCAL_STOARGE_NAME, JSON.stringify(cart));
 
+    },
+
+    emptyCart: function(){
+
+        localStorage.setItem(LOCAL_STOARGE_NAME, JSON.stringify([]));
+
     }
 
 }

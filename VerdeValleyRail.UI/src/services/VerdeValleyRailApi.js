@@ -45,6 +45,10 @@ var api = {
         return vvrApi.post(`Invoice/Preview`, bookingCreates);
     },
 
+    payInvoice: async(invoice) => {
+        return vvrApi.post(`Invoice/Pay`, invoice);
+    },
+
     listStationOptions: async() => {
         return vvrApi.get(`/Stations/Options`);
     },

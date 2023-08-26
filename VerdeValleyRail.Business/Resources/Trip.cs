@@ -17,8 +17,8 @@ namespace VerdeValleyRail.Business.Resources
 
         public int TrainId { get; set; }
 
-        public Route Route { get; set; }
+        public Route? Route { get; set; }
 
-        public IEnumerable<TripSeat> Seats { get; set; }
+        public IEnumerable<TripSeat>? Seats { get; set; }
     }
 }

@@ -12,6 +12,7 @@ namespace VerdeValleyRail.Business.Resources
         public decimal Tax { get; set; }
         public decimal TotalPrice { get; set; }
         public decimal GrandTotal { get { return Tax + TotalPrice; } }
-        public PaymentMethod PaymentMethod { get; set; }
+        public int CustomerId { get; set; }
+        //public PaymentMethod PaymentMethod { get; set; }
     }
 }
