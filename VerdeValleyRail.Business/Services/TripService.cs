@@ -10,7 +10,7 @@ using E = VerdeValleyRail.Data.Entities;
 using R = VerdeValleyRail.Business.Resources;
 
 namespace VerdeValleyRail.Business.Services
-{
+{    
     public interface ITripService
     {
         R.Trip GetTrip(int tripId, bool withSeats = false);

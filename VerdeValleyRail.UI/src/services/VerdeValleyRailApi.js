@@ -41,6 +41,10 @@ var api = {
         return vvrApi.get(`/Customers/EmailExists`, { params: { email: email } });
     },
 
+    previewInvoice: async(bookingCreates) => {
+        return vvrApi.post(`Invoice/Preview`, bookingCreates);
+    },
+
     listStationOptions: async() => {
         return vvrApi.get(`/Stations/Options`);
     },
