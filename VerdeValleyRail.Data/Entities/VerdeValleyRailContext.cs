@@ -36,6 +36,10 @@ public partial class VerdeValleyRailContext : DbContext
 
     public virtual DbSet<Engine> Engines { get; set; }
 
+    public virtual DbSet<Invoice> Invoices { get; set; }
+
+    public virtual DbSet<InvoiceBooking> InvoiceBookings { get; set; }
+
     public virtual DbSet<Route> Routes { get; set; }
 
     public virtual DbSet<Seat> Seats { get; set; }
@@ -208,6 +212,34 @@ public partial class VerdeValleyRailContext : DbContext
                 .HasMaxLength(50)
                 .UseCollation("utf8mb3_general_ci")
                 .HasCharSet("utf8mb3");
+        });
+
+        modelBuilder.Entity<Invoice>(entity =>
+        {
+            entity.HasKey(e => e.InvoiceId).HasName("PRIMARY");
+
+            entity.ToTable("Invoice");
+
+            entity.HasIndex(e => e.CustomerId, "FK_CustomerId_idx");
+
+            entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+            entity.Property(e => e.Guid).HasMaxLength(36);
+        });
+
+        modelBuilder.Entity<InvoiceBooking>(entity =>
+        {
+            entity.HasKey(e => e.InvoiceBookingId).HasName("PRIMARY");
+
+            entity.ToTable("InvoiceBooking");
+
+            entity.HasIndex(e => e.BookingId, "FK_BookingId_idx");
+
+            entity.HasIndex(e => e.InvoiceId, "FK_InvoiceId_idx");
+
+            entity.HasOne(d => d.Invoice).WithMany(p => p.InvoiceBookings)
+                .HasForeignKey(d => d.InvoiceId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_InvoiceBooking_Invoice");
         });
 
         modelBuilder.Entity<Route>(entity =>

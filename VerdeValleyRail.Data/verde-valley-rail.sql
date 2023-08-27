@@ -64,7 +64,7 @@ CREATE TABLE `Booking` (
   KEY `FK_Customer_idx` (`CustomerId`),
   CONSTRAINT `FK_Booking_Customer` FOREIGN KEY (`CustomerId`) REFERENCES `Customer` (`CustomerId`),
   CONSTRAINT `FK_Booking_Trip` FOREIGN KEY (`TripId`) REFERENCES `Trip` (`TripId`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,7 +73,7 @@ CREATE TABLE `Booking` (
 
 LOCK TABLES `Booking` WRITE;
 /*!40000 ALTER TABLE `Booking` DISABLE KEYS */;
-INSERT INTO `Booking` VALUES (1,2,1,'9561947f-2e59-11ee-9224-0242ac120002'),(2,2,1,'99e83344-2e59-11ee-9224-0242ac120002');
+INSERT INTO `Booking` VALUES (1,2,1,'9561947f-2e59-11ee-9224-0242ac120002'),(2,2,1,'99e83344-2e59-11ee-9224-0242ac120002'),(3,9,1,'cad0b1c1-8d5f-40d9-b147-fc4d8a1f3258'),(5,2,15,'bc55e6f4-e0c4-4a67-becd-7af94324ed6b'),(6,253,15,'ea3c1899-34fe-4500-9390-8f63cab2b7f6'),(7,2,15,'d62fb812-728b-430b-848b-e29e793ecfa7'),(8,9,15,'49cd7d77-fe4a-4ddb-a3f5-5ac4ca5ec3f5'),(9,18,16,'a9a1d547-c169-4131-8a7d-1c3e2ba241f3'),(10,261,16,'ec314587-59be-4ac9-bf21-60465eb883b9'),(11,107,16,'f44f0ab1-c1c8-4ec2-85e6-25cf7b0b23fe');
 /*!40000 ALTER TABLE `Booking` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -96,7 +96,7 @@ CREATE TABLE `BookingSeat` (
   CONSTRAINT `FK_BookingSeat_Booking` FOREIGN KEY (`BookingId`) REFERENCES `Booking` (`BookingId`),
   CONSTRAINT `FK_BookingSeat_Car` FOREIGN KEY (`CarId`) REFERENCES `Car` (`CarId`),
   CONSTRAINT `FK_BookingSeat_Seat` FOREIGN KEY (`SeatId`) REFERENCES `Seat` (`SeatId`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -105,7 +105,7 @@ CREATE TABLE `BookingSeat` (
 
 LOCK TABLES `BookingSeat` WRITE;
 /*!40000 ALTER TABLE `BookingSeat` DISABLE KEYS */;
-INSERT INTO `BookingSeat` VALUES (1,1,131055,4),(2,1,131056,4),(3,2,131061,4);
+INSERT INTO `BookingSeat` VALUES (1,1,131055,4),(2,1,131056,4),(3,2,131061,4),(5,3,131055,14),(6,3,131056,14),(7,5,131136,4),(8,5,131137,4),(9,5,131145,4),(10,5,131146,4),(11,6,131080,14),(12,6,131081,14),(13,6,131094,14),(14,6,131095,14),(15,6,131124,14),(16,6,131125,14),(17,7,131108,4),(18,7,131109,4),(19,7,131117,4),(20,7,131118,4),(21,7,131111,4),(22,7,131110,4),(23,7,131150,5),(24,7,131151,5),(25,7,131152,5),(26,7,131153,5),(27,8,131115,16),(28,8,131116,16),(29,8,131117,16),(30,8,131118,16),(31,8,131122,16),(32,8,131123,16),(33,8,131124,16),(34,8,131125,16),(35,9,131073,1),(36,9,131074,1),(37,9,131096,1),(38,9,131097,1),(39,9,131110,1),(40,9,131111,1),(41,10,131059,15),(42,10,131060,15),(43,11,131080,1),(44,11,131081,1),(45,11,131094,1),(46,11,131095,1);
 /*!40000 ALTER TABLE `BookingSeat` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -176,7 +176,7 @@ CREATE TABLE `Customer` (
   `PasswordSalt` varchar(29) NOT NULL,
   PRIMARY KEY (`CustomerId`),
   UNIQUE KEY `Email_UNIQUE` (`Email`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -185,7 +185,7 @@ CREATE TABLE `Customer` (
 
 LOCK TABLES `Customer` WRITE;
 /*!40000 ALTER TABLE `Customer` DISABLE KEYS */;
-INSERT INTO `Customer` VALUES (1,'John','Doe','johndoe@sedonajoe.com','5551112222','$2a$10$twfhgLpn78./Jfbm4EftN.PoyMmq7MlvV7PnSlfT5TkL80f./YUC6','$2a$10$twfhgLpn78./Jfbm4EftN.');
+INSERT INTO `Customer` VALUES (1,'John','Doe','johndoe@sedonajoe.com','5551112222','$2a$10$twfhgLpn78./Jfbm4EftN.PoyMmq7MlvV7PnSlfT5TkL80f./YUC6','$2a$10$twfhgLpn78./Jfbm4EftN.'),(2,'John','Jones','johnjones@test.com','5551112222','$2a$10$YIomT48T1VrjCh6ztTtCVedhr7wj8ghBvcx8mJ/hwJxsVFambs.2K','$2a$10$YIomT48T1VrjCh6ztTtCVe'),(3,'John','Jones','johnjones2@test.com','5551112222','$2a$10$o8l/LUB5kjTJViwh4ZSsdOpBTCfarhJaWn0QGiNy4Qt7DnavK1W5W','$2a$10$o8l/LUB5kjTJViwh4ZSsdO'),(4,'Mark','Watson','mwatson@vvrail.com','1111111111','$2a$10$vkG2S0htfucdTlHMtoABAeKCsIKVp.2XvKPT/JgmO0zwJdEWFvuji','$2a$10$vkG2S0htfucdTlHMtoABAe'),(5,'Alice','Wunderlund','awunderlund@vvrail.com','1112223333','$2a$10$8TLC1wpr8wN.BtQwZSV8M.L2Pskz9qeHYwvyg2FuBecOIbZDjcCHK','$2a$10$8TLC1wpr8wN.BtQwZSV8M.'),(6,'Angela','Adams','aadams@vvrail.com','2222222222','$2a$10$rMgcQ81Y6Eo.cdEC/Utuau15JMuBpr83y04pIbJXMuN14EDeaJpq6','$2a$10$rMgcQ81Y6Eo.cdEC/Utuau'),(7,'Andrew','Watson','awatson@vvrail.com','','$2a$10$twUbGeNwxQUYPzlEqMJHeuto2E2hVrhI1uEtAzw0dEMGcNc0w1mEy','$2a$10$twUbGeNwxQUYPzlEqMJHeu'),(8,'Mel','Karnofski','mel@vvrail.com','','$2a$10$DtLIEYOQ66jIno8xIJe8.OW4Iat8W5LLgAhxXuLsS8Tm.Y8EWgSyu','$2a$10$DtLIEYOQ66jIno8xIJe8.O'),(9,'Marshal','Walker','mwalker@vvrail.com','5152221111','$2a$10$7NaXmTmxXUX56W0BNPbud.EHUxgCPbuNIJrz8Nyd6kaY0Epg6NWNW','$2a$10$7NaXmTmxXUX56W0BNPbud.'),(10,'Andrea','Adams','andreaadams@vvrail.com','1111111111','$2a$10$etpwOQ.1sFA/zceOUsp.WOATU7mle4toAfNTh2j2V0huOwU1i.wIm','$2a$10$etpwOQ.1sFA/zceOUsp.WO'),(11,'Marsha','Brady','mbrady@vvrail.com','1111111111','$2a$10$ajRy3I6MSGazDjfAsucxdeNgh5BENGN.cK42Mm9RnWIl0RnAIB.2C','$2a$10$ajRy3I6MSGazDjfAsucxde'),(12,'John','Reg','johnreg@vvrail.com','','$2a$10$lg.RWZogC/j.7EtYd0L.XOp6Me.teEbfQ5lxhBYCbTpd5Bqba8lwC','$2a$10$lg.RWZogC/j.7EtYd0L.XO'),(13,'Alan','Grant','alangrant@vvrail.com','5025151234','$2a$10$x9xA97L09cB9dMHSbXBy6uCHFC.5kfRdLDacswb60VPpVB5AacIO6','$2a$10$x9xA97L09cB9dMHSbXBy6u'),(14,'Jane ','Says','jane@vvrail.com','1111111111','$2a$10$g3QI2u090bdHFCTVh6w8E.8pMdn8T9fz6cQ0jf/lbE.1W4XPV8Da.','$2a$10$g3QI2u090bdHFCTVh6w8E.'),(15,'John','Desert','jd@vvr.com','1111111111','$2a$10$S/.nQT0h3CSQDnrQvfnUVOJfFDplZy8lI4ndBzhqdl4ElfFTBpU6C','$2a$10$S/.nQT0h3CSQDnrQvfnUVO'),(16,'Jane','Verde','jane@verde.com','5555555555','$2a$10$wLwtZL1QATS2wNOQtTzFPuPd4IoPMIHQqIuj/wtOAr0lWmGfcTTk6','$2a$10$wLwtZL1QATS2wNOQtTzFPu');
 /*!40000 ALTER TABLE `Customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -212,6 +212,63 @@ LOCK TABLES `Engine` WRITE;
 /*!40000 ALTER TABLE `Engine` DISABLE KEYS */;
 INSERT INTO `Engine` VALUES (1,'Ole Rusty','24601A'),(2,'Needles','111111-234'),(3,'Sparkey','2311-B.1'),(4,'Chugga','123-M123'),(5,'Choo','A9123'),(6,'Rumble','LV426-1');
 /*!40000 ALTER TABLE `Engine` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Invoice`
+--
+
+DROP TABLE IF EXISTS `Invoice`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Invoice` (
+  `InvoiceId` int NOT NULL AUTO_INCREMENT,
+  `CustomerId` int NOT NULL,
+  `CreatedOn` datetime NOT NULL,
+  `Guid` varchar(36) NOT NULL,
+  PRIMARY KEY (`InvoiceId`),
+  KEY `FK_CustomerId_idx` (`CustomerId`),
+  CONSTRAINT `FK_Invoice_Customer` FOREIGN KEY (`CustomerId`) REFERENCES `Customer` (`CustomerId`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Invoice`
+--
+
+LOCK TABLES `Invoice` WRITE;
+/*!40000 ALTER TABLE `Invoice` DISABLE KEYS */;
+INSERT INTO `Invoice` VALUES (1,16,'2023-08-27 16:06:38','e1938207-d8a1-4610-b576-0dc9b3d78818');
+/*!40000 ALTER TABLE `Invoice` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `InvoiceBooking`
+--
+
+DROP TABLE IF EXISTS `InvoiceBooking`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `InvoiceBooking` (
+  `InvoiceBookingId` int NOT NULL AUTO_INCREMENT,
+  `InvoiceId` int NOT NULL,
+  `BookingId` int NOT NULL,
+  PRIMARY KEY (`InvoiceBookingId`),
+  KEY `FK_InvoiceId_idx` (`InvoiceId`),
+  KEY `FK_BookingId_idx` (`BookingId`),
+  CONSTRAINT `FK_InvoiceBooking_Booking` FOREIGN KEY (`BookingId`) REFERENCES `Booking` (`BookingId`),
+  CONSTRAINT `FK_InvoiceBooking_Invoice` FOREIGN KEY (`InvoiceId`) REFERENCES `Invoice` (`InvoiceId`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `InvoiceBooking`
+--
+
+LOCK TABLES `InvoiceBooking` WRITE;
+/*!40000 ALTER TABLE `InvoiceBooking` DISABLE KEYS */;
+INSERT INTO `InvoiceBooking` VALUES (1,1,11);
+/*!40000 ALTER TABLE `InvoiceBooking` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -475,4 +532,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-07-29 18:06:25
+-- Dump completed on 2023-08-27 12:09:21

@@ -6,27 +6,31 @@ using System.Text;
 using System.Threading.Tasks;
 using VerdeValleyRail.Business.Resources;
 using VerdeValleyRail.Data.Entities;
+using E = VerdeValleyRail.Data.Entities;
+using R = VerdeValleyRail.Business.Resources;
 
 namespace VerdeValleyRail.Business.Services
 {
     public interface IInvoiceService
     {
-        Invoice CreateInvoice(IEnumerable<BookingCreate> bookingCreates);
-        bool PayInvoice(Invoice invoice);
+        R.Invoice CreateInvoice(IEnumerable<BookingCreate> bookingCreates);
+        bool PayInvoice(R.Invoice invoice);
     }
 
     public class InvoiceService : IInvoiceService
     {
         Func<ITripService> _createTripService;
         IBookingService _bookService;
+        VerdeValleyRailContext _db;
 
-        public InvoiceService(Func<ITripService> createTripService, IBookingService bookService)
+        public InvoiceService(Func<ITripService> createTripService, IBookingService bookService, VerdeValleyRailContext db)
         {     
             _createTripService = createTripService;
             _bookService = bookService;
+            _db = db;
         }
 
-        public Invoice CreateInvoice(IEnumerable<BookingCreate> bookingCreates)
+        public R.Invoice CreateInvoice(IEnumerable<BookingCreate> bookingCreates)
         {
             var invoiceItems = new ConcurrentBag<InvoiceItem>();
 
@@ -46,7 +50,7 @@ namespace VerdeValleyRail.Business.Services
                 invoiceItems.Add(invoiceItem);
             });
 
-            var invoice = new Invoice();
+            var invoice = new R.Invoice();
             invoice.Items = invoiceItems.ToList();
 
             var totalPrice = invoice.Items.Select(i => i.Price).Sum();
@@ -57,13 +61,32 @@ namespace VerdeValleyRail.Business.Services
             return invoice;
         }
 
-        public bool PayInvoice(Invoice invoice)
+        public bool PayInvoice(R.Invoice invoice)
         {
+            var invoiceEntity = new E.Invoice();
+
+            invoiceEntity.CustomerId = invoice.CustomerId;
+            invoiceEntity.CreatedOn = DateTime.Now.ToUniversalTime();
+            invoiceEntity.Guid = Guid.NewGuid().ToString();
+
+            invoiceEntity.InvoiceBookings = new List<InvoiceBooking>();
+
             foreach(var item in invoice.Items)
             {
                 item.Booking.CustomerId = invoice.CustomerId;
-                _bookService.CreateBooking(item.Booking);
+                var booking = _bookService.CreateBooking(item.Booking);
+
+                var invoiceBooking = new InvoiceBooking()
+                {
+                    InvoiceId = invoiceEntity.InvoiceId,
+                    BookingId = booking.BookingId
+                };
+
+                invoiceEntity.InvoiceBookings.Add(invoiceBooking);
             }
+
+            _db.Add(invoiceEntity);
+            _db.SaveChanges();
 
             return true;
         }
