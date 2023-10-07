@@ -93,40 +93,76 @@ setData();
 
         
 
-        Hello <CustomerName></CustomerName>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md">
+                        <div class="mb-2">
+                            <label class="fw-bolder">Departure:</label>  {{ formatDateTime(trip.departure) }}
+                        </div>
+                        <div class="mb-2">
+                            <label class="fw-bolder">Route:</label>  {{ trip.route.startStation.name }} <i class="bi bi-arrow-right"></i> {{ trip.route.endStation.name }}
+                        </div>
+                        <div class="mb-2">
+                            <span class="fw-bolder">{{ selectedSeats.length }}</span> Seats Selected
+                        </div>                        
+                        <SeatPicker :seats="trip.seats" v-model="selectedSeats" @close="onPickerClose"></SeatPicker>
+                        <div v-show="totalCost > 0">
+                            <div class="fs-3 mb-2">
+                                Total: {{ formatCurrency(totalCost) }}
+                            </div>
+                            <button type="button" class="btn btn-primary btn-sm" v-show="selectedSeats.length > 0 && !tripInCart" icon="pi pi-external-link" @click="upsertToCart"><i class="bi bi-cart-plus"></i>  Add to Cart</button>
+                            <button type="button" class="btn btn-primary btn-sm" v-show="tripInCart" icon="pi pi-external-link" @click="removeFromCart"><i class="bi bi-cart-dash"></i>  Remove from Cart</button>
+                        </div>
+                    </div>
+                    <div class="col-md text-center">
+                        <div class="stat-block align-middle fs-1">
+                            <i class="bi bi-stopwatch"></i> {{ trip.route.minutes }} <sup>min</sup>
+                        </div>
+                    </div>
+                    <div class="col-md text-center">
+                        <div class="stat-block">
+                            <div class="fs-1">
+                                {{ formatCurrency(trip.pricePerSeat) }} <sup>per seat</sup>
+                            </div>                        
+                            <div>{{ availableSeats }} left</div>
+                        </div>
+                    </div>
+                </div>
 
-        <div>Departure: {{ formatDateTime(trip.departure) }}</div>
-        <div>
-            {{ trip.route.startStation.name }} to {{ trip.route.endStation.name }}
+
+                
+            </div>
         </div>
-        <div>
-            {{ trip.route.minutes }} minutes
-        </div>
-        <div>
-            {{ formatCurrency(trip.pricePerSeat) }} per seat
-        </div>
-        <div>
-            {{ availableSeats }} available seats
-        </div>
-        <div>
-            {{ selectedSeats.length }} Seats Selected
-        </div>
-        <div>
-            Total: {{ formatCurrency(totalCost) }}
-        </div>
+
         
-        <SeatPicker :seats="trip.seats" v-model="selectedSeats" @close="onPickerClose"></SeatPicker>
+        
+        
 
-        <pre>
-
-
-
-        </pre>
-
-        <Button label="Add to Cart" v-show="selectedSeats.length > 0 && !tripInCart" icon="pi pi-external-link" @click="upsertToCart" />
-
-        <Button label="Remove from Cart" v-show="tripInCart" icon="pi pi-external-link" @click="removeFromCart" />
+        
 
     </div>
 </template>
+
+<style scoped lang="scss">
+
+    .stat-block{
+
+        $height: 200px;
+
+        border-radius: var(--bs-border-radius);
+        background-color: rgb(233, 233, 233);
+        color: #5f5f5f;        
+        height: $height;
+        padding-top: $height / 2 - 40px;
+
+        sup{
+            font-size: .5em;
+            font-style: italic;
+        }
+        
+    }
+
+
+</style>
 

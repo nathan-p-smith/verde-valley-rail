@@ -95,7 +95,9 @@ function onDialogHidden(){
     </template>  
 </Dialog>
 
-<Button label="Pick Seats" icon="pi pi-external-link" @click="dialogVisible = true" />
+
+
+<div class="pseudo-link" @click="dialogVisible = true">Choose Seats...</div>
 
 </div>
 
