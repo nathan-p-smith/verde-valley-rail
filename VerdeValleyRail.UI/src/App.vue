@@ -4,21 +4,39 @@ import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-  <header>
-    
+  <header>    
     <div>
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/Trips">Trips</RouterLink>
-        <RouterLink to="/Trip/3">Trip 3</RouterLink>
+      <nav>        
+        <RouterLink to="/Trips">Trips</RouterLink>        
       </nav>
     </div>
   </header>
 
-  <RouterView />
+  <div class="container">
+    <RouterView />
+  </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+
+
+  header{
+    
+    $height: 50px;
+    
+    display: block;
+    background-color: red;
+    height: $height;
+    line-height: $height;
+    padding: 0 20px;
+    margin-bottom: 10px;
+
+    a{
+      color: #fff;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+  }
 
 </style>

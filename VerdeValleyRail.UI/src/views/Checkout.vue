@@ -47,7 +47,7 @@ getInvoice();
 </script>
 
 <template>
-    <div>
+    <div class="p-component">
 
         <div v-for="i in invoice.items">
             <InvoiceItem :item="i"></InvoiceItem>

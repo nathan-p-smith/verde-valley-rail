@@ -58,26 +58,38 @@ var testDate = new Date();
 <template>
     <div>
 
+        <div class="row mb-4">
+            <div class="col-md">
+                <Calendar v-model="filter.departure" 
+                    @update:modelValue="searchTrips" 
+                    class="w-100" />
+            </div>
+            <div class="col-md">
+                <Dropdown v-model="filter.startStationId" 
+                    :options="stationOptions" 
+                    @change="searchTrips"
+                    optionLabel="name" 
+                    option-value="stationId" 
+                    placeholder="Select Starting City"             
+                    class="w-100 md:w-14rem" />
+            </div>
+            <div class="col-md">
+                <Dropdown v-model="filter.endStationId" 
+                    :options="stationOptions" 
+                    @change="searchTrips"
+                    optionLabel="name" 
+                    option-value="stationId" 
+                    placeholder="Select Destination" 
+                    class="w-100 md:w-14rem" />
+            </div>
+        </div>
+
         
 
-        <Calendar v-model="filter.departure" @update:modelValue="searchTrips" />
 
+        
 
-        <Dropdown v-model="filter.startStationId" 
-            :options="stationOptions" 
-            @change="searchTrips"
-            optionLabel="name" 
-            option-value="stationId" 
-            placeholder="Select Starting City"             
-            class="w-full md:w-14rem" />
-
-        <Dropdown v-model="filter.endStationId" 
-            :options="stationOptions" 
-            @change="searchTrips"
-            optionLabel="name" 
-            option-value="stationId" 
-            placeholder="Select Destination" 
-            class="w-full md:w-14rem" />
+        
 
         <DataTable v-if="trips.length > 0" :value="trips" tableStyle="min-width: 50rem" data-key="tripId" @row-click="onTripSelected">            
             <Column field="departure" header="Departs">
