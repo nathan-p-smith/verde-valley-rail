@@ -1,25 +1,12 @@
 import * as Mui from '@mui/material';
 import React from 'react';
+import { TripSearchResult } from '../types/TripSearchResult';
+import TripLink from '../components/TripLink';
 
-export class TripSearchResult {
-    tripId: number | null = null;
-    trainId: number | null = null;
-    departure: Date | null = null;
-    startingStationName: string | null = null;
-    endingStationName: string | null = null;
-    pricePerSeat: number | null = null;
-    minutes: number | null = null;
-    availableSeats: number | null = null;    
-}
 
-export class TripSearchFilter {
-    departure?: Date | null;
-    startStationId?: number | null;
-    endStationId?: number | null;
-}
 
-export class TripGridProps {
-    trips: TripSearchResult[] | null = null;
+ type TripGridProps = {
+    trips: TripSearchResult[];
   }
 
 export const TripGrid: React.FC<TripGridProps> = ({ trips }) => {
@@ -43,10 +30,10 @@ export const TripGrid: React.FC<TripGridProps> = ({ trips }) => {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <Mui.TableCell component="th" scope="row">
-                {trip.startingStationName}
+                <TripLink tripId={trip.tripId}>{trip.startingStationName}</TripLink>
               </Mui.TableCell>
               <Mui.TableCell component="th" scope="row">
-                {trip.endingStationName}
+                <TripLink tripId={trip.tripId}>{trip.endingStationName}</TripLink>
               </Mui.TableCell>
             </Mui.TableRow>
           ))}
