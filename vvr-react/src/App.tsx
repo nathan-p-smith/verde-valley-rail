@@ -4,7 +4,7 @@ import SampleTable from './components/SampleTable';
 import * as Mui from '@mui/material';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import FindTrip from './pages/FindTrip';
-import Trip from './pages/Trip';
+import TripDetail from './pages/TripDetail';
 import ChooseSeats from './pages/ChooseSeats';
 
 function App() {
@@ -34,7 +34,7 @@ function App() {
         </nav>
         <Routes>
           <Route path="/find-trip" element={<FindTrip />} />
-          <Route path="/trip/:tripId" element={<Trip />} />
+          <Route path="/trip-detail/:tripId" element={<TripDetail />} />
           <Route path="/choose-seats" element={<ChooseSeats />} />
         </Routes>
       </Router>

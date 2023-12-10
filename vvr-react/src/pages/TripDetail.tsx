@@ -9,12 +9,29 @@ import { TripGrid } from '../components/TripGird';
 import { TripSearchResult } from '../types/TripSearchResult';
 import { TripSearchFilter } from '../types/TripSearchFilter';
 import StationSelect from '../components/StationSelect';
+import { Trip } from '../types/Trip';
 
-const Trip = () => {
+const TripDetail = () => {
 
     const { tripId } = useParams();
-    
-    
+    const [trip, setTrip] = useState<Trip | null>(null);
+
+    if(!tripId)
+        throw ("");
+
+    useEffect(() => {
+
+        const load = async () => {
+
+            const tripResponse = await api.getTrip(parseInt(tripId, 10));
+            setTrip(tripResponse.data);
+
+
+        }
+
+        load();
+
+    }, []);  
     
     
     
@@ -22,10 +39,14 @@ const Trip = () => {
   return (
     <div>
       
-    TRIP { tripId }
+    TRIP { trip?.tripId }
+
+    <div>
+        { trip?.route.startStation.name } to { trip?.route.endStation.name }
+    </div>
 
     </div>
   );
 };
 
-export default Trip;
+export default TripDetail;

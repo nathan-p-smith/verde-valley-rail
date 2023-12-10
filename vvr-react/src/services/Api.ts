@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import { StationOption } from '../types/StationOption';
 import { TripSearchFilter } from '../types/TripSearchFilter';
 import { TripSearchResult } from '../types/TripSearchResult';
+import { Trip } from '../types/Trip';
 
 const vvrApi = axios.create({
     baseURL: '/api'
@@ -56,9 +57,9 @@ var api = {
         return vvrApi.get<StationOption[]>(`/Stations/Options`);
     },
 
-    // getTrip: async (id) => {
-    //     return vvrApi.get(`/Trips/${id}`);
-    // },
+    getTrip: async (id: number) => {
+        return vvrApi.get<Trip>(`/Trips/${id}`);
+    },
 
     searchTrips: async (filter: TripSearchFilter) => {
         return vvrApi.get<TripSearchResult[]>(`/Trips/Search`, { params: filter });

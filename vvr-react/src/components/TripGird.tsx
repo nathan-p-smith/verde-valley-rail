@@ -1,7 +1,7 @@
 import * as Mui from '@mui/material';
 import React from 'react';
 import { TripSearchResult } from '../types/TripSearchResult';
-import TripLink from '../components/TripLink';
+import TripDetailLink from './TripDetailLink';
 
 
 
@@ -30,10 +30,10 @@ export const TripGrid: React.FC<TripGridProps> = ({ trips }) => {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <Mui.TableCell component="th" scope="row">
-                <TripLink tripId={trip.tripId}>{trip.startingStationName}</TripLink>
+                <TripDetailLink tripId={trip.tripId}>{trip.startingStationName}</TripDetailLink>
               </Mui.TableCell>
               <Mui.TableCell component="th" scope="row">
-                <TripLink tripId={trip.tripId}>{trip.endingStationName}</TripLink>
+                <TripDetailLink tripId={trip.tripId}>{trip.endingStationName}</TripDetailLink>
               </Mui.TableCell>
             </Mui.TableRow>
           ))}
