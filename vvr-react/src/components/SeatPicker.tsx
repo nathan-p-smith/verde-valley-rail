@@ -17,64 +17,6 @@ type Row = {
     seats: Seat[]
 }
 
-
-interface CarProps {
-    car: Car
-}
-
-const CarMarkup: React.FC<CarProps> = ({ car }) => {
-    return (
-        <div className="car">
-            {car.rows.map((r) => (
-                <RowMarkup row={r}></RowMarkup>
-            ))}
-        </div>
-    )
-}
-
-interface RowProps {
-    row: Row
-}
-
-const RowMarkup: React.FC<RowProps> = ({ row }) => {
-
-    return(
-        <div className="row">
-            {row.seats.map((seat) => (
-                <SeatMarkup seat={seat}></SeatMarkup>
-            ))}
-        </div>
-    )
-
-}
-
-interface SeatProps {
-    seat: Seat
-}
-
-const SeatMarkup: React.FC<SeatProps> = ({ seat }) => {
-
-    var className = "seat";
-
-    if(seat.booked)
-        className += " booked";
-
-    return (
-        <div className={className}>
-            {seat.position}
-        </div>
-    )
-};
-
-
-// const SeatMarkup: React.FC<{seat: Seat}> = ({ seat }) => {
-//     return (
-//         <div>
-//             {seat.position}
-//         </div>
-//     )
-// };
-
 const SeatPicker: React.FC<SeatPickerProps> = ({ seats, onSeatSelected }) => {
 
     const carsMap: any = {};
@@ -93,6 +35,58 @@ const SeatPicker: React.FC<SeatPickerProps> = ({ seats, onSeatSelected }) => {
 
         carsMap[carId][row].push(seat);
     });
+
+    interface CarProps {
+        car: Car
+    }
+    
+    const CarMarkup: React.FC<CarProps> = ({ car }) => {
+        return (
+            <div className="car">
+                {car.rows.map((r) => (
+                    <RowMarkup row={r}></RowMarkup>
+                ))}
+            </div>
+        )
+    }
+    
+    interface RowProps {
+        row: Row
+    }
+    
+    const RowMarkup: React.FC<RowProps> = ({ row }) => {
+    
+        return(
+            <div className="row">
+                {row.seats.map((seat) => (
+                    <SeatMarkup seat={seat}></SeatMarkup>
+                ))}
+            </div>
+        )
+    
+    }
+    
+    interface SeatProps {
+        seat: Seat
+    }
+    
+    const SeatMarkup: React.FC<SeatProps> = ({ seat }) => {
+    
+        var className = "seat";
+    
+        if(seat.booked)
+            className += " booked";
+    
+        const handleClick = () => {
+            onSeatSelected(seat);
+        };
+
+        return (
+            <div className={className} onClick={handleClick}>
+                {seat.position}
+            </div>
+        )
+    };
 
     const cars: Car[] = [];
 

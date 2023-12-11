@@ -11,6 +11,7 @@ import { TripSearchFilter } from '../types/TripSearchFilter';
 import StationSelect from '../components/StationSelect';
 import { Trip } from '../types/Trip';
 import SeatPicker from '../components/SeatPicker';
+import { Seat } from '../types/Seat';
 
 const TripDetail = () => {
 
@@ -35,7 +36,9 @@ const TripDetail = () => {
 
     }, []);  
     
-    
+    const onSeatSelected = (seat: Seat) => {
+        console.log(seat);
+    };
     
 
   return (
@@ -48,7 +51,7 @@ const TripDetail = () => {
     </div>
 
     <div>
-        {trip?.seats ? <SeatPicker seats={trip!.seats}></SeatPicker> : null}
+        {trip?.seats ? <SeatPicker seats={trip!.seats} onSeatSelected={onSeatSelected}></SeatPicker> : null}
     </div>
 
     </div>
