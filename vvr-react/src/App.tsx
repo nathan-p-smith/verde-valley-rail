@@ -8,16 +8,10 @@ import TripDetail from './pages/TripDetail';
 import ChooseSeats from './pages/ChooseSeats';
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  
   return (
     <>
-      <div>
-        <Mui.Button variant="contained">Hello world</Mui.Button>
-      </div>
-      <div>
-        <SampleTable></SampleTable>
-      </div>
+
       <Router>
         <nav>
           <ul>

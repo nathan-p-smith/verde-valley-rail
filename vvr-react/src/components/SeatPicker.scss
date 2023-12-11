@@ -1,0 +1,41 @@
+.seat-picker{
+
+    .car{
+
+        border: solid black 2px;
+        padding: 15px;
+        border-radius: 20px;
+        margin-bottom: 10px;
+        display:table;
+
+        .row{
+
+
+            
+
+            .seat{
+
+                
+
+                $seat-size: 40px;
+                display: inline-block;
+                padding: 5px;
+                margin: 2px;
+                border: solid black 1px;
+                height: $seat-size;
+                width: $seat-size;
+                text-align: center;
+                line-height: $seat-size;
+                cursor: pointer;
+
+                &.booked{
+                    background-color: aquamarine;
+                }
+            }
+
+            .seat:nth-child(2) {
+                margin-right: 50px;
+            }
+        }
+    }
+}

@@ -10,11 +10,12 @@ import { TripSearchResult } from '../types/TripSearchResult';
 import { TripSearchFilter } from '../types/TripSearchFilter';
 import StationSelect from '../components/StationSelect';
 import { Trip } from '../types/Trip';
+import SeatPicker from '../components/SeatPicker';
 
 const TripDetail = () => {
 
     const { tripId } = useParams();
-    const [trip, setTrip] = useState<Trip | null>(null);
+    const [trip, setTrip] = useState<Trip | null>();
 
     if(!tripId)
         throw ("");
@@ -24,6 +25,7 @@ const TripDetail = () => {
         const load = async () => {
 
             const tripResponse = await api.getTrip(parseInt(tripId, 10));
+
             setTrip(tripResponse.data);
 
 
@@ -43,6 +45,10 @@ const TripDetail = () => {
 
     <div>
         { trip?.route.startStation.name } to { trip?.route.endStation.name }
+    </div>
+
+    <div>
+        {trip?.seats ? <SeatPicker seats={trip!.seats}></SeatPicker> : null}
     </div>
 
     </div>
