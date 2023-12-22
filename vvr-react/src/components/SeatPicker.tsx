@@ -3,8 +3,10 @@ import { Seat } from "../types/Seat";
 import "./SeatPicker.scss";
 
 type SeatPickerProps = {
-    seats: Seat[],
-    onSeatSelected: (seat: Seat) => void;
+    seats: Seat[],    
+    selectedSeats:Seat[],
+    onSeatSelected: (seat: Seat) => void;    
+    onSelection: (seats: Seat[]) => void;
 }
 
 type Car = {
@@ -19,16 +21,17 @@ type Row = {
 
 
 
-const SeatPicker: React.FC<SeatPickerProps> = ({ seats, onSeatSelected }) => {
+const SeatPicker: React.FC<SeatPickerProps> = ({ seats, selectedSeats, onSeatSelected, onSelection }) => {
+
 
     const carsMap: any = {};
 
     //const [selectedSeats, setSelectedSeats] = useState<Seat[]>([]);    
-    var selectedSeats:Seat[] = [];    
+    
 
-    // useEffect(() => {
-    //     console.log("Selected Seats", selectedSeats);
-    // }, [selectedSeats]);
+    useEffect(() => {
+        console.log("Seat Picker rerender");
+    });
 
     // Iterate through the seats and organize them by CarId, Row, and Position
     seats.forEach((seat) => {
@@ -81,12 +84,9 @@ const SeatPicker: React.FC<SeatPickerProps> = ({ seats, onSeatSelected }) => {
     
     const SeatMarkup: React.FC<SeatProps> = ({ seat }) => {
     
-        const [selected, setSelected] = useState(false);
+        var seatIsSelected = selectedSeats.some(s => s.seatId === seat.seatId && s.carId === seat.carId);
 
-        useEffect(() => { 
-            if(selected)
-                console.log("changed", selected);
-         }, [selected]);
+        const [selected, setSelected] = useState(seatIsSelected);
 
         function getClassName():string{
 
@@ -122,14 +122,18 @@ const SeatPicker: React.FC<SeatPickerProps> = ({ seats, onSeatSelected }) => {
             
             
             if(!selected){
-                selectedSeats.push(seat);
+                onSelection([...selectedSeats, seat]);                
+                console.log("!selected");
             }
             else
             {
-                selectedSeats = selectedSeats.filter(s => !(s.seatId === seat.seatId && s.carId === seat.carId));
+                onSelection(selectedSeats.filter(s => !(s.seatId === seat.seatId && s.carId === seat.carId)));                
+                console.log("1selected");
             }
 
-            console.log(selectedSeats);
+            
+            
+
             // await setSelectedSeats(prevSeats => {
             //     console.log(selected);
             //     if (!selected) {
@@ -141,7 +145,7 @@ const SeatPicker: React.FC<SeatPickerProps> = ({ seats, onSeatSelected }) => {
 
             setSelected(prevSelected => !prevSelected);
 
-            
+            //onSelection(selectedSeats);
 
             //onSeatSelected(seat);
         };
