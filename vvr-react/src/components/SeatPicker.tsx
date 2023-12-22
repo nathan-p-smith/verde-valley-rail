@@ -4,8 +4,7 @@ import "./SeatPicker.scss";
 
 type SeatPickerProps = {
     seats: Seat[],    
-    selectedSeats:Seat[],
-    onSeatSelected: (seat: Seat) => void;    
+    selectedSeats:Seat[],      
     onSelection: (seats: Seat[]) => void;
 }
 
@@ -21,17 +20,9 @@ type Row = {
 
 
 
-const SeatPicker: React.FC<SeatPickerProps> = ({ seats, selectedSeats, onSeatSelected, onSelection }) => {
-
+const SeatPicker: React.FC<SeatPickerProps> = ({ seats, selectedSeats, onSelection }) => {
 
     const carsMap: any = {};
-
-    //const [selectedSeats, setSelectedSeats] = useState<Seat[]>([]);    
-    
-
-    useEffect(() => {
-        console.log("Seat Picker rerender");
-    });
 
     // Iterate through the seats and organize them by CarId, Row, and Position
     seats.forEach((seat) => {
@@ -84,9 +75,7 @@ const SeatPicker: React.FC<SeatPickerProps> = ({ seats, selectedSeats, onSeatSel
     
     const SeatMarkup: React.FC<SeatProps> = ({ seat }) => {
     
-        var seatIsSelected = selectedSeats.some(s => s.seatId === seat.seatId && s.carId === seat.carId);
-
-        const [selected, setSelected] = useState(seatIsSelected);
+        const [selected, setSelected] = useState(selectedSeats.some(s => s.seatId === seat.seatId && s.carId === seat.carId));
 
         function getClassName():string{
 
@@ -94,12 +83,7 @@ const SeatPicker: React.FC<SeatPickerProps> = ({ seats, selectedSeats, onSeatSel
 
             if(seat.booked)
                 className += " booked";
-        
-            
-            // if(selectedSeats.find(s => s.seatId == seat.seatId && s.carId == seat.carId)){
-            //     className += " selected";            
-            // }
-
+    
             if(selected)
                 className += " selected";
 
@@ -109,45 +93,17 @@ const SeatPicker: React.FC<SeatPickerProps> = ({ seats, selectedSeats, onSeatSel
         const handleClick = async () => {
 
             if(seat.booked)
-                return;
-
-            // if(!selectedSeats.find(s => s.seatId == seat.seatId && s.carId == seat.carId)){
-            //     //If the seat wasn't selected, add it to selected seats.
-            //     setSelectedSeats([...selectedSeats, seat]);                
-            // }
-            // else{
-            //     //Otherwise, remove it
-            //     setSelectedSeats(selectedSeats.filter(s => !(s.seatId == seat.seatId && s.carId == seat.carId)));
-            // }         
-            
+                return;    
             
             if(!selected){
-                onSelection([...selectedSeats, seat]);                
-                console.log("!selected");
+                onSelection([...selectedSeats, seat]);                                
             }
             else
             {
-                onSelection(selectedSeats.filter(s => !(s.seatId === seat.seatId && s.carId === seat.carId)));                
-                console.log("1selected");
+                onSelection(selectedSeats.filter(s => !(s.seatId === seat.seatId && s.carId === seat.carId)));                                
             }
 
-            
-            
-
-            // await setSelectedSeats(prevSeats => {
-            //     console.log(selected);
-            //     if (!selected) {
-            //       return [...prevSeats, seat];
-            //     } else {
-            //       return prevSeats.filter(s => !(s.seatId === seat.seatId && s.carId === seat.carId));
-            //     }
-            // });
-
             setSelected(prevSelected => !prevSelected);
-
-            //onSelection(selectedSeats);
-
-            //onSeatSelected(seat);
         };
 
         return (

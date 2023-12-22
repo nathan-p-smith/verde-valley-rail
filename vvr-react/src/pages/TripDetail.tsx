@@ -19,15 +19,9 @@ const TripDetail = () => {
     const [trip, setTrip] = useState<Trip | null>();
     const [selectedSeats, setSelectedSeats] = useState<Seat[]>([]);
 
-    useEffect(() => { console.log("test", selectedSeats) }, [selectedSeats]);
 
     if(!tripId)
         throw ("");
-
-        useEffect(() => {
-            console.log('Page is being re-rendered');
-            // You can perform actions when the component is re-rendered
-          }, []);
     
 
     useEffect(() => {
@@ -44,15 +38,10 @@ const TripDetail = () => {
         load();
 
     }, []);  
-    
-    const onSeatSelected = (seat: Seat) => {
-        //console.log(seat);
-    };
 
-    const onSelection = (seats: Seat[]) => {
-          
-          setSelectedSeats(seats);
-        };
+    const onSelection = (seats: Seat[]) => {        
+        setSelectedSeats(seats);
+    };
     
 
   return (
@@ -67,7 +56,7 @@ const TripDetail = () => {
     <div>Total Selected Seats: {selectedSeats.length}</div>
 
     <div>
-        {trip?.seats ? <SeatPicker key="seat_picker" seats={trip!.seats} selectedSeats={selectedSeats} onSeatSelected={onSeatSelected} onSelection={onSelection}></SeatPicker> : null}
+        {trip?.seats ? <SeatPicker key="seat_picker" seats={trip!.seats} selectedSeats={selectedSeats} onSelection={onSelection}></SeatPicker> : null}
     </div>
 
     </div>
