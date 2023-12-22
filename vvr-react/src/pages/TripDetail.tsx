@@ -12,13 +12,19 @@ import StationSelect from '../components/StationSelect';
 import { Trip } from '../types/Trip';
 import SeatPicker from '../components/SeatPicker';
 import { Seat } from '../types/Seat';
+import { useAuth } from '../context/AuthContext';
 
 const TripDetail = () => {
 
     const { tripId } = useParams();
     const [trip, setTrip] = useState<Trip | null>();
     const [selectedSeats, setSelectedSeats] = useState<Seat[]>([]);
+    const { login } = useAuth();
 
+
+    function handleLogin(){
+        login();
+    }
 
     if(!tripId)
         throw ("");
@@ -48,6 +54,8 @@ const TripDetail = () => {
     <div>
       
     TRIP { trip?.tripId }
+
+    <div onClick={handleLogin}>Login</div>
 
     <div>
         { trip?.route.startStation.name } to { trip?.route.endStation.name }
