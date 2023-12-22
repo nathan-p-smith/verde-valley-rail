@@ -1,3 +1,4 @@
+import * as Mui from '@mui/material';
 import { useState, useContext, useEffect } from "react";
 import { Seat } from "../types/Seat";
 import "./SeatPicker.scss";
@@ -21,6 +22,11 @@ type Row = {
 
 
 const SeatPicker: React.FC<SeatPickerProps> = ({ seats, selectedSeats, onSelection }) => {
+
+    const [modalVisible, setModalVisible] = useState(false);
+
+
+
 
     const carsMap: any = {};
 
@@ -137,14 +143,38 @@ const SeatPicker: React.FC<SeatPickerProps> = ({ seats, selectedSeats, onSelecti
         cars.push(car);
     });
 
-    
+    function handleChooseSeatsClick() {
+        setModalVisible(true);
+    }
+
+    function handleModalClose(){
+        setModalVisible(false);
+    }
+
+    function handleSelectionCancel(){
+        onSelection([]);
+        setModalVisible(false);
+    }
 
     return(
-        <div className="seat-picker">
-            {cars.map((c) => (
-                <CarMarkup key={`car_${c.carId}`} car={c}></CarMarkup>
-            ))}
-        </div>
+        <>
+        <Mui.Button onClick={handleChooseSeatsClick}>Choose Seats</Mui.Button>
+        <Mui.Dialog open={modalVisible} onClose={handleModalClose} scroll="paper">
+            <Mui.DialogTitle id="scroll-dialog-title">Choose Seats</Mui.DialogTitle>
+            <Mui.DialogContent>                
+                <div className="seat-picker">
+                    {cars.map((c) => (
+                        <CarMarkup key={`car_${c.carId}`} car={c}></CarMarkup>
+                    ))}
+                </div>                
+            </Mui.DialogContent>
+            <Mui.DialogActions>
+                <Mui.Button onClick={handleSelectionCancel}>Cancel</Mui.Button>
+                <Mui.Button onClick={handleModalClose}>Choose</Mui.Button>
+            </Mui.DialogActions>
+        </Mui.Dialog>
+        
+        </>
     )
 };
 
