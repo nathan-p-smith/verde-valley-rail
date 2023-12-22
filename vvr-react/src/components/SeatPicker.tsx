@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Seat } from "../types/Seat";
 import "./SeatPicker.scss";
 
@@ -20,6 +20,12 @@ type Row = {
 const SeatPicker: React.FC<SeatPickerProps> = ({ seats, onSeatSelected }) => {
 
     const carsMap: any = {};
+
+    const [selectedSeats, setSelectedSeats] = useState<Seat[]>([]);
+
+    useEffect(() => {
+        console.log("Selected Seats", selectedSeats);
+    }, [selectedSeats]);
 
     // Iterate through the seats and organize them by CarId, Row, and Position
     seats.forEach((seat) => {
@@ -43,8 +49,8 @@ const SeatPicker: React.FC<SeatPickerProps> = ({ seats, onSeatSelected }) => {
     const CarMarkup: React.FC<CarProps> = ({ car }) => {
         return (
             <div className="car">
-                {car.rows.map((r) => (
-                    <RowMarkup row={r}></RowMarkup>
+                {car.rows.map((r, index) => (
+                    <RowMarkup key={`row_${car.carId}_${index}`} row={r}></RowMarkup>
                 ))}
             </div>
         )
@@ -57,9 +63,9 @@ const SeatPicker: React.FC<SeatPickerProps> = ({ seats, onSeatSelected }) => {
     const RowMarkup: React.FC<RowProps> = ({ row }) => {
     
         return(
-            <div className="row">
-                {row.seats.map((seat) => (
-                    <SeatMarkup seat={seat}></SeatMarkup>
+            <div className="row">                
+                {row.seats.map((seat) => (                                
+                    <SeatMarkup key={`seat_${seat.carId}_${seat.seatId}`} seat={seat}></SeatMarkup>
                 ))}
             </div>
         )
@@ -72,17 +78,40 @@ const SeatPicker: React.FC<SeatPickerProps> = ({ seats, onSeatSelected }) => {
     
     const SeatMarkup: React.FC<SeatProps> = ({ seat }) => {
     
-        var className = "seat";
-    
-        if(seat.booked)
-            className += " booked";
-    
+        function getClassName():string{
+
+            var className = "seat";
+
+            if(seat.booked)
+                className += " booked";
+        
+            
+            if(selectedSeats.find(s => s.seatId == seat.seatId && s.carId == seat.carId)){
+                className += " selected";            
+            }
+
+            return className;
+        }
+
         const handleClick = () => {
+
+            if(seat.booked)
+                return;
+
+            if(!selectedSeats.find(s => s.seatId == seat.seatId && s.carId == seat.carId)){
+                //If the seat wasn't selected, add it to selected seats.
+                setSelectedSeats([...selectedSeats, seat]);                
+            }
+            else{
+                //Otherwise, remove it
+                setSelectedSeats(selectedSeats.filter(s => !(s.seatId == seat.seatId && s.carId == seat.carId)));
+            }            
+
             onSeatSelected(seat);
         };
 
         return (
-            <div className={className} onClick={handleClick}>
+            <div className={getClassName()} onClick={handleClick}>
                 {seat.position}
             </div>
         )
@@ -112,12 +141,12 @@ const SeatPicker: React.FC<SeatPickerProps> = ({ seats, onSeatSelected }) => {
         cars.push(car);
     });
 
-    console.log(cars);
+    
 
     return(
         <div className="seat-picker">
             {cars.map((c) => (
-                <CarMarkup car={c}></CarMarkup>
+                <CarMarkup key={`car_${c.carId}`} car={c}></CarMarkup>
             ))}
         </div>
     )

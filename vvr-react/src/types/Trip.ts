@@ -10,10 +10,3 @@ export type Trip = {
     route:        Route;
     seats:        Seat[];
 }
-
-export enum Position {
-    A = "A",
-    B = "B",
-    C = "C",
-    D = "D",
-}

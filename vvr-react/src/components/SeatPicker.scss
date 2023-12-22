@@ -31,6 +31,11 @@
                 &.booked{
                     background-color: aquamarine;
                 }
+
+                &.selected{
+                    background-color: rgb(138, 20, 89);
+                    color: #fff;
+                }
             }
 
             .seat:nth-child(2) {
