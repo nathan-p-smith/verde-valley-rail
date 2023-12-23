@@ -82,6 +82,7 @@ const SeatPicker: React.FC<SeatPickerProps> = ({ seats, selectedSeats, onSelecti
     
     const SeatMarkup: React.FC<SeatProps> = ({ seat }) => {
     
+        console.log("selected", selectedSeats);
         const [selected, setSelected] = useState(selectedSeats.some(s => s.seatId === seat.seatId && s.carId === seat.carId));
 
         function getClassName():string{
@@ -152,11 +153,6 @@ const SeatPicker: React.FC<SeatPickerProps> = ({ seats, selectedSeats, onSelecti
         setModalVisible(false);
     }
 
-    function handleSelectionCancel(){
-        onSelection([]);
-        setModalVisible(false);
-    }    
-
     return(
         <>
         <Mui.Button onClick={handleChooseSeatsClick}>Choose Seats</Mui.Button>
@@ -169,9 +165,8 @@ const SeatPicker: React.FC<SeatPickerProps> = ({ seats, selectedSeats, onSelecti
                     ))}
                 </div>                
             </Mui.DialogContent>
-            <Mui.DialogActions>
-                <Mui.Button onClick={handleSelectionCancel}>Cancel</Mui.Button>
-                <Mui.Button onClick={handleModalClose}>Choose</Mui.Button>
+            <Mui.DialogActions>                
+                <Mui.Button onClick={handleModalClose}>Close</Mui.Button>
             </Mui.DialogActions>
         </Mui.Dialog>
         

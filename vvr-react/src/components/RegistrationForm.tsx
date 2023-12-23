@@ -35,8 +35,8 @@ const RegistrationForm : React.FC<RegistrationFormProps> = ({ onRegistration }) 
 
         try
         {
-            var resp = (await api.createCustomer(customerCreate)).data;
-            onRegistration(resp.jwt);
+            var jwt = (await api.createCustomer(customerCreate)).data;
+            onRegistration(jwt);
         }
         catch(e)
         {

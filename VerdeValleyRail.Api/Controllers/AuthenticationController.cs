@@ -28,7 +28,7 @@ namespace VerdeValleyRail.Api.Controllers
             {
                 string jwt = JwtHelper.CreateToken(customer.CustomerId, _jwtSettings.JwtSecret);
 
-                return Ok(new { jwt });
+                return Ok(jwt);
             }
 
             return Unauthorized();

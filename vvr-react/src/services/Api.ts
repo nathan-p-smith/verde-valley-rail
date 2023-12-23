@@ -25,7 +25,7 @@ vvrApi.interceptors.request.use((config) => {
 var api = {
 
     authenticate: async (login:AuthenticateRequest) => {
-        return vvrApi.post(`/Authentication`, login);
+        return vvrApi.post<string>(`/Authentication`, login);
     },
 
     // getBooking: async (guid) => {
@@ -41,7 +41,7 @@ var api = {
     },
 
     createCustomer: async (customerCreate: CustomerCreate) => {
-        return vvrApi.post(`/Customers`, customerCreate);
+        return vvrApi.post<string>(`/Customers`, customerCreate);
     },
 
     // customerEmailExists: async(email) => {

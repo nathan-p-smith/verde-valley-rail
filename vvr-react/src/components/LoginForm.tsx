@@ -29,9 +29,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
 
         try
         {
-            var resp = (await api.authenticate(login)).data;
-            console.log(resp);
-            onLogin(resp.jwt);
+            var jwt = (await api.authenticate(login)).data;            
+            onLogin(jwt);
         }
         catch(e)
         {

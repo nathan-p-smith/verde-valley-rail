@@ -44,7 +44,7 @@ namespace VerdeValleyRail.Api.Controllers
 
             string jwt = JwtHelper.CreateToken(customer.CustomerId, _settings.JwtSecret);
 
-            return Ok(new { jwt });
+            return Ok(jwt);
         }
 
         [HttpGet("EmailExists")]

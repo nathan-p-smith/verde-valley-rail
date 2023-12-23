@@ -3,8 +3,7 @@
 import { BookingSeat } from "./BookingSeat";
 
 export type Booking = {
-    tripId:       number;
-    customerId:   number;
+    tripId:       number;    
     bookingSeats: BookingSeat[];
 }
 

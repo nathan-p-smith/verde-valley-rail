@@ -15,6 +15,9 @@ import { Seat } from '../types/Seat';
 import { useAuth } from '../context/AuthContext';
 import * as Mui from "@mui/material";
 import { useNavigate } from 'react-router-dom';
+import cartService from '../services/ShoppingCartService';
+import { Booking } from '../types/Booking';
+import { BookingSeat } from '../types/BookingSeat';
 
 const TripDetail = () => {
 
@@ -23,7 +26,7 @@ const TripDetail = () => {
     const [selectedSeats, setSelectedSeats] = useState<Seat[]>([]);
     const { login, isLoggedIn } = useAuth();
     const navigateTo = useNavigate();
-
+    
 
     function handleLogin(){
         login();
@@ -39,20 +42,33 @@ const TripDetail = () => {
 
             const tripResponse = await api.getTrip(parseInt(tripId, 10));
 
-            setTrip(tripResponse.data);
-
-
+            setTrip(tripResponse.data);            
         }
 
         load();
 
     }, []);  
 
+    useEffect(() => {        
+        var booking = cartService.getCart().find(b => b.tripId == parseInt(tripId, 10));
+
+        if(booking){                                
+            setSelectedSeats(trip?.seats.filter(s => booking?.bookingSeats.some(b => b.carId == s.carId && b.seatId == s.seatId)) ?? [])
+        }
+    }, [trip]);
+
     const onSelection = (seats: Seat[]) => {        
         setSelectedSeats(seats);
     };
 
     function handleBookTrip(){
+
+        var booking = {
+            tripId: parseInt(tripId!),
+            bookingSeats: selectedSeats.map((s) => { return { carId: s.carId, seatId: s.seatId } })
+        };        
+
+        cartService.upsertToCart(booking);
 
         if(isLoggedIn){
             navigateTo("/checkout");
@@ -66,23 +82,23 @@ const TripDetail = () => {
   return (
     <div>
       
-    TRIP { trip?.tripId }
+        TRIP { trip?.tripId }
 
-    <div onClick={handleLogin}>Login</div>
+        <div onClick={handleLogin}>Login</div>
 
-    
+        
 
-    <div>
-        { trip?.route.startStation.name } to { trip?.route.endStation.name }
-    </div>
+        <div>
+            { trip?.route.startStation.name } to { trip?.route.endStation.name }
+        </div>
 
-    <div>Total Selected Seats: {selectedSeats.length}</div>
+        <div>Total Selected Seats: {selectedSeats.length}</div>
 
-    {selectedSeats.length > 0 ? <Mui.Button onClick={handleBookTrip}>Book Trip</Mui.Button> : null }
+        <div>
+            {trip?.seats ? <SeatPicker key="seat_picker" seats={trip!.seats} selectedSeats={selectedSeats} onSelection={onSelection}></SeatPicker> : null}
+        </div>
 
-    <div>
-        {trip?.seats ? <SeatPicker key="seat_picker" seats={trip!.seats} selectedSeats={selectedSeats} onSelection={onSelection}></SeatPicker> : null}
-    </div>
+        {selectedSeats.length > 0 ? <Mui.Button onClick={handleBookTrip}>Book Trip</Mui.Button> : null }
 
     </div>
   );
