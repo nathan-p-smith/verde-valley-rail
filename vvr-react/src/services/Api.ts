@@ -5,6 +5,7 @@ import { TripSearchResult } from '../types/TripSearchResult';
 import { Trip } from '../types/Trip';
 import { AuthenticateRequest } from '../types/AuthenticateRequest';
 import { Customer } from '../types/Customer';
+import { CustomerCreate } from '../types/CustomerCreate';
 
 const vvrApi = axios.create({
     baseURL: '/api'
@@ -39,9 +40,9 @@ var api = {
         return vvrApi.get<Customer>(`/Customers`);
     },
 
-    // createCustomer: async (customerCreate) => {
-    //     return vvrApi.post(`/Customers`, customerCreate);
-    // },
+    createCustomer: async (customerCreate: CustomerCreate) => {
+        return vvrApi.post(`/Customers`, customerCreate);
+    },
 
     // customerEmailExists: async(email) => {
     //     return vvrApi.get(`/Customers/EmailExists`, { params: { email: email } });
