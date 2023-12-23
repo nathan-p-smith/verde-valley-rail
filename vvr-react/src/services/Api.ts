@@ -3,6 +3,8 @@ import { StationOption } from '../types/StationOption';
 import { TripSearchFilter } from '../types/TripSearchFilter';
 import { TripSearchResult } from '../types/TripSearchResult';
 import { Trip } from '../types/Trip';
+import { AuthenticateRequest } from '../types/AuthenticateRequest';
+import { Customer } from '../types/Customer';
 
 const vvrApi = axios.create({
     baseURL: '/api'
@@ -21,9 +23,9 @@ vvrApi.interceptors.request.use((config) => {
 
 var api = {
 
-    // authenticate: async (authenticateRequest) => {
-    //     return vvrApi.post(`/Authentication`, authenticateRequest);
-    // },
+    authenticate: async (login:AuthenticateRequest) => {
+        return vvrApi.post(`/Authentication`, login);
+    },
 
     // getBooking: async (guid) => {
     //     return vvrApi.get(`/Bookings/${guid}`);
@@ -33,9 +35,9 @@ var api = {
     //     return vvrApi.post(`/Bookings`, bookingCreate);
     // },
 
-    // getCustomer: async () => {
-    //     return vvrApi.get(`/Customers`);
-    // },
+    getCustomer: async() => {
+        return vvrApi.get<Customer>(`/Customers`);
+    },
 
     // createCustomer: async (customerCreate) => {
     //     return vvrApi.post(`/Customers`, customerCreate);

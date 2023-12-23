@@ -1,8 +1,11 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { Customer } from '../types/Customer';
 
 // Define the shape of the context
 interface AuthContextProps {
   isLoggedIn: boolean;
+  customer: Customer | null;
+  setCustomer: (customer: Customer) => void;
   login: () => void;
   logout: () => void;
 }
@@ -17,6 +20,7 @@ interface AuthProviderProps {
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isLoggedIn, setLoggedIn] = useState(false);
+  const [customer, setCustomer] = useState<Customer | null>(null);
 
   const login = () => {
     // Perform authentication logic
@@ -32,6 +36,8 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const contextValue: AuthContextProps = {
     isLoggedIn,
+    customer,
+    setCustomer,
     login,
     logout,
   };

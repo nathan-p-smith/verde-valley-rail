@@ -3,6 +3,7 @@ import { useState, useContext, useEffect } from "react";
 import { Seat } from "../types/Seat";
 import "./SeatPicker.scss";
 
+
 type SeatPickerProps = {
     seats: Seat[],    
     selectedSeats:Seat[],      
@@ -154,7 +155,7 @@ const SeatPicker: React.FC<SeatPickerProps> = ({ seats, selectedSeats, onSelecti
     function handleSelectionCancel(){
         onSelection([]);
         setModalVisible(false);
-    }
+    }    
 
     return(
         <>

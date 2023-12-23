@@ -13,13 +13,16 @@ import { Trip } from '../types/Trip';
 import SeatPicker from '../components/SeatPicker';
 import { Seat } from '../types/Seat';
 import { useAuth } from '../context/AuthContext';
+import * as Mui from "@mui/material";
+import { useNavigate } from 'react-router-dom';
 
 const TripDetail = () => {
 
     const { tripId } = useParams();
     const [trip, setTrip] = useState<Trip | null>();
     const [selectedSeats, setSelectedSeats] = useState<Seat[]>([]);
-    const { login } = useAuth();
+    const { login, isLoggedIn } = useAuth();
+    const navigateTo = useNavigate();
 
 
     function handleLogin(){
@@ -48,6 +51,16 @@ const TripDetail = () => {
     const onSelection = (seats: Seat[]) => {        
         setSelectedSeats(seats);
     };
+
+    function handleBookTrip(){
+
+        if(isLoggedIn){
+            navigateTo("/checkout");
+            return;
+        }
+            
+        navigateTo(`/login?then=${encodeURIComponent("/checkout")}`);
+    }
     
 
   return (
@@ -57,11 +70,15 @@ const TripDetail = () => {
 
     <div onClick={handleLogin}>Login</div>
 
+    
+
     <div>
         { trip?.route.startStation.name } to { trip?.route.endStation.name }
     </div>
 
     <div>Total Selected Seats: {selectedSeats.length}</div>
+
+    {selectedSeats.length > 0 ? <Mui.Button onClick={handleBookTrip}>Book Trip</Mui.Button> : null }
 
     <div>
         {trip?.seats ? <SeatPicker key="seat_picker" seats={trip!.seats} selectedSeats={selectedSeats} onSelection={onSelection}></SeatPicker> : null}
