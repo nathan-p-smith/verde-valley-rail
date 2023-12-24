@@ -1,0 +1,26 @@
+.header {
+
+    &__top-bar{
+
+        $header-height: 80px;
+    
+        height: $header-height;
+        line-height: $header-height;
+    
+        //https://coolors.co/gradient-maker/82917a-243b19?position=0,100&opacity=100,100&type=linear&rotation=135        
+        background: hsla(99, 9%, 52%, 1);
+        background: linear-gradient(135deg, hsla(99, 9%, 52%, 1) 0%, hsla(101, 40%, 16%, 1) 100%);        
+        background: -moz-linear-gradient(135deg, hsla(99, 9%, 52%, 1) 0%, hsla(101, 40%, 16%, 1) 100%);        
+        background: -webkit-linear-gradient(135deg, hsla(99, 9%, 52%, 1) 0%, hsla(101, 40%, 16%, 1) 100%);        
+    }
+
+    &__logo{
+        float: left;
+    }
+
+    &__login-block{
+        float: right;
+    }
+
+}
+    

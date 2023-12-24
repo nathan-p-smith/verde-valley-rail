@@ -35,32 +35,29 @@ function App() {
   
   return (
     
-      <>
-        <div>Logged In: {isLoggedIn ? "Logged In" : "Anonymous"}</div>
-        <div>{customer ? `Hello ${customer.firstName}` : null}</div>
-        <Router>
-          <nav>
-            <ul>
-              <li>
-                <Link to="/find-trip">Find Trip</Link>
-              </li>
-              <li>
-                <Link to="/choose-seats">Choose Seats</Link>
-              </li>
-              <li>
-                
-              </li>
-            </ul>
-          </nav>
-          <Routes>
-            <Route path="/find-trip" element={<FindTrip />} />
-            <Route path="/trip-detail/:tripId" element={<TripDetail />} />
-            <Route path="/choose-seats" element={<ChooseSeats />} />
-            <Route path="/login" element={<Login/>} />
-            <Route path="/checkout" element={<Checkout/>} />
-          </Routes>
-        </Router>
-      </>
+      <div className="layout">
+        <div className="header">
+          <div className='header__top-bar'>
+            <div className='container'>
+              <div className='header__logo'>LOGO</div>
+              <div className='header__login-block'>
+                <div>{customer ? `Hello ${customer.firstName}` : null}</div>
+              </div>
+            </div>
+          </div>          
+        </div>
+        <div className='container'>
+          <Router>
+            <Routes>
+              <Route path="/find-trip" element={<FindTrip />} />
+              <Route path="/trip-detail/:tripId" element={<TripDetail />} />
+              <Route path="/choose-seats" element={<ChooseSeats />} />
+              <Route path="/login" element={<Login/>} />
+              <Route path="/checkout" element={<Checkout/>} />
+            </Routes>
+          </Router>
+        </div>
+      </div>
     
   )
 }
