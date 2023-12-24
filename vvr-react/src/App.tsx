@@ -3,7 +3,7 @@ import './App.css'
 import SampleTable from './components/SampleTable';
 import * as Mui from '@mui/material';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import FindTrip from './pages/FindTrip';
+import FindTrip from './pages/FindTrip/FindTrip';
 import TripDetail from './pages/TripDetail';
 import ChooseSeats from './pages/ChooseSeats';
 import Login from './pages/Login';

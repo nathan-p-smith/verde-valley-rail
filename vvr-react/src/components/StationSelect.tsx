@@ -3,14 +3,17 @@ import * as Mui from '@mui/material';
 import api from '../services/Api';
 import { StationOption } from '../types/StationOption';
 
-type StationSelectProps = {
-    onChange: Function | null;
+type StationSelectProps = {    
     value: number | null;
     name: string | undefined;
+    label: string | undefined;
+    onChange: Function | null;
 }
 
-const StationSelect: React.FC<StationSelectProps> = ({ value, name, onChange }) => {
+const StationSelect: React.FC<StationSelectProps> = ({ value, name, label, onChange }) => {
   // Your array of objects
+
+    label = label ?? "Select an option";
 
     const [options, setOptions] = useState<StationOption[]>([]);
 
@@ -36,16 +39,18 @@ const StationSelect: React.FC<StationSelectProps> = ({ value, name, onChange }) 
         onChange(event);
   };
 
+  
+
   return (
     <Mui.FormControl fullWidth>
-      <Mui.InputLabel id="select-label">Select an option</Mui.InputLabel>
+      <Mui.InputLabel id="select-label">{ label }</Mui.InputLabel>
       <Mui.Select
         labelId="select-label"
         id="select"
-        value={selectedValue}
-        label="Select an option"
+        value={selectedValue}       
+        label={ label }
         name={name}
-        onChange={handleChange}
+        onChange={handleChange}        
       >
         {options.map((option) => (
           <Mui.MenuItem key={option.stationId} value={option.stationId}>
