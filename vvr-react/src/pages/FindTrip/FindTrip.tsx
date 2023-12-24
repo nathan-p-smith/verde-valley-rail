@@ -24,7 +24,7 @@ const FindTrip = () => {
     });
 
     async function searchTrips(){
-      var tripResults = (await api.searchTrips(tripSearchFilter)).data;
+      var tripResults = await api.searchTrips(tripSearchFilter);      
       setTrips(tripResults);
     }
 
@@ -54,7 +54,7 @@ const FindTrip = () => {
       
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         
-      <Mui.Stack className='search-controls' direction="row" spacing={2}>
+      <Mui.Stack className='search-controls' sx={{mb: 3}} direction="row" spacing={2}>
         <DatePicker 
           label="Depart On"
           className='search-controls__date-picker'
@@ -67,9 +67,10 @@ const FindTrip = () => {
 
 
 
-        
+      { trips.length > 0 ? <TripGrid trips={trips} /> 
+        : <div>We're sorry, there are no trips for your criteria.</div> }
 
-        <TripGrid trips={trips} />        
+        
 
 
     </LocalizationProvider>

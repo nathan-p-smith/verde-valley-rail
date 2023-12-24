@@ -6,6 +6,7 @@ import { Trip } from '../types/Trip';
 import { AuthenticateRequest } from '../types/AuthenticateRequest';
 import { Customer } from '../types/Customer';
 import { CustomerCreate } from '../types/CustomerCreate';
+import { format, parseISO } from 'date-fns';
 
 const vvrApi = axios.create({
     baseURL: '/api'
@@ -64,8 +65,10 @@ var api = {
         return vvrApi.get<Trip>(`/Trips/${id}`);
     },
 
-    searchTrips: async (filter: TripSearchFilter) => {
-        return vvrApi.get<TripSearchResult[]>(`/Trips/Search`, { params: filter });
+    searchTrips: async (filter: TripSearchFilter):Promise<TripSearchResult[]> => {
+        
+        var results = (await vvrApi.get(`/Trips/Search`, { params: filter })).data;
+        return results.map((r:any):TripSearchResult[] => ({ ...r, departure: parseISO(r.departure) }));
     }
 
 }
