@@ -10,6 +10,8 @@ import Login from './pages/Login';
 import Checkout from './pages/Checkout';
 import { useAuth } from './context/AuthContext';
 import api from "./services/Api";
+import LoginButton from './components/LoginButton';
+import UserBlock from './components/UserBlock';
 
 
 function App() {
@@ -23,31 +25,38 @@ function App() {
     if(!jwt)
       return;
 
+    onLogin(jwt);
+
+  }, []);
+
+  const onLogin = (jwt:string) => {
+    
+    localStorage.setItem("vv-customer-jwt", jwt);
+
     login();
 
     api.getCustomer().then(resp => {
       setCustomer(resp.data);
     });
-
-  }, []);
+  }
 
   
   
   return (
-    
+      <Router>
       <div className="layout">
         <div className="header">
           <div className='header__top-bar'>
             <div className='container'>
               <div className='header__logo'>LOGO</div>
               <div className='header__login-block'>
-                <div>{customer ? `Hello ${customer.firstName}` : null}</div>
+                <UserBlock></UserBlock>                
               </div>
             </div>
           </div>          
         </div>
         <div className='container'>
-          <Router>
+          
             <Routes>
               <Route path="/find-trip" element={<FindTrip />} />
               <Route path="/trip-detail/:tripId" element={<TripDetail />} />
@@ -55,9 +64,10 @@ function App() {
               <Route path="/login" element={<Login/>} />
               <Route path="/checkout" element={<Checkout/>} />
             </Routes>
-          </Router>
+          
         </div>
       </div>
+      </Router>
     
   )
 }
