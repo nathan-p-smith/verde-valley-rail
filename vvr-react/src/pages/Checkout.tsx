@@ -3,10 +3,13 @@ import shoppingCartService from "../services/ShoppingCartService";
 import { Booking } from "../types/Booking";
 import CheckoutBooking from "../components/CheckoutBooking";
 import { Grid, Paper, Typography } from '@mui/material';
+import CheckoutForm from "../components/CheckoutForm";
+import { useAuth } from "../context/AuthContext";
 
 const Checkout = () => {
 
     const [bookings, setBookings] = useState<Booking[]>([]);
+    const { customer } = useAuth();
 
     useEffect(() => {
 
@@ -45,10 +48,10 @@ const Checkout = () => {
       <Grid item xs={6}>
         <Paper style={{ padding: 20 }}>
           <Typography variant="h5">My Info</Typography>
-          <Typography>
-            Sed cursus, elit a dapibus hendrerit, dui risus imperdiet metus, in consectetur augue
-            elit quis arcu.
-          </Typography>
+          
+
+          {customer ? <CheckoutForm customer={customer}></CheckoutForm> : null }
+
         </Paper>
       </Grid>
     </Grid>
