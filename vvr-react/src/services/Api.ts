@@ -61,8 +61,8 @@ var api = {
         return vvrApi.get<StationOption[]>(`/Stations/Options`);
     },
 
-    getTrip: async (id: number) => {
-        return vvrApi.get<Trip>(`/Trips/${id}`);
+    getTrip: async (id: number, includeSeates?: boolean) => {
+        return vvrApi.get<Trip>(`/Trips/${id}`, { params: { includeSeates } });
     },
 
     searchTrips: async (filter: TripSearchFilter):Promise<TripSearchResult[]> => {

@@ -16,9 +16,9 @@ namespace VerdeValleyRail.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult GetTrip(int id)
+        public ActionResult GetTrip(int id, bool includeSeats = true)
         {
-            var trip = _tripService.GetTrip(id, withSeats: true);
+            var trip = _tripService.GetTrip(id, withSeats: includeSeats);
 
             return Ok(trip);
         }

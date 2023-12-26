@@ -4,11 +4,14 @@ import * as Mui from "@mui/material";
 import LoginForm from "../components/LoginForm";
 import RegistrationForm from '../components/RegistrationForm';
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 
 const Login = () => {
 
     const { setCustomer } = useAuth();
+
+    const navigateTo = useNavigate();
 
     const setCustomerState = async (jwt:string) => {
         console.log(jwt);
@@ -17,6 +20,8 @@ const Login = () => {
 
         var customer = (await api.getCustomer()).data;
         setCustomer(customer);
+        navigateTo('/checkout');
+        
     };
 
     return (
