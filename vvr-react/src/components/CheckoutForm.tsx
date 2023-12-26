@@ -4,7 +4,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { TextField, Grid, Button } from '@mui/material';
 import { Customer } from '../types/Customer';
-import CreditCardNumberMask from './CreditCardNumberMask';
+//import CreditCardNumberMask from './CreditCardNumberMask';
+import InputMask from "react-input-mask";
+import MonthYearPicker from './MonthYearPicker';
 
 
 type CheckoutFormProps = {
@@ -15,9 +17,10 @@ const schema = z.object({
   firstName: z.string().nonempty({ message: 'First Name is required' }),
   lastName: z.string().nonempty({ message: 'Last Name is required' }),
   email: z.string().email({ message: 'Invalid email address' }),
-  creditCardNumber: z.string().refine((value) => value.length === 19, {
+  creditCardNumber: z.string().refine((value) => value.length != 25, {
     message: 'Invalid credit card number',
   }),
+  expirationDate: z.date()
 });
 
 const CheckoutForm : React.FC<CheckoutFormProps> = ({ customer }) => {
@@ -35,6 +38,8 @@ const CheckoutForm : React.FC<CheckoutFormProps> = ({ customer }) => {
     // Handle form submission
     console.log(data);
   };
+
+
 
   return (
     
@@ -86,8 +91,46 @@ const CheckoutForm : React.FC<CheckoutFormProps> = ({ customer }) => {
           />
         </Grid>
         <Grid item xs={12}>
-          
-          Credit card here
+        
+            <Controller
+            name="creditCardNumber"
+            control={control}
+            defaultValue=""
+            rules={{ required: 'Phone number is required' }}
+            render={({ field }) => (
+                <InputMask
+                mask="9999 - 9999 - 9999 - 9999"
+                maskChar="_"
+                value={field.value}
+                onChange={(e) => field.onChange(e.target.value)}
+                >
+                {(inputProps) => (
+                    <TextField
+                    {...inputProps}
+                    label="Credit Card"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    error={Boolean(formState.errors.creditCardNumber)}
+                    helperText={formState.errors.creditCardNumber?.message}
+                    />
+                )}
+                </InputMask>
+            )}
+            />
+
+
+
+
+        </Grid>
+        <Grid item xs={12}>
+            <MonthYearPicker
+            
+            value={new Date()} // Initial value, you can set it to a default or leave it empty
+            onChange={(date) => console.log(date)}
+            />
+
+            
         </Grid>
         <Grid item xs={12}>
           <Button type="submit" variant="contained" color="primary">
