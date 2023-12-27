@@ -3,7 +3,7 @@ import shoppingCartService from "../services/ShoppingCartService";
 import { Booking } from "../types/Booking";
 import CheckoutBooking from "../components/CheckoutBooking";
 import { Grid, Paper, Typography } from '@mui/material';
-import CheckoutForm from "../components/CheckoutForm";
+import CheckoutForm, { CheckoutFormProps } from "../components/CheckoutForm";
 import { useAuth } from "../context/AuthContext";
 
 const Checkout = () => {
@@ -24,6 +24,10 @@ const Checkout = () => {
         var newBookings = shoppingCartService.removeFromCart(booking.tripId);
         setBookings(newBookings);
     };
+
+    const handleSubmit = (formData:CheckoutFormProps) => {
+      console.log("form data", formData);
+    }
 
     return (
 
@@ -50,7 +54,7 @@ const Checkout = () => {
           <Typography variant="h5">My Info</Typography>
           
 
-          {customer ? <CheckoutForm customer={customer}></CheckoutForm> : null }
+          {customer ? <CheckoutForm customer={customer} onSubmit={handleSubmit}></CheckoutForm> : null }
 
         </Paper>
       </Grid>

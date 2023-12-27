@@ -1,8 +1,8 @@
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { TextField, MenuItem, Grid, Select, InputLabel, FormControl } from '@mui/material';
-import { z, string, object, number } from 'zod';
+import { TextField, MenuItem, Grid, Select, InputLabel, FormControl, Button } from '@mui/material';
+import { z, string, object, number, ZodError } from 'zod';
 import InputMask from 'react-input-mask';
 import NumericInput from './NumericInput';
 
@@ -10,9 +10,31 @@ const schema = object({
     firstName: z.string().min(1, { message: "First Name is required."}),
     lastName: z.string().min(1, { message: "Last Name is required."}),
     email: z.string().min(1, {message: 'Email is required'}).email({message: 'You must enter a valid email'}),
-    creditCard: z.string().min(1, {message: 'Credit Card is required.'}),
-    cardExpirationDate: z.string().min(1, {message: 'Expiration Date is required.'}),
-    cardCvc: z.string().min(1, { message: 'CVC is required.'})
+    creditCard: z.string().min(1, {message: 'Credit Card is required.'}),    
+    cardExpirationDate: z.string().min(7, {message: 'Expiration Date is required.'}).refine((exp) => {
+        
+        if(exp.replace(/[^0-9]/g, '').length != 4)
+            return true; //Don't evaluate if input isn't complete.
+
+        try
+        {
+            var date = parseMonthYearDate(exp);
+            console.log(date);
+
+            if(date <= new Date())
+                return false;            
+        }
+        catch(e)
+        {
+            return false;
+        }
+
+        return true;        
+
+    }, {
+        message: "Expiration date must be a valid future date."
+    }),
+    cardCvc: z.string().min(3, { message: 'CVC is required.'})
   });
   
 type CheckoutFormSchema = z.infer<typeof schema>;
@@ -28,7 +50,28 @@ const initialValues = {
 
 const creditCardMask = '9999-9999-9999-9999';
 
-const CheckoutForm = () => {
+const parseMonthYearDate = (input: string) => {
+
+    input = input.replace(/\s/g, '');
+
+    var parts = input.split("/");
+    var month = parseInt(parts[0]);
+
+    if(month < 1 || month > 12){        
+        throw "Invalid month value."
+    }
+
+    var year = parseInt(`20${parts[1]}`);
+    console.log(year); 
+
+    return new Date(year, month - 1, 1)
+};
+
+export type CheckoutFormProps = {
+    onSubmit: (formData:CheckoutFormSchema) => void;
+}
+
+const CheckoutForm : React.FC<CheckoutFormProps> = ({ onSubmit }) => {
   const {
     register,
     handleSubmit,
@@ -40,12 +83,12 @@ const CheckoutForm = () => {
     defaultValues: initialValues,
   });
 
-  const onSubmit = (data: CheckoutFormSchema) => {
-    console.log(data);
-  };
-
+  const handleFormSubmit = (formData:CheckoutFormSchema) => {
+    onSubmit(formData);
+  }
+  
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(handleFormSubmit)}>
       <Grid container spacing={2}>
         <Grid item xs={6}>
           <Controller
@@ -120,7 +163,7 @@ const CheckoutForm = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <button type="submit">Submit</button>
+          <Button type="submit" color="primary">Submit</Button>
         </Grid>                
       </Grid>
     </form>
