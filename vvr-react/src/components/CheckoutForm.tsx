@@ -1,62 +1,54 @@
 import React from 'react';
-import { useForm, Controller, FormProvider } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { TextField, Grid, Button } from '@mui/material';
-import { Customer } from '../types/Customer';
-//import CreditCardNumberMask from './CreditCardNumberMask';
-import InputMask from "react-input-mask";
-import MonthYearPicker from './MonthYearPicker';
+import { TextField, MenuItem, Grid, Select, InputLabel, FormControl } from '@mui/material';
+import { z, string, object, number } from 'zod';
+import InputMask from 'react-input-mask';
+
+const schema = object({
+    firstName: z.string().min(1, { message: "First Name is required."}),
+    lastName: z.string().min(1, { message: "Last Name is required."}),
+    email: z.string().min(1, {message: 'Email is required'}).email({message: 'You must enter a valid email'})
+  });
+  
+type CheckoutFormSchema = z.infer<typeof schema>;
+
+const initialValues = {
+  firstName: 'John',
+  lastName: 'Doe',
+  email: 'asdf@asdf.com'
+};
 
 
-type CheckoutFormProps = {
-    customer: Customer;    
-}
 
-const schema = z.object({
-  firstName: z.string().nonempty({ message: 'First Name is required' }),
-  lastName: z.string().nonempty({ message: 'Last Name is required' }),
-  email: z.string().email({ message: 'Invalid email address' }),
-  creditCardNumber: z.string().refine((value) => value.length != 25, {
-    message: 'Invalid credit card number',
-  }),
-  expirationDate: z.date()
-});
-
-const CheckoutForm : React.FC<CheckoutFormProps> = ({ customer }) => {
-  const { handleSubmit, control, formState } = useForm({
+const CheckoutForm = () => {
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({
+    mode: 'all',    
     resolver: zodResolver(schema),
-    defaultValues: {
-        firstName: customer.firstName,
-        lastName: customer.lastName,
-        email: customer.email,
-        creditCardNumber: ""
-    }
+    defaultValues: initialValues,
   });
 
-  const onSubmit = (data:any) => {
-    // Handle form submission
+  const onSubmit = (data: CheckoutFormSchema) => {
     console.log(data);
   };
 
-
-
   return (
-    
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Grid container spacing={3}>
+      <Grid container spacing={2}>
         <Grid item xs={6}>
           <Controller
             name="firstName"
             control={control}
-            render={({ field }) => (
-              <TextField
-                label="First Name"                
-                {...field}
-                fullWidth
-                error={!!formState.errors?.firstName}
-                helperText={formState.errors?.firstName?.message}
-              />
+            defaultValue={initialValues.firstName}
+            render={({ field }) => (                
+              <div>
+              <TextField {...field} label="First Name" fullWidth error={!!errors.firstName} helperText={errors.firstName?.message} />              
+              </div>
             )}
           />
         </Grid>
@@ -64,14 +56,11 @@ const CheckoutForm : React.FC<CheckoutFormProps> = ({ customer }) => {
           <Controller
             name="lastName"
             control={control}
-            render={({ field }) => (
-              <TextField
-                label="Last Name"
-                {...field}
-                fullWidth
-                error={!!formState.errors?.lastName}
-                helperText={formState.errors?.lastName?.message}
-              />
+            defaultValue={initialValues.lastName}
+            render={({ field }) => (                
+              <div>
+              <TextField {...field} label="Last Name" fullWidth error={!!errors.lastName} helperText={errors.lastName?.message} />              
+              </div>
             )}
           />
         </Grid>
@@ -79,67 +68,17 @@ const CheckoutForm : React.FC<CheckoutFormProps> = ({ customer }) => {
           <Controller
             name="email"
             control={control}
+            defaultValue={initialValues.email}
             render={({ field }) => (
-              <TextField
-                label="Email"
-                {...field}
-                fullWidth
-                error={!!formState.errors?.email}
-                helperText={formState.errors?.email?.message}
-              />
+              <TextField {...field} label="Email" fullWidth error={!!errors.email} helperText={errors.email?.message} />
             )}
           />
         </Grid>
         <Grid item xs={12}>
-        
-            <Controller
-            name="creditCardNumber"
-            control={control}
-            defaultValue=""
-            rules={{ required: 'Phone number is required' }}
-            render={({ field }) => (
-                <InputMask
-                mask="9999 - 9999 - 9999 - 9999"
-                maskChar="_"
-                value={field.value}
-                onChange={(e) => field.onChange(e.target.value)}
-                >
-                {(inputProps) => (
-                    <TextField
-                    {...inputProps}
-                    label="Credit Card"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    error={Boolean(formState.errors.creditCardNumber)}
-                    helperText={formState.errors.creditCardNumber?.message}
-                    />
-                )}
-                </InputMask>
-            )}
-            />
-
-
-
-
-        </Grid>
-        <Grid item xs={12}>
-            <MonthYearPicker
-            
-            value={new Date()} // Initial value, you can set it to a default or leave it empty
-            onChange={(date) => console.log(date)}
-            />
-
-            
-        </Grid>
-        <Grid item xs={12}>
-          <Button type="submit" variant="contained" color="primary">
-            Submit
-          </Button>
-        </Grid>
+          <button type="submit">Submit</button>
+        </Grid>                
       </Grid>
     </form>
-    
   );
 };
 
