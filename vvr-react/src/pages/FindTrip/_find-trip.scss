@@ -1,12 +1,8 @@
 .find-trip {
-
-    .search-controls {
-
-        &__date-picker {
-
-            min-width: 200px;
-        }
-
+  .search-controls {
+    &__date-picker {
+      min-width: 200px;
+      width: 100%;
     }
-
+  }
 }

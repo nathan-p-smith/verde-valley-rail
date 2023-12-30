@@ -8,8 +8,8 @@ import { TripGrid } from "../../components/TripGird";
 import { TripSearchResult } from "../../types/TripSearchResult";
 import { TripSearchFilter } from "../../types/TripSearchFilter";
 import StationSelect from "../../components/StationSelect";
-import * as Mui from "@mui/material";
 import "./_find-trip.scss";
+import { Grid, Stack, Typography } from "@mui/material";
 
 const FindTrip = () => {
   const [firstRun, setFirstRun] = useState<Boolean>(true);
@@ -44,41 +44,42 @@ const FindTrip = () => {
 
   return (
     <div className="find-trip">
-      <Mui.Typography variant="h1" className="page-header">
+      <Typography variant="h1" className="page-header">
         Find Trip Page
-      </Mui.Typography>
+      </Typography>
 
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <Mui.Stack
-          className="search-controls"
-          sx={{ mb: 3 }}
-          direction="row"
-          spacing={2}
-        >
-          <DatePicker
-            label="Depart On"
-            className="search-controls__date-picker"
-            value={tripSearchFilter.departure}
-            onChange={(departure) => {
-              setTripSearchFilter({
-                ...tripSearchFilter,
-                departure: departure,
-              });
-            }}
-          />
-          <StationSelect
-            name="startStationId"
-            value={tripSearchFilter.startStationId}
-            label="Starting Point"
-            onChange={onStationSelectChange}
-          />
-          <StationSelect
-            name="endStationId"
-            value={tripSearchFilter.endStationId}
-            label="Destination"
-            onChange={onStationSelectChange}
-          />
-        </Mui.Stack>
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={4}>
+            <DatePicker
+              label="Depart On"
+              className="search-controls__date-picker"
+              value={tripSearchFilter.departure}
+              onChange={(departure) => {
+                setTripSearchFilter({
+                  ...tripSearchFilter,
+                  departure: departure,
+                });
+              }}
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <StationSelect
+              name="startStationId"
+              value={tripSearchFilter.startStationId}
+              label="Starting Point"
+              onChange={onStationSelectChange}
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <StationSelect
+              name="endStationId"
+              value={tripSearchFilter.endStationId}
+              label="Destination"
+              onChange={onStationSelectChange}
+            />
+          </Grid>
+        </Grid>
 
         {trips.length > 0 ? (
           <TripGrid trips={trips} />
