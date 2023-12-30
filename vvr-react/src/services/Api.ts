@@ -7,6 +7,9 @@ import { AuthenticateRequest } from '../types/AuthenticateRequest';
 import { Customer } from '../types/Customer';
 import { CustomerCreate } from '../types/CustomerCreate';
 import { format, parseISO } from 'date-fns';
+import { BookingCreate } from '../types/BookingCreate';
+import { Invoice } from '../types/Invoice';
+import { Booking } from '../types/Booking';
 
 const vvrApi = axios.create({
     baseURL: '/api'
@@ -33,6 +36,10 @@ var api = {
     //     return vvrApi.get(`/Bookings/${guid}`);
     // },
 
+    getCustomerBookings: async () => {
+        return vvrApi.get<Booking[]>(`/Bookings/CustomerBookings`);
+    },
+
     // createBooking: async (bookingCreate) => {
     //     return vvrApi.post(`/Bookings`, bookingCreate);
     // },
@@ -49,13 +56,13 @@ var api = {
     //     return vvrApi.get(`/Customers/EmailExists`, { params: { email: email } });
     // },
 
-    // previewInvoice: async(bookingCreates) => {
-    //     return vvrApi.post(`Invoice/Preview`, bookingCreates);
-    // },
+    previewInvoice: async(bookingCreates: BookingCreate[]) => {
+        return vvrApi.post<Invoice>(`Invoice/Preview`, bookingCreates);
+    },
 
-    // payInvoice: async(invoice) => {
-    //     return vvrApi.post(`Invoice/Pay`, invoice);
-    // },
+    payInvoice: async(invoice: Invoice) => {
+        return vvrApi.post<Invoice>(`Invoice/Pay`, invoice);
+    },
 
     listStationOptions: async() => {
         return vvrApi.get<StationOption[]>(`/Stations/Options`);

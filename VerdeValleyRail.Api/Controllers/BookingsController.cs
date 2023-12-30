@@ -8,7 +8,7 @@ namespace VerdeValleyRail.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BookingsController : ControllerBase
+    public class BookingsController : AuthorizedControllerBase
     {
         IBookingService _bookingService;
 
@@ -25,6 +25,19 @@ namespace VerdeValleyRail.Api.Controllers
             return Ok(booking);
         }
 
+        [HttpGet("CustomerBookings")]
+        public ActionResult GetCustomerBookings()
+        {
+            int? customerId = base.GetCustomerId();
+
+            if (customerId == null)
+                return BadRequest();
+
+            var bookings = _bookingService.GetCustomerBookings((int)customerId);
+
+            return Ok(bookings);
+        }
+
         [HttpPost]
         [Authorize]
         public ActionResult CreateBooking([FromBody] BookingCreate bookingCreate)
@@ -37,6 +50,5 @@ namespace VerdeValleyRail.Api.Controllers
 
             return Ok(booking);
         }
-
     }
 }

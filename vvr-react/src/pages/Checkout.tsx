@@ -5,34 +5,51 @@ import CheckoutBooking from "../components/CheckoutBooking";
 import { Grid, Paper, Typography } from '@mui/material';
 import CheckoutForm, { CheckoutFormProps } from "../components/CheckoutForm";
 import { useAuth } from "../context/AuthContext";
+import { Invoice } from "../types/Invoice";
+import api from "../services/Api";
+import { InvoiceItem } from "../types/InvoiceItem";
+import InvoiceItemDisplay from "../components/InvoiceItemDisplay";
+import { BookingCreate } from "../types/BookingCreate";
+import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
 
-    const [bookings, setBookings] = useState<Booking[]>([]);
+    const [invoice, setInvoice] = useState<Invoice>();
     const { customer } = useAuth();
+    const navigateTo = useNavigate();
+
+    const loadInvoice = async () => {
+
+      var cartBookings = shoppingCartService.getCart();
+      var invoiceResponse = await api.previewInvoice(cartBookings);
+
+      setInvoice(invoiceResponse.data);      
+    };
 
     useEffect(() => {
 
-        var cartBookings = shoppingCartService.getCart();
-        setBookings(cartBookings);
-
-        console.log(cartBookings);
+        loadInvoice();
 
     }, []);
 
-    const handleDelete = (booking: Booking) => {
-        var newBookings = shoppingCartService.removeFromCart(booking.tripId);
-        setBookings(newBookings);
+    const handleDelete = (booking: BookingCreate) => {
+        shoppingCartService.removeFromCart(booking.tripId);
+        loadInvoice();
     };
 
-    const handleSubmit = (formData:CheckoutFormProps) => {
+    const handleSubmit = async (formData:CheckoutFormProps) => {
       console.log("form data", formData);
+
+      await api.payInvoice(invoice!);
+      shoppingCartService.emptyCart();
+
+      navigateTo(`/bookings`);
     }
 
     return (
 
         <div>
-            {bookings.length == 0 ? <div>There are no items in your cart!</div> : null }
+            {invoice?.items?.length == 0 ? <div>There are no items in your cart!</div> : null }
 
             
 
@@ -43,7 +60,7 @@ const Checkout = () => {
         <Paper style={{ padding: 20 }}>
           <Typography variant="h5">Cart</Typography>
           {
-                bookings.map(b => (<CheckoutBooking booking={b} onDelete={handleDelete}></CheckoutBooking>))
+                invoice?.items?.map(i => (<InvoiceItemDisplay item={i} onDelete={handleDelete}></InvoiceItemDisplay>))
         } 
         </Paper>
       </Grid>

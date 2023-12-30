@@ -12,7 +12,7 @@ import { useAuth } from './context/AuthContext';
 import api from "./services/Api";
 import LoginButton from './components/LoginButton';
 import UserBlock from './components/UserBlock';
-
+import Bookings from './pages/Bookings';
 
 function App() {
 
@@ -63,6 +63,7 @@ function App() {
               <Route path="/choose-seats" element={<ChooseSeats />} />
               <Route path="/login" element={<Login/>} />
               <Route path="/checkout" element={<Checkout/>} />
+              <Route path="/bookings" element={<Bookings/>} />
             </Routes>
           
         </div>

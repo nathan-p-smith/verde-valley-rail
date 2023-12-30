@@ -1,14 +1,15 @@
 import { Booking } from "../types/Booking";
+import { BookingCreate } from "../types/BookingCreate";
 
 const LOCAL_STOARGE_NAME = 'vv-cart';
 
 var shoppingCartService = {
 
-    getCart: function(): Booking[]{
+    getCart: function(): BookingCreate[]{
 
         var cartData = localStorage.getItem(LOCAL_STOARGE_NAME);
 
-        let cart: Booking[] = [];        
+        let cart: BookingCreate[] = [];        
 
         if(!cartData){
             
@@ -20,7 +21,7 @@ var shoppingCartService = {
         return JSON.parse(cartData);
     },
 
-    upsertToCart: function(booking : Booking){
+    upsertToCart: function(booking : BookingCreate){
 
         var cart = this.getCart();
 
@@ -37,7 +38,7 @@ var shoppingCartService = {
 
     },
 
-    removeFromCart: function(tripId : number): Booking[]{
+    removeFromCart: function(tripId : number): BookingCreate[]{
 
         var cart = this.getCart();
 
@@ -50,7 +51,7 @@ var shoppingCartService = {
         return cart;
     },
 
-    saveCart: function(cart : Booking[]){
+    saveCart: function(cart : BookingCreate[]){
 
         localStorage.setItem(LOCAL_STOARGE_NAME, JSON.stringify(cart));
 

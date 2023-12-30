@@ -15,6 +15,7 @@ namespace VerdeValleyRail.Business.Services
     public interface IBookingService
     {
         R.Booking GetBooking(string bookingGuid);
+        IEnumerable<R.Booking> GetCustomerBookings(int customerId);
         R.Booking GetBooking(int bookingId);
         R.Booking CreateBooking(BookingCreate bookingCreate);
     }
@@ -46,6 +47,20 @@ namespace VerdeValleyRail.Business.Services
                 return null;
 
             return GetBooking((int)bookingId);
+        }
+
+        public IEnumerable<R.Booking> GetCustomerBookings(int customerId)
+        {
+            var bookingIds = _db.Bookings.Where(b => b.CustomerId == customerId).Select(b => b.BookingId).ToList();
+
+            var bookings = new List<R.Booking>();
+
+            foreach(int bookingId in bookingIds)
+            {
+                bookings.Add(GetBooking(bookingId));
+            }
+
+            return bookings;
         }
 
         public R.Booking CreateBooking(BookingCreate bookingCreate)

@@ -94,7 +94,7 @@ export default function UserMenu() {
         <MenuItem onClick={handleClose}>
           <Avatar /> Profile
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={() => navigateTo("/bookings")}>
           <Avatar /> My Trips
         </MenuItem>
         <Divider /> 
