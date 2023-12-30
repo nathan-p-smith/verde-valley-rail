@@ -60,7 +60,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   } = useForm({
     mode: "all",
     resolver: zodResolver(schema),
-    shouldUnregister: false,
   });
 
   const handleRegistration = async (formData: RegistrationFormSchema) => {
