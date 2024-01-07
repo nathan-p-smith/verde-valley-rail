@@ -2,8 +2,9 @@ import LoginButton from "./LoginButton";
 import { useAuth } from "../context/AuthContext";
 import { useEffect } from "react";
 import api from "../services/Api";
-import * as Mui from "@mui/material";
 import UserMenu from "./UserMenu";
+import { Box } from "@mui/material";
+import RegistrationButton from "./RegistrationButton";
 
 const UserBlock = () => {
   const { setCustomer, customer } = useAuth();
@@ -24,7 +25,18 @@ const UserBlock = () => {
     });
   };
 
-  return <>{customer ? <UserMenu /> : <LoginButton onLogin={onLogin} />}</>;
+  return (
+    <>
+      {customer ? (
+        <UserMenu />
+      ) : (
+        <Box>
+          <RegistrationButton onRegistration={onLogin}></RegistrationButton>
+          | <LoginButton onLogin={onLogin} />
+        </Box>
+      )}
+    </>
+  );
 };
 
 export default UserBlock;
