@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { AuthenticateRequest } from "../customTypes/AuthenticateRequest";
-import api from "../services/Api";
+import { AuthenticateRequest } from "@/customTypes/AuthenticateRequest";
+import api from "@/services/Api";
 import { z, string, object, number, ZodError, ZodString } from "zod";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
-import ErrorMessage from "../components/ErrorMessage";
+import ErrorMessage from "@/components/ErrorMessage";
 
 type LoginFormProps = {
   onLogin: (jwt: string) => void;

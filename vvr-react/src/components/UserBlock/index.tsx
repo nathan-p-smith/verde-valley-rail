@@ -1,10 +1,10 @@
-import LoginButton from "../LoginButton";
-import { useAuth } from "../../context/AuthContext";
-import { useEffect } from "react";
-import api from "../../services/Api";
-import UserMenu from "./UserMenu";
+import LoginButton from "@/components/LoginButton";
+import RegistrationButton from "@/components/RegistrationButton";
+import { useAuth } from "@/context/AuthContext";
+import api from "@/services/Api";
 import { Box, Button } from "@mui/material";
-import RegistrationButton from "../RegistrationButton";
+import { useEffect } from "react";
+import UserMenu from "./UserMenu";
 import "./_user-block.scss";
 
 const UserBlock = () => {
