@@ -1,5 +1,5 @@
-import { CustomerCreate } from "../types/CustomerCreate";
-import { useState } from "react";
+import { CustomerCreate } from "../customTypes/CustomerCreate";
+import { ReactNode, useState } from "react";
 import api from "../services/Api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z, string, object, number, ZodError, ZodString } from "zod";
@@ -184,7 +184,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           />
         </Grid>
         <Grid item xs={12}>
-          <Button type="submit" color="primary">
+          <Button fullWidth="xs" variant="contained" type="submit">
             Submit
           </Button>
         </Grid>

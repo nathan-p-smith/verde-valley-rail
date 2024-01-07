@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import shoppingCartService from "../services/ShoppingCartService";
-import { Booking } from "../types/Booking";
+import { Booking } from "../customTypes/Booking";
 import CheckoutBooking from "../components/CheckoutBooking";
 import { Grid, Paper, Typography } from "@mui/material";
 import CheckoutForm, { CheckoutFormProps } from "../components/CheckoutForm";
 import { useAuth } from "../context/AuthContext";
-import { Invoice } from "../types/Invoice";
+import { Invoice } from "../customTypes/Invoice";
 import api from "../services/Api";
-import { InvoiceItem } from "../types/InvoiceItem";
+import { InvoiceItem } from "../customTypes/InvoiceItem";
 import InvoiceItemDisplay from "../components/InvoiceItemDisplay/InvoiceItemDisplay";
-import { BookingCreate } from "../types/BookingCreate";
+import { BookingCreate } from "../customTypes/BookingCreate";
 import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {

@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import { Seat } from "../types/Seat";
+import { Seat } from "../customTypes/Seat";
 import "./SeatPicker.scss";
 import {
   Button,

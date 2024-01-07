@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { Booking } from "../../types/Booking";
-import { Trip } from "../../types/Trip";
+import { Booking } from "../../customTypes/Booking";
+import { Trip } from "../../customTypes/Trip";
 import api from "../../services/Api";
 import { Link } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ConfirmationDialog from "../ConfirmationDialog";
-import { InvoiceItem } from "../../types/InvoiceItem";
-import { BookingCreate } from "../../types/BookingCreate";
+import { InvoiceItem } from "../../customTypes/InvoiceItem";
+import { BookingCreate } from "../../customTypes/BookingCreate";
 import "./_invoice-item-display.scss";
 import { Box, Stack, Typography } from "@mui/material";
 import PriceDisplay from "../PriceDisplay/PriceDisplay";

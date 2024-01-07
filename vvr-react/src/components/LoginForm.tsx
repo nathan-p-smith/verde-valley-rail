@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AuthenticateRequest } from "../types/AuthenticateRequest";
+import { AuthenticateRequest } from "../customTypes/AuthenticateRequest";
 import api from "../services/Api";
 import { z, string, object, number, ZodError, ZodString } from "zod";
 import { Controller, useForm } from "react-hook-form";
@@ -100,8 +100,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
             />
           </Grid>
           <Grid item xs={12}>
-            <Button type="submit" color="primary">
-              Submit
+            <Button fullWidth variant="contained" type="submit">
+              Sign In
             </Button>
           </Grid>
         </Grid>

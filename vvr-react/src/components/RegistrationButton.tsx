@@ -1,15 +1,17 @@
-import { useState } from "react";
-import { AuthenticateRequest } from "../types/AuthenticateRequest";
+import { ReactNode, useState } from "react";
+import { AuthenticateRequest } from "../customTypes/AuthenticateRequest";
 import api from "../services/Api";
 import RegistrationForm from "./RegistrationForm";
 import { Button, Dialog, DialogContent, DialogTitle } from "@mui/material";
 
 type RegistrationButtonProps = {
   onRegistration: (jwt: string) => void;
+  children: ReactNode | undefined;
 };
 
 const RegistrationButton: React.FC<RegistrationButtonProps> = ({
   onRegistration,
+  children,
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -28,9 +30,20 @@ const RegistrationButton: React.FC<RegistrationButtonProps> = ({
 
   return (
     <>
-      <Button onClick={handleRegisterClick}>Register</Button>
-      <Dialog open={modalVisible} onClose={handleModalClose} scroll="paper">
-        <DialogTitle id="scroll-dialog-title">Sign In</DialogTitle>
+      {children ? (
+        <span onClick={handleRegisterClick}>{children}</span>
+      ) : (
+        <Button variant="contained" onClick={handleRegisterClick}>
+          Register
+        </Button>
+      )}
+      <Dialog
+        maxWidth="xs"
+        open={modalVisible}
+        onClose={handleModalClose}
+        scroll="paper"
+      >
+        <DialogTitle id="scroll-dialog-title">Register</DialogTitle>
         <DialogContent>
           <RegistrationForm onRegistration={handleRegistration} />
         </DialogContent>

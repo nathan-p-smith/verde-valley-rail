@@ -1,42 +1,49 @@
-import * as Mui from "@mui/material";
-import { useState } from "react";
-import { AuthenticateRequest } from "../types/AuthenticateRequest";
-import api from "../services/Api";
-import LoginForm from "./LoginForm";
+import { ReactNode, useState } from "react";
+import LoginForm from "../components/LoginForm";
+import { Button, Dialog, DialogContent, DialogTitle } from "@mui/material";
 
-type LoginButtonProps = {    
-    onLogin: (jwt:string) => void;
-}
+type LoginButtonProps = {
+  onLogin: (jwt: string) => void;
+  children: ReactNode | undefined;
+};
 
-const LoginButton: React.FC<LoginButtonProps> = ({ onLogin }) => {
+const LoginButton: React.FC<LoginButtonProps> = ({ onLogin, children }) => {
+  const [modalVisible, setModalVisible] = useState(false);
 
-    const [modalVisible, setModalVisible] = useState(false);
+  const handleLogin = (jwt: string) => {
+    onLogin(jwt);
+    setModalVisible(false);
+  };
 
-    const handleLogin = (jwt:string) => {
-        onLogin(jwt);
-        setModalVisible(false);
-    };
+  const handleLoginClick = () => {
+    setModalVisible(true);
+  };
 
-    const handleLoginClick = () => {
-        setModalVisible(true);
-    }
+  const handleModalClose = () => {
+    setModalVisible(false);
+  };
 
-    const handleModalClose = () => {
-        setModalVisible(false);
-    }
+  return (
+    <>
+      {children ? (
+        <span onClick={handleLoginClick}>{children}</span>
+      ) : (
+        <Button onClick={handleLoginClick}>Sign In</Button>
+      )}
 
-    return (
-        <>        
-        <Mui.Button onClick={handleLoginClick}>Sign In</Mui.Button>
-        <Mui.Dialog open={modalVisible} onClose={handleModalClose} scroll="paper">
-            <Mui.DialogTitle id="scroll-dialog-title">Sign In</Mui.DialogTitle>
-            <Mui.DialogContent>                
-                <LoginForm onLogin={handleLogin} />
-            </Mui.DialogContent>            
-        </Mui.Dialog>
-        </>
-    )
-}
-
+      <Dialog
+        maxWidth="xs"
+        open={modalVisible}
+        onClose={handleModalClose}
+        scroll="paper"
+      >
+        <DialogTitle id="scroll-dialog-title">Sign In</DialogTitle>
+        <DialogContent>
+          <LoginForm onLogin={handleLogin} />
+        </DialogContent>
+      </Dialog>
+    </>
+  );
+};
 
 export default LoginButton;

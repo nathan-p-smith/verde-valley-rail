@@ -5,7 +5,7 @@ import React, {
   ReactNode,
   useEffect,
 } from "react";
-import { Customer } from "../types/Customer";
+import { Customer } from "../customTypes/Customer";
 
 // Define the shape of the context
 interface AuthContextProps {

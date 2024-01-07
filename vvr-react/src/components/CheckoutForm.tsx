@@ -13,7 +13,7 @@ import {
 import { z, string, object, number, ZodError } from "zod";
 import InputMask from "react-input-mask";
 import NumericInput from "./NumericInput";
-import { Customer } from "../types/Customer";
+import { Customer } from "../customTypes/Customer";
 
 const schema = object({
   firstName: z.string().min(1, { message: "First Name is required." }),

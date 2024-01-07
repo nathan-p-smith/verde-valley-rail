@@ -11,8 +11,8 @@ import Tooltip from "@mui/material/Tooltip";
 import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
-import { useAuth } from "../context/AuthContext";
-import shoppingCartService from "../services/ShoppingCartService";
+import { useAuth } from "../../context/AuthContext";
+import shoppingCartService from "../../services/ShoppingCartService";
 import { useNavigate } from "react-router-dom";
 
 export default function UserMenu() {
