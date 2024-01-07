@@ -8,7 +8,7 @@ import { useAuth } from "../context/AuthContext";
 import { Invoice } from "../types/Invoice";
 import api from "../services/Api";
 import { InvoiceItem } from "../types/InvoiceItem";
-import InvoiceItemDisplay from "../components/InvoiceItemDisplay";
+import InvoiceItemDisplay from "../components/InvoiceItemDisplay/InvoiceItemDisplay";
 import { BookingCreate } from "../types/BookingCreate";
 import { useNavigate } from "react-router-dom";
 
@@ -50,30 +50,30 @@ const Checkout = () => {
 
       <Grid container spacing={3}>
         {/* First column */}
-        <Grid item xs={6}>
-          <Paper style={{ padding: 20 }}>
-            <Typography variant="h5">Cart</Typography>
-            {invoice?.items?.map((i) => (
-              <InvoiceItemDisplay
-                item={i}
-                onDelete={handleDelete}
-              ></InvoiceItemDisplay>
-            ))}
-          </Paper>
+        <Grid item xs={12} md={6}>
+          <Typography variant="h1" className="page-header">
+            My Cart
+          </Typography>
+          {invoice?.items?.map((i) => (
+            <InvoiceItemDisplay
+              item={i}
+              onDelete={handleDelete}
+            ></InvoiceItemDisplay>
+          ))}
         </Grid>
 
         {/* Second column */}
-        <Grid item xs={6}>
-          <Paper style={{ padding: 20 }}>
-            <Typography variant="h5">My Info</Typography>
+        <Grid item xs={12} md={6}>
+          <Typography variant="h1" className="page-header">
+            Payment Info
+          </Typography>
 
-            {customer ? (
-              <CheckoutForm
-                customer={customer}
-                onSubmit={handleSubmit}
-              ></CheckoutForm>
-            ) : null}
-          </Paper>
+          {customer ? (
+            <CheckoutForm
+              customer={customer}
+              onSubmit={handleSubmit}
+            ></CheckoutForm>
+          ) : null}
         </Grid>
       </Grid>
     </div>

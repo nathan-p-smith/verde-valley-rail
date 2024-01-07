@@ -10,6 +10,7 @@ import { TripSearchFilter } from "../../types/TripSearchFilter";
 import StationSelect from "../../components/StationSelect";
 import "./_find-trip.scss";
 import { Grid, Stack, Typography } from "@mui/material";
+import dayjs from "dayjs";
 
 const FindTrip = () => {
   const [firstRun, setFirstRun] = useState<Boolean>(true);
@@ -17,7 +18,7 @@ const FindTrip = () => {
   const [tripSearchFilter, setTripSearchFilter] = useState<TripSearchFilter>({
     startStationId: null,
     endStationId: null,
-    departure: null,
+    departure: dayjs(new Date("2023-8-2")),
   });
 
   async function searchTrips() {
@@ -26,10 +27,10 @@ const FindTrip = () => {
   }
 
   useEffect(() => {
-    if (firstRun) {
-      setFirstRun(false);
-      return;
-    }
+    // if (firstRun) {
+    //   setFirstRun(false);
+    //   return;
+    // }
 
     console.log("api");
     searchTrips();

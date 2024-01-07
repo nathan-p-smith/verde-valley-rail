@@ -1,0 +1,13 @@
+.price-display {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+
+  &__dollars {
+    font-size: 30px;
+  }
+
+  &__cents {
+    font-size: 15px;
+    padding-left: 5px;
+    vertical-align: top;
+  }
+}

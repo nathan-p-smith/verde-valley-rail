@@ -1,35 +1,37 @@
 import { useEffect, useState } from "react";
 import api from "../services/Api";
 import { Booking } from "../types/Booking";
-import BookingDisplay from '../components/BookingDisplay';
+import BookingDisplay from "../components/BookingDisplay/BookingDisplay";
+import { Typography } from "@mui/material";
 
 const Bookings = () => {
+  const [bookings, setBookings] = useState<Booking[]>([]);
 
-    const [bookings, setBookings] = useState<Booking[]>([]);
+  const loadBookings = async () => {
+    var bookingsResponse = await api.getCustomerBookings();
+    setBookings(bookingsResponse.data);
+  };
 
-    const loadBookings = async () => {
+  useEffect(() => {
+    loadBookings();
+  }, []);
 
-        var bookingsResponse = await api.getCustomerBookings();
-        setBookings(bookingsResponse.data);
-        
-    };
+  return (
+    <div>
+      <Typography variant="h1" className="page-header">
+        My Trips
+      </Typography>
 
-    useEffect(() => {
+      <Typography sx={{ mb: 3 }}>
+        Thanks for booking your travels with Verde Valley Rail. Here are your
+        upcoming trips!
+      </Typography>
 
-        loadBookings();
-
-    }, []);
-
-    return (
-        <div>
-
-            <h1>My Bookings</h1>
-
-            <p>Thanks for booking your travels with Verde Valley Rail.  Here are your upcoming trips!</p>
-            
-            {bookings.length > 0 ? bookings?.map(b => <BookingDisplay booking={b}></BookingDisplay>) : null}
-        </div>
-    )
-}
+      {bookings.length > 0
+        ? bookings?.map((b) => <BookingDisplay booking={b}></BookingDisplay>)
+        : null}
+    </div>
+  );
+};
 
 export default Bookings;

@@ -13,6 +13,7 @@ import {
 import { z, string, object, number, ZodError } from "zod";
 import InputMask from "react-input-mask";
 import NumericInput from "./NumericInput";
+import { Customer } from "../types/Customer";
 
 const schema = object({
   firstName: z.string().min(1, { message: "First Name is required." }),
@@ -49,15 +50,6 @@ const schema = object({
 
 type CheckoutFormSchema = z.infer<typeof schema>;
 
-const initialValues = {
-  firstName: "John",
-  lastName: "Doe",
-  email: "asdf@asdf.com",
-  creditCard: "",
-  cardExpirationDate: "",
-  cardCvc: "",
-};
-
 const creditCardMask = "9999-9999-9999-9999";
 
 const parseMonthYearDate = (input: string) => {
@@ -77,10 +69,11 @@ const parseMonthYearDate = (input: string) => {
 };
 
 export type CheckoutFormProps = {
+  customer: Customer;
   onSubmit: (formData: CheckoutFormSchema) => void;
 };
 
-const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSubmit }) => {
+const CheckoutForm: React.FC<CheckoutFormProps> = ({ customer, onSubmit }) => {
   const {
     register,
     handleSubmit,
@@ -89,7 +82,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSubmit }) => {
   } = useForm({
     mode: "all",
     resolver: zodResolver(schema),
-    defaultValues: initialValues,
+    defaultValues: { ...customer },
   });
 
   const handleFormSubmit = (formData: CheckoutFormSchema) => {
@@ -103,7 +96,6 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSubmit }) => {
           <Controller
             name="firstName"
             control={control}
-            defaultValue={initialValues.firstName}
             render={({ field }) => (
               <div>
                 <TextField
@@ -121,7 +113,6 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSubmit }) => {
           <Controller
             name="lastName"
             control={control}
-            defaultValue={initialValues.lastName}
             render={({ field }) => (
               <div>
                 <TextField
@@ -139,7 +130,6 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSubmit }) => {
           <Controller
             name="email"
             control={control}
-            defaultValue={initialValues.email}
             render={({ field }) => (
               <TextField
                 {...field}
@@ -203,7 +193,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSubmit }) => {
           <Controller
             name="cardCvc"
             control={control}
-            defaultValue={initialValues.cardCvc}
+            defaultValue={customer.cardCvc}
             render={({ field }) => (
               <NumericInput
                 {...field}
@@ -216,8 +206,8 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSubmit }) => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Button type="submit" color="primary">
-            Submit
+          <Button variant="contained" type="submit" color="primary">
+            Pay Now
           </Button>
         </Grid>
       </Grid>
