@@ -15,7 +15,7 @@ import UserBlock from "./components/UserBlock";
 import Bookings from "./pages/Bookings";
 
 function App() {
-  const { isLoggedIn, login, setCustomer, customer } = useAuth();
+  const { setCustomer } = useAuth();
 
   useEffect(() => {
     var jwt = localStorage.getItem("vv-customer-jwt");
@@ -27,8 +27,6 @@ function App() {
 
   const onLogin = (jwt: string) => {
     localStorage.setItem("vv-customer-jwt", jwt);
-
-    login();
 
     api.getCustomer().then((resp) => {
       setCustomer(resp.data);

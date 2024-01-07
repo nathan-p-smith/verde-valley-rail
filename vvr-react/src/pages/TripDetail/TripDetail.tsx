@@ -29,12 +29,8 @@ const TripDetail = () => {
   const { tripId } = useParams();
   const [trip, setTrip] = useState<Trip | null>();
   const [selectedSeats, setSelectedSeats] = useState<Seat[]>([]);
-  const { login, isLoggedIn } = useAuth();
+  const { customer, setCustomer } = useAuth();
   const navigateTo = useNavigate();
-
-  function handleLogin() {
-    login();
-  }
 
   if (!tripId) throw "";
 
@@ -78,7 +74,7 @@ const TripDetail = () => {
 
     cartService.upsertToCart(booking);
 
-    if (isLoggedIn) {
+    if (customer) {
       navigateTo("/checkout");
       return;
     }
