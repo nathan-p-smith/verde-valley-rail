@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace VerdeValleyRail.Data.Entities;
-
-public partial class Car
+namespace VerdeValleyRail.Data.Entities
 {
-    public int CarId { get; set; }
+    public partial class Car
+    {
+        public Car()
+        {
+            BookingSeats = new HashSet<BookingSeat>();
+            TrainCars = new HashSet<TrainCar>();
+        }
 
-    public int CarTypeId { get; set; }
+        public int CarId { get; set; }
+        public int CarTypeId { get; set; }
 
-    public virtual ICollection<BookingSeat> BookingSeats { get; set; } = new List<BookingSeat>();
-
-    public virtual CarType CarType { get; set; } = null!;
-
-    public virtual ICollection<TrainCar> TrainCars { get; set; } = new List<TrainCar>();
+        public virtual CarType CarType { get; set; } = null!;
+        public virtual ICollection<BookingSeat> BookingSeats { get; set; }
+        public virtual ICollection<TrainCar> TrainCars { get; set; }
+    }
 }

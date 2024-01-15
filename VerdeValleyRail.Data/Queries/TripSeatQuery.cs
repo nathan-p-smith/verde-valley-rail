@@ -12,10 +12,10 @@ namespace VerdeValleyRail.Data.Queries
     {
         public IEnumerable<TripSeatResult> GetTripSeats(int tripId)
         {
-            var query = SQL.SELECT(@"CarId, SeatId, `Row`, `Position`, IF(BookingSeatId IS NOT NULL, 1, 0) AS Booked")
+            var query = SQL.SELECT(@"CarId, SeatId, [Row], [Position], CASE WHEN BookingSeatId IS NOT NULL THEN 1 ELSE 0 END AS Booked")
                 .FROM("vw_TripSeat vts")
                 .WHERE("vts.TripId = {0}", tripId)
-                .ORDER_BY("CarId, `Row`, Position");
+                .ORDER_BY("CarId, [Row], Position");
 
             return _db.Map<TripSeatResult>(query);
         }

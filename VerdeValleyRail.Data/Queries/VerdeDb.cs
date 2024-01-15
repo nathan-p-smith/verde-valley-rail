@@ -9,7 +9,7 @@ namespace VerdeValleyRail.Data.Queries
 {
     public class VerdeDb : Database
     {
-        public VerdeDb(string connectionString) : base(connectionString, "MySql.Data.MySqlClient")
+        public VerdeDb(string connectionString) : base(connectionString, "Microsoft.Data.SqlClient")
         {
 
         }
