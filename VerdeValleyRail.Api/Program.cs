@@ -5,6 +5,7 @@ using VerdeValleyRail.Api.Jwt;
 using VerdeValleyRail.Business;
 using VerdeValleyRail.Data;
 using Microsoft.Extensions.Configuration.Json;
+using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 
 IConfiguration configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
@@ -20,6 +21,11 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddSpaStaticFiles(configuration =>
+{
+    configuration.RootPath = "wwwroot"; // Adjust this path based on your project structure
+});
 
 var appSettings = configuration.Get<AppSettings>();
 
@@ -41,6 +47,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseSpaStaticFiles();
+
+app.UseSpa(spa =>
+{
+    spa.Options.SourcePath = "wwwroot"; // Adjust this path based on your project structure
+});
 
 //app.UseHttpsRedirection();
 
