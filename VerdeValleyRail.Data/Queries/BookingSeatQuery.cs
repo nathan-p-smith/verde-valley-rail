@@ -11,7 +11,7 @@ namespace VerdeValleyRail.Data.Queries
     {
         public IEnumerable<BookingSeatResult> GetBookingSeats(int bookingId)
         {
-            var query = SQL.SELECT("TripId, BookingId, BookingSeatId, SeatId, CarId, `Row`, `Position`")
+            var query = SQL.SELECT("TripId, BookingId, BookingSeatId, SeatId, CarId, [Row], [Position]")
                 .FROM("vw_BookingSeat")
                 .WHERE("BookingId = {0}", bookingId);
 

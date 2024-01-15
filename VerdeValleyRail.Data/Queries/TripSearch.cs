@@ -1,5 +1,4 @@
 ﻿using DbExtensions;
-using Google.Protobuf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +34,7 @@ namespace VerdeValleyRail.Data.Queries
                 query.WHERE("r.EndStationId = {0}", filter.EndStationId);
 
             if (filter?.Departure != null)
-                query.WHERE("Date(tp.Departure) = {0}", filter.Departure?.ToString("yyyy-MM-dd"));
+                query.WHERE("CONVERT(DATE, tp.Departure) = {0}", filter.Departure?.ToString("yyyy-MM-dd"));
 
             query.GROUP_BY(@"tp.TripId, vts.TrainId, tp.Departure, ss.Name, es.Name, tp.PricePerSeat, r.Minutes")
                 .ORDER_BY("tp.Departure");

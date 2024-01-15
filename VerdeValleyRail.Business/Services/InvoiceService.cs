@@ -67,7 +67,7 @@ namespace VerdeValleyRail.Business.Services
 
             invoiceEntity.CustomerId = invoice.CustomerId;
             invoiceEntity.CreatedOn = DateTime.Now.ToUniversalTime();
-            invoiceEntity.Guid = Guid.NewGuid().ToString();
+            invoiceEntity.Guid = Guid.NewGuid();
 
             invoiceEntity.InvoiceBookings = new List<InvoiceBooking>();
 

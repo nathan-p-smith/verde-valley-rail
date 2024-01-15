@@ -41,7 +41,7 @@ namespace VerdeValleyRail.Business.Services
 
         public R.Booking GetBooking(string bookingGuid)
         {
-            int? bookingId = _db.Bookings.Where(b => b.BookingGuid == bookingGuid).FirstOrDefault()?.BookingId;
+            int? bookingId = _db.Bookings.Where(b => b.BookingGuid == new Guid(bookingGuid)).FirstOrDefault()?.BookingId;
 
             if (bookingId == null)
                 return null;
@@ -68,7 +68,7 @@ namespace VerdeValleyRail.Business.Services
             var bookingEntity = new E.Booking();
 
             bookingEntity.InjectFrom(bookingCreate);
-            bookingEntity.BookingGuid = Guid.NewGuid().ToString();
+            bookingEntity.BookingGuid = Guid.NewGuid();
 
             _db.Bookings.Add(bookingEntity);
 

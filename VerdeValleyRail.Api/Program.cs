@@ -4,8 +4,16 @@ using VerdeValleyRail.Api;
 using VerdeValleyRail.Api.Jwt;
 using VerdeValleyRail.Business;
 using VerdeValleyRail.Data;
+using Microsoft.Extensions.Configuration.Json;
+using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+
+IConfiguration configuration = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+    .AddUserSecrets<AppSettings>()
+    .Build();
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Add services to the container.
 
@@ -14,7 +22,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var appSettings = builder.Configuration.Get<AppSettings>();
+builder.Services.AddSpaStaticFiles(configuration =>
+{
+    configuration.RootPath = "wwwroot"; // Adjust this path based on your project structure
+});
+
+var appSettings = configuration.Get<AppSettings>();
 
 builder.Services.BindDataDependencies(appSettings.ConnectionStrings.VerdeValleyRail)
     .BindBusinessDependencies()
@@ -26,7 +39,7 @@ builder.Services.BindDataDependencies(appSettings.ConnectionStrings.VerdeValleyR
 var app = builder.Build();
 
 // Needed for raw queries (DbExtensions)
-DbProviderFactories.RegisterFactory("MySql.Data.MySqlClient", MySql.Data.MySqlClient.MySqlClientFactory.Instance);
+DbProviderFactories.RegisterFactory("Microsoft.Data.SqlClient", Microsoft.Data.SqlClient.SqlClientFactory.Instance);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -34,6 +47,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseSpaStaticFiles();
+
+app.UseSpa(spa =>
+{
+    spa.Options.SourcePath = "wwwroot"; // Adjust this path based on your project structure
+});
 
 //app.UseHttpsRedirection();
 
