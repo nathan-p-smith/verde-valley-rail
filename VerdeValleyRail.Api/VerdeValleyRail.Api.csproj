@@ -29,4 +29,8 @@
     <ProjectReference Include="..\VerdeValleyRail.Data\VerdeValleyRail.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>
