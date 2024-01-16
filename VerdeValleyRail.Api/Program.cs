@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 IConfiguration configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
     .AddUserSecrets<AppSettings>()
+    .AddEnvironmentVariables()
     .Build();
 
 var builder = WebApplication.CreateBuilder(args);
