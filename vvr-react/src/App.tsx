@@ -1,18 +1,15 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.css";
-import SampleTable from "./components/SampleTable";
-import * as Mui from "@mui/material";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import FindTrip from "./pages/FindTrip/FindTrip";
-import TripDetail from "./pages/TripDetail/TripDetail";
-import ChooseSeats from "./pages/ChooseSeats";
-import Login from "./pages/Login";
-import Checkout from "./pages/Checkout";
-import { useAuth } from "./context/AuthContext";
-import api from "./services/Api";
-import LoginButton from "./components/LoginButton";
 import UserBlock from "./components/UserBlock";
+import { useAuth } from "./context/AuthContext";
 import Bookings from "./pages/Bookings";
+import Checkout from "./pages/Checkout";
+import ChooseSeats from "./pages/ChooseSeats";
+import FindTrip from "./pages/FindTrip/FindTrip";
+import Login from "./pages/Login";
+import TripDetail from "./pages/TripDetail/TripDetail";
+import api from "./services/Api";
 
 function App() {
   const { setCustomer } = useAuth();

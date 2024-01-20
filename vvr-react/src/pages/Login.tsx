@@ -1,10 +1,3 @@
-import { react } from "react";
-import api from "../services/Api";
-import LoginForm from "../components/LoginForm";
-import RegistrationForm from "../components/RegistrationForm";
-import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
-import RegistrationButton from "../components/RegistrationButton";
 import {
   Box,
   Button,
@@ -12,10 +5,13 @@ import {
   CardContent,
   Container,
   Divider,
-  Link,
-  Stack,
   Typography,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import LoginForm from "../components/LoginForm";
+import RegistrationButton from "../components/RegistrationButton";
+import { useAuth } from "../context/AuthContext";
+import api from "../services/Api";
 
 const Login = () => {
   const { setCustomer } = useAuth();

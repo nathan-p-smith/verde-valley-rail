@@ -1,16 +1,13 @@
-import { useEffect, useState } from "react";
-import { Booking } from "../../customTypes/Booking";
-import { Trip } from "../../customTypes/Trip";
-import api from "../../services/Api";
-import { Link } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
-import ConfirmationDialog from "../ConfirmationDialog";
-import { InvoiceItem } from "../../customTypes/InvoiceItem";
-import { BookingCreate } from "../../customTypes/BookingCreate";
-import "./_invoice-item-display.scss";
-import { Box, Stack, Typography } from "@mui/material";
-import PriceDisplay from "../PriceDisplay/PriceDisplay";
 import EditIcon from "@mui/icons-material/Edit";
+import { Box, Stack, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { BookingCreate } from "../../customTypes/BookingCreate";
+import { InvoiceItem } from "../../customTypes/InvoiceItem";
+import ConfirmationDialog from "../ConfirmationDialog";
+import PriceDisplay from "../PriceDisplay/PriceDisplay";
+import "./_invoice-item-display.scss";
 
 type InvoiceItemDisplayProps = {
   item: InvoiceItem;

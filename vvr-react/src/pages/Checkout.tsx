@@ -1,16 +1,14 @@
+import { Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import shoppingCartService from "../services/ShoppingCartService";
-import { Booking } from "../customTypes/Booking";
-import CheckoutBooking from "../components/CheckoutBooking";
-import { Grid, Paper, Typography } from "@mui/material";
-import CheckoutForm, { CheckoutFormProps } from "../components/CheckoutForm";
+import { useNavigate } from "react-router-dom";
+import CheckoutForm, { CheckoutFormSchema } from "../components/CheckoutForm";
+import InvoiceItemDisplay from "../components/InvoiceItemDisplay/InvoiceItemDisplay";
 import { useAuth } from "../context/AuthContext";
+import { BookingCreate } from "../customTypes/BookingCreate";
 import { Invoice } from "../customTypes/Invoice";
 import api from "../services/Api";
-import { InvoiceItem } from "../customTypes/InvoiceItem";
-import InvoiceItemDisplay from "../components/InvoiceItemDisplay/InvoiceItemDisplay";
-import { BookingCreate } from "../customTypes/BookingCreate";
-import { useNavigate } from "react-router-dom";
+import shoppingCartService from "../services/ShoppingCartService";
+import { SubmitHandler } from "react-hook-form";
 
 const Checkout = () => {
   const [invoice, setInvoice] = useState<Invoice>();
@@ -33,7 +31,7 @@ const Checkout = () => {
     loadInvoice();
   };
 
-  const handleSubmit = async (formData: CheckoutFormProps) => {
+  const handleSubmit: SubmitHandler<CheckoutFormSchema> = async (formData) => {
     console.log("form data", formData);
 
     await api.payInvoice(invoice!);

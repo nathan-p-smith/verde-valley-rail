@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import React from "react";
 
 interface ConfirmDialogProps {
   open: boolean;
@@ -14,17 +14,22 @@ interface ConfirmDialogProps {
   text: string;
   cancelText: string;
   confirmText: string;
-
 }
 
-const ConfirmDialog: React.FC<ConfirmDialogProps> = ({ open, onClose, onConfirm, title, text, cancelText, confirmText }) => {
+const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
+  open,
+  onClose,
+  onConfirm,
+  title,
+  text,
+  cancelText,
+  confirmText,
+}) => {
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          {text}
-        </DialogContentText>
+        <DialogContentText>{text}</DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="primary">

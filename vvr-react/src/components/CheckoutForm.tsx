@@ -1,19 +1,11 @@
-import React from "react";
-import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  TextField,
-  MenuItem,
-  Grid,
-  Select,
-  InputLabel,
-  FormControl,
-  Button,
-} from "@mui/material";
-import { z, string, object, number, ZodError } from "zod";
-import InputMask from "react-input-mask";
-import NumericInput from "./NumericInput";
+import { Button, Grid, TextField } from "@mui/material";
+import React from "react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { object, z } from "zod";
 import { Customer } from "../customTypes/Customer";
+import NumericInput from "./NumericInput";
+import InputMask from "react-input-mask";
 
 const schema = object({
   firstName: z.string().min(1, { message: "First Name is required." }),
@@ -48,9 +40,7 @@ const schema = object({
   cardCvc: z.string().min(3, { message: "CVC is required." }),
 });
 
-type CheckoutFormSchema = z.infer<typeof schema>;
-
-const creditCardMask = "9999-9999-9999-9999";
+export type CheckoutFormSchema = z.infer<typeof schema>;
 
 const parseMonthYearDate = (input: string) => {
   input = input.replace(/\s/g, "");
@@ -75,17 +65,21 @@ export type CheckoutFormProps = {
 
 const CheckoutForm: React.FC<CheckoutFormProps> = ({ customer, onSubmit }) => {
   const {
-    register,
     handleSubmit,
     control,
     formState: { errors },
   } = useForm({
     mode: "all",
     resolver: zodResolver(schema),
-    defaultValues: { ...customer },
+    defaultValues: {
+      ...customer,
+      creditCard: "",
+      cardExpirationDate: "",
+      cardCvc: "",
+    },
   });
 
-  const handleFormSubmit = (formData: CheckoutFormSchema) => {
+  const handleFormSubmit: SubmitHandler<CheckoutFormSchema> = (formData) => {
     onSubmit(formData);
   };
 
@@ -150,17 +144,14 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ customer, onSubmit }) => {
               <InputMask
                 mask="9999-9999-9999-9999"
                 value={field.value}
-                onChange={(e) => field.onChange(e.target.value)}
+                onChange={(e: any) => field.onChange(e.target.value)}
               >
-                {(inputProps) => (
-                  <TextField
-                    {...inputProps}
-                    label="Credit Card"
-                    fullWidth
-                    error={!!errors.creditCard}
-                    helperText={errors.creditCard?.message}
-                  />
-                )}
+                <TextField
+                  label="Credit Card"
+                  fullWidth
+                  error={!!errors.creditCard}
+                  helperText={errors.creditCard?.message}
+                />
               </InputMask>
             )}
           />
@@ -174,17 +165,14 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ customer, onSubmit }) => {
               <InputMask
                 mask="99 / 99"
                 value={field.value}
-                onChange={(e) => field.onChange(e.target.value)}
+                onChange={(e: any) => field.onChange(e.target.value)}
               >
-                {(inputProps) => (
-                  <TextField
-                    {...inputProps}
-                    label="Expiration Date (MM / YY)"
-                    fullWidth
-                    error={!!errors.cardExpirationDate}
-                    helperText={errors.cardExpirationDate?.message}
-                  />
-                )}
+                <TextField
+                  label="Expiration Date (MM / YY)"
+                  fullWidth
+                  error={!!errors.cardExpirationDate}
+                  helperText={errors.cardExpirationDate?.message}
+                />
               </InputMask>
             )}
           />
@@ -193,14 +181,13 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ customer, onSubmit }) => {
           <Controller
             name="cardCvc"
             control={control}
-            defaultValue={customer.cardCvc}
             render={({ field }) => (
               <NumericInput
                 {...field}
                 maxLength={4}
                 label="CVC"
                 error={!!errors.cardCvc}
-                helperText={errors.cardCvc?.message}
+                helperText={errors?.cardCvc?.message ?? ""}
               />
             )}
           />

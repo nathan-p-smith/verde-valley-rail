@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { AuthenticateRequest } from "@/customTypes/AuthenticateRequest";
-import api from "@/services/Api";
-import { z, string, object, number, ZodError, ZodString } from "zod";
-import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Button, Grid, TextField, Typography } from "@mui/material";
-import ErrorMessage from "@/components/ErrorMessage";
+import { Button, Grid, TextField } from "@mui/material";
+import { useState } from "react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { object, z } from "zod";
+import ErrorMessage from "../components/ErrorMessage";
+import { AuthenticateRequest } from "../customTypes/AuthenticateRequest";
+import api from "../services/Api";
 
 type LoginFormProps = {
   onLogin: (jwt: string) => void;
@@ -24,27 +24,19 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
   );
 
   const {
-    register,
     handleSubmit,
     control,
     formState: { errors },
   } = useForm({
     mode: "all",
     resolver: zodResolver(schema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
 
-  //   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //     // Extract the name and value from the event target
-  //     const { name, value } = e.target;
-
-  //     // Update the form data using the spread operator
-  //     setLogin((prevLogin: AuthenticateRequest) => ({
-  //       ...prevLogin,
-  //       [name]: value,
-  //     }));
-  //   };
-
-  const tryLogin = async (formData: LoginFormSchema) => {
+  const tryLogin: SubmitHandler<LoginFormSchema> = async (formData) => {
     try {
       var login: AuthenticateRequest = {
         ...formData,
@@ -95,7 +87,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
               )}
             />
             <ErrorMessage
-              condition={invalidLoginMessage}
+              condition={!!invalidLoginMessage}
               message={invalidLoginMessage}
             />
           </Grid>

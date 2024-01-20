@@ -1,6 +1,3 @@
-// ChooseSeats.js
-import React from 'react';
-
 const ChooseSeats = () => {
   return (
     <div>

@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
-import api from "../services/Api";
-import { Booking } from "../customTypes/Booking";
-import BookingDisplay from "../components/BookingDisplay/BookingDisplay";
 import { Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import BookingDisplay from "../components/BookingDisplay/BookingDisplay";
+import { Booking } from "../customTypes/Booking";
+import api from "../services/Api";
 
 const Bookings = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
