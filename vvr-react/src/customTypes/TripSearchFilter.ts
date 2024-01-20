@@ -1,5 +1,7 @@
+import { Dayjs } from "dayjs";
+
 export type TripSearchFilter = {
-    departure: Date | null;
-    startStationId: number | null;
-    endStationId: number | null;
+  departure: Dayjs | null;
+  startStationId: number | null;
+  endStationId: number | null;
 };

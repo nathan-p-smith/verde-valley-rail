@@ -2,10 +2,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Grid, TextField } from "@mui/material";
 import React from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import InputMask from "react-input-mask";
 import { object, z } from "zod";
 import { Customer } from "../customTypes/Customer";
 import NumericInput from "./NumericInput";
+import InputMask from "react-input-mask";
 
 const schema = object({
   firstName: z.string().min(1, { message: "First Name is required." }),
@@ -40,7 +40,7 @@ const schema = object({
   cardCvc: z.string().min(3, { message: "CVC is required." }),
 });
 
-type CheckoutFormSchema = z.infer<typeof schema>;
+export type CheckoutFormSchema = z.infer<typeof schema>;
 
 const parseMonthYearDate = (input: string) => {
   input = input.replace(/\s/g, "");

@@ -1,6 +1,3 @@
-import { useState, useContext, useEffect } from "react";
-import { Seat } from "../customTypes/Seat";
-import "./SeatPicker.scss";
 import {
   Button,
   Dialog,
@@ -8,6 +5,9 @@ import {
   DialogContent,
   DialogTitle,
 } from "@mui/material";
+import { useState } from "react";
+import { Seat } from "../customTypes/Seat";
+import "./SeatPicker.scss";
 
 type SeatPickerProps = {
   seats: Seat[];
@@ -36,7 +36,7 @@ const SeatPicker: React.FC<SeatPickerProps> = ({
 
   // Iterate through the seats and organize them by CarId, Row, and Position
   seats.forEach((seat) => {
-    const { carId, row, position } = seat;
+    const { carId, row } = seat;
 
     if (!carsMap[carId]) {
       carsMap[carId] = {};

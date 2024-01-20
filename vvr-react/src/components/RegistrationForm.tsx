@@ -1,12 +1,11 @@
-import { CustomerCreate } from "../customTypes/CustomerCreate";
-import { ReactNode, useState } from "react";
-import api from "../services/Api";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z, string, object, number, ZodError, ZodString } from "zod";
-import InputMask from "react-input-mask";
-import { Controller, useForm } from "react-hook-form";
-import { Button, Grid, TextField, debounce } from "@mui/material";
+import { Button, Grid, TextField } from "@mui/material";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import InputMask, { Props } from "react-input-mask";
+import { object, z } from "zod";
+import { CustomerCreate } from "../customTypes/CustomerCreate";
 import myDebounce from "../helpers/Debounce";
+import api from "../services/Api";
 
 const REQUIRED_PASSWORD_LENGTH = 8;
 
@@ -53,16 +52,25 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   onRegistration,
 }) => {
   const {
-    register,
     handleSubmit,
     control,
     formState: { errors },
   } = useForm({
     mode: "all",
     resolver: zodResolver(schema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      password: "",
+      passwordConfirm: "",
+    },
   });
 
-  const handleRegistration = async (formData: RegistrationFormSchema) => {
+  const handleRegistration: SubmitHandler<RegistrationFormSchema> = async (
+    formData
+  ) => {
     try {
       var customerCreate: CustomerCreate = {
         ...formData,
@@ -135,13 +143,13 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
               <InputMask
                 mask="(999) 999-9999"
                 value={field.value}
-                onChange={(e) => field.onChange(e.target.value)}
+                onChange={(e: any) => field.onChange(e.target.value)}
               >
-                {(inputProps) => (
+                {(inputProps: Props) => (
                   <TextField
                     {...inputProps}
                     label="Phone"
-                    fullWidth
+                    fullWidth={true}
                     error={!!errors.phone}
                     helperText={errors.phone?.message}
                   />
@@ -184,7 +192,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           />
         </Grid>
         <Grid item xs={12}>
-          <Button fullWidth="xs" variant="contained" type="submit">
+          <Button fullWidth={true} variant="contained" type="submit">
             Submit
           </Button>
         </Grid>
