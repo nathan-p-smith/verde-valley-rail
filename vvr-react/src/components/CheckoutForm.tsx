@@ -1,19 +1,11 @@
-import React from "react";
-import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  TextField,
-  MenuItem,
-  Grid,
-  Select,
-  InputLabel,
-  FormControl,
-  Button,
-} from "@mui/material";
-import { z, string, object, number, ZodError } from "zod";
+import { Button, Grid, TextField } from "@mui/material";
+import React from "react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import InputMask from "react-input-mask";
-import NumericInput from "./NumericInput";
+import { object, z } from "zod";
 import { Customer } from "../customTypes/Customer";
+import NumericInput from "./NumericInput";
 
 const schema = object({
   firstName: z.string().min(1, { message: "First Name is required." }),
@@ -50,8 +42,6 @@ const schema = object({
 
 type CheckoutFormSchema = z.infer<typeof schema>;
 
-const creditCardMask = "9999-9999-9999-9999";
-
 const parseMonthYearDate = (input: string) => {
   input = input.replace(/\s/g, "");
 
@@ -82,10 +72,15 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ customer, onSubmit }) => {
   } = useForm({
     mode: "all",
     resolver: zodResolver(schema),
-    defaultValues: { ...customer },
+    defaultValues: {
+      ...customer,
+      creditCard: "",
+      cardExpirationDate: "",
+      cardCvc: "",
+    },
   });
 
-  const handleFormSubmit = (formData: CheckoutFormSchema) => {
+  const handleFormSubmit: SubmitHandler<CheckoutFormSchema> = (formData) => {
     onSubmit(formData);
   };
 
@@ -150,9 +145,9 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ customer, onSubmit }) => {
               <InputMask
                 mask="9999-9999-9999-9999"
                 value={field.value}
-                onChange={(e) => field.onChange(e.target.value)}
+                onChange={(e: any) => field.onChange(e.target.value)}
               >
-                {(inputProps) => (
+                {(inputProps: any) => (
                   <TextField
                     {...inputProps}
                     label="Credit Card"
@@ -174,9 +169,9 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ customer, onSubmit }) => {
               <InputMask
                 mask="99 / 99"
                 value={field.value}
-                onChange={(e) => field.onChange(e.target.value)}
+                onChange={(e: any) => field.onChange(e.target.value)}
               >
-                {(inputProps) => (
+                {(inputProps: any) => (
                   <TextField
                     {...inputProps}
                     label="Expiration Date (MM / YY)"
@@ -193,14 +188,13 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ customer, onSubmit }) => {
           <Controller
             name="cardCvc"
             control={control}
-            defaultValue={customer.cardCvc}
             render={({ field }) => (
               <NumericInput
                 {...field}
                 maxLength={4}
                 label="CVC"
                 error={!!errors.cardCvc}
-                helperText={errors.cardCvc?.message}
+                helperText={errors?.cardCvc?.message ?? ""}
               />
             )}
           />

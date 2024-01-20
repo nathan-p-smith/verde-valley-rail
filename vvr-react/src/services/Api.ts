@@ -1,15 +1,15 @@
-import axios, { AxiosResponse } from "axios";
-import { StationOption } from "@customTypes/StationOption";
-import { TripSearchFilter } from "@customTypes/TripSearchFilter";
-import { TripSearchResult } from "@customTypes/TripSearchResult";
-import { Trip } from "@customTypes/Trip";
-import { AuthenticateRequest } from "@customTypes/AuthenticateRequest";
-import { Customer } from "@customTypes/Customer";
-import { CustomerCreate } from "@customTypes/CustomerCreate";
-import { format, parseISO } from "date-fns";
-import { BookingCreate } from "@customTypes/BookingCreate";
-import { Invoice } from "@customTypes/Invoice";
-import { Booking } from "@customTypes/Booking";
+import axios from "axios";
+import { StationOption } from "../customTypes/StationOption";
+import { TripSearchFilter } from "../customTypes/TripSearchFilter";
+import { TripSearchResult } from "../customTypes/TripSearchResult";
+import { Trip } from "../customTypes/Trip";
+import { AuthenticateRequest } from "../customTypes/AuthenticateRequest";
+import { Customer } from "../customTypes/Customer";
+import { CustomerCreate } from "../customTypes/CustomerCreate";
+import { parseISO } from "date-fns";
+import { BookingCreate } from "../customTypes/BookingCreate";
+import { Invoice } from "../customTypes/Invoice";
+import { Booking } from "../customTypes/Booking";
 
 const vvrApi = axios.create({
   baseURL: "/api",

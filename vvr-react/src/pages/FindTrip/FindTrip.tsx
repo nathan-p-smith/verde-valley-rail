@@ -1,19 +1,18 @@
 // FindTrip.js
-import { useState, useEffect } from "react";
+import { Grid, Typography } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import api from "../../services/Api";
-import { TripGrid } from "../../components/TripGird";
-import { TripSearchResult } from "../../customTypes/TripSearchResult";
-import { TripSearchFilter } from "../../customTypes/TripSearchFilter";
-import StationSelect from "../../components/StationSelect";
-import "./_find-trip.scss";
-import { Grid, Stack, Typography } from "@mui/material";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
+import { useEffect, useState } from "react";
+import StationSelect from "../../components/StationSelect";
+import { TripGrid } from "../../components/TripGird";
+import { TripSearchFilter } from "../../customTypes/TripSearchFilter";
+import { TripSearchResult } from "../../customTypes/TripSearchResult";
+import api from "../../services/Api";
+import "./_find-trip.scss";
 
 const FindTrip = () => {
-  const [firstRun, setFirstRun] = useState<Boolean>(true);
   const [trips, setTrips] = useState<TripSearchResult[]>([]);
   const [tripSearchFilter, setTripSearchFilter] = useState<TripSearchFilter>({
     startStationId: null,
@@ -27,12 +26,6 @@ const FindTrip = () => {
   }
 
   useEffect(() => {
-    // if (firstRun) {
-    //   setFirstRun(false);
-    //   return;
-    // }
-
-    console.log("api");
     searchTrips();
   }, [tripSearchFilter]);
 

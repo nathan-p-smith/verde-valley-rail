@@ -1,4 +1,3 @@
-import { Booking } from "../customTypes/Booking";
 import { BookingCreate } from "../customTypes/BookingCreate";
 
 const LOCAL_STOARGE_NAME = "vv-cart";

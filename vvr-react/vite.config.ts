@@ -7,6 +7,9 @@ export default defineConfig({
   build: {
     outDir: "../VerdeValleyRail.Api/wwwroot",
   },
+  optimizeDeps: {
+    include: ["@emotion/react", "@emotion/styled", "@mui/material/Tooltip"],
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
