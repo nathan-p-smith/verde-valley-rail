@@ -1,11 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Grid, TextField } from "@mui/material";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import InputMask, { Props } from "react-input-mask";
+import InputMask from "react-input-mask";
 import { object, z } from "zod";
 import { CustomerCreate } from "../customTypes/CustomerCreate";
 import myDebounce from "../helpers/Debounce";
 import api from "../services/Api";
+import React from "react";
 
 const REQUIRED_PASSWORD_LENGTH = 8;
 
@@ -145,15 +146,12 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
                 value={field.value}
                 onChange={(e: any) => field.onChange(e.target.value)}
               >
-                {(inputProps: Props) => (
-                  <TextField
-                    {...inputProps}
-                    label="Phone"
-                    fullWidth={true}
-                    error={!!errors.phone}
-                    helperText={errors.phone?.message}
-                  />
-                )}
+                <TextField
+                  label="Phone"
+                  fullWidth={true}
+                  error={!!errors.phone}
+                  helperText={errors.phone?.message}
+                />
               </InputMask>
             )}
           />

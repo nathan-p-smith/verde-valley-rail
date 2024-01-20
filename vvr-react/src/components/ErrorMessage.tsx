@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 
 type ErrorMessageProps = {
   condition: boolean;
-  message: string;
+  message: string | null | undefined;
 };
 
 const ErrorMessage: React.FC<ErrorMessageProps> = ({ condition, message }) => {

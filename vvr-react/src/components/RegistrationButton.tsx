@@ -1,8 +1,6 @@
-import { ReactNode, useState } from "react";
-import { AuthenticateRequest } from "../customTypes/AuthenticateRequest";
-import api from "../services/Api";
-import RegistrationForm from "./RegistrationForm";
 import { Button, Dialog, DialogContent, DialogTitle } from "@mui/material";
+import { ReactNode, useState } from "react";
+import RegistrationForm from "./RegistrationForm";
 
 type RegistrationButtonProps = {
   onRegistration: (jwt: string) => void;

@@ -1,22 +1,27 @@
-import React, { useState } from 'react';
-import TextField, { TextFieldProps } from '@mui/material/TextField';
+import React from "react";
+import TextField, { TextFieldProps } from "@mui/material/TextField";
 
 type NumericInputProps = {
-    value: string,
-    maxLength: number,
-    onChange: (value: string) => void;
-    additionalProps: TextFieldProps;
-    label: string,
-    error: boolean,
-    helperText: string
-}
+  value: string;
+  maxLength: number;
+  onChange: (value: string) => void;
+  additionalProps?: TextFieldProps | undefined;
+  label: string;
+  error: boolean;
+  helperText: string;
+};
 
-const NumericInput : React.FC<NumericInputProps> = ({ label, value, maxLength, onChange, error, helperText }) => {
-  const [numericString, setNumericString] = useState('');
-
-  const handleInputChange = (event) => {
+const NumericInput: React.FC<NumericInputProps> = ({
+  label,
+  value,
+  maxLength,
+  onChange,
+  error,
+  helperText,
+}) => {
+  const handleInputChange = (event: any) => {
     // Allow only numeric input
-    const value = event.target.value.replace(/[^0-9]/g, '');
+    const value = event.target.value.replace(/[^0-9]/g, "");
 
     // Limit the length of the numeric string to between 3 and 4 characters
     if (value.length <= maxLength) {
@@ -33,7 +38,6 @@ const NumericInput : React.FC<NumericInputProps> = ({ label, value, maxLength, o
       fullWidth
       error={error}
       helperText={helperText}
-      
     />
   );
 };

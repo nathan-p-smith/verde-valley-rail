@@ -65,7 +65,6 @@ export type CheckoutFormProps = {
 
 const CheckoutForm: React.FC<CheckoutFormProps> = ({ customer, onSubmit }) => {
   const {
-    register,
     handleSubmit,
     control,
     formState: { errors },
@@ -147,15 +146,12 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ customer, onSubmit }) => {
                 value={field.value}
                 onChange={(e: any) => field.onChange(e.target.value)}
               >
-                {(inputProps: any) => (
-                  <TextField
-                    {...inputProps}
-                    label="Credit Card"
-                    fullWidth
-                    error={!!errors.creditCard}
-                    helperText={errors.creditCard?.message}
-                  />
-                )}
+                <TextField
+                  label="Credit Card"
+                  fullWidth
+                  error={!!errors.creditCard}
+                  helperText={errors.creditCard?.message}
+                />
               </InputMask>
             )}
           />
@@ -171,15 +167,12 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ customer, onSubmit }) => {
                 value={field.value}
                 onChange={(e: any) => field.onChange(e.target.value)}
               >
-                {(inputProps: any) => (
-                  <TextField
-                    {...inputProps}
-                    label="Expiration Date (MM / YY)"
-                    fullWidth
-                    error={!!errors.cardExpirationDate}
-                    helperText={errors.cardExpirationDate?.message}
-                  />
-                )}
+                <TextField
+                  label="Expiration Date (MM / YY)"
+                  fullWidth
+                  error={!!errors.cardExpirationDate}
+                  helperText={errors.cardExpirationDate?.message}
+                />
               </InputMask>
             )}
           />

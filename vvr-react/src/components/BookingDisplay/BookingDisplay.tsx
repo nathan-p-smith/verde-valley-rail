@@ -1,16 +1,10 @@
-import { useEffect, useState } from "react";
-import { Booking } from "../../customTypes/Booking";
-import { Trip } from "../../customTypes/Trip";
-import api from "../../services/Api";
-import { Link } from "react-router-dom";
-import DeleteIcon from "@mui/icons-material/Delete";
-import ConfirmationDialog from "../ConfirmationDialog";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import FlightClassIcon from "@mui/icons-material/FlightClass";
+import { Box, Stack, Typography } from "@mui/material";
 import { format } from "date-fns";
-import { Box, Icon, Paper, Stack, Typography } from "@mui/material";
+import { Booking } from "../../customTypes/Booking";
 import { BookingSeat } from "../../customTypes/BookingSeat";
 import "./_booking-display.scss";
-import FlightClassIcon from "@mui/icons-material/FlightClass";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
 
 type BookingDisplayProps = {
   booking: Booking;
