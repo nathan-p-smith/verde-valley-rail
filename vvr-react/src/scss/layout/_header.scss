@@ -31,8 +31,28 @@
     display: flex;
     align-items: center;
     height: $header-height;
+    margin-right: 50px;
     img {
       width: 200px;
+    }
+  }
+
+  &__main-menu {
+    $link-color: #fff;
+
+    float: left;
+    line-height: $header-height !important;
+    height: $header-height;
+    font-size: 14px;
+
+    a {
+      color: $link-color;
+      text-decoration: none;
+      font-weight: bold;
+      margin-right: 20px;
+      &:visited {
+        color: $link-color;
+      }
     }
   }
 

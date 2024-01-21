@@ -6,12 +6,15 @@ import React, {
   useEffect,
 } from "react";
 import { Customer } from "../customTypes/Customer";
+import shoppingCartService from "@/services/ShoppingCartService";
 
 // Define the shape of the context
 interface AuthContextProps {
   customer: Customer | null;
   setCustomer: (customer: Customer | null) => void;
   isLoggedIn: boolean;
+  totalCartItems: number | null;
+  setTotalCartItems: (total: number) => void;
 }
 
 // Create a context with initial values
@@ -25,8 +28,11 @@ interface AuthProviderProps {
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [customer, setCustomer] = useState<Customer | null>(null);
+  const [totalCartItems, setTotalCartItems] = useState(0);
 
   useEffect(() => {
+    setTotalCartItems(shoppingCartService.getCart().length);
+
     if (customer) setIsLoggedIn(true);
     return;
 
@@ -37,6 +43,8 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     customer,
     setCustomer,
     isLoggedIn,
+    totalCartItems,
+    setTotalCartItems,
   };
 
   return (

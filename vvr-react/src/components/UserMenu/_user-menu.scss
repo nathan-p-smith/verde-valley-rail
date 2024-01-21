@@ -1,0 +1,18 @@
+.user-menu {
+  a {
+    $link-color: #fff;
+    color: $link-color;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-decoration: none;
+  }
+
+  &__shopping-cart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    svg {
+      margin-right: 10px;
+    }
+  }
+}

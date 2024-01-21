@@ -20,7 +20,7 @@ const TripDetail = () => {
   const { tripId } = useParams();
   const [trip, setTrip] = useState<Trip | null>();
   const [selectedSeats, setSelectedSeats] = useState<Seat[]>([]);
-  const { customer } = useAuth();
+  const { customer, setTotalCartItems } = useAuth();
   const navigateTo = useNavigate();
 
   if (!tripId) throw "";
@@ -64,6 +64,7 @@ const TripDetail = () => {
     };
 
     cartService.upsertToCart(booking);
+    setTotalCartItems(cartService.getCart().length);
 
     if (customer) {
       navigateTo("/checkout");
@@ -74,7 +75,7 @@ const TripDetail = () => {
   }
 
   return (
-    <div className="trip-detail">
+    <div className="trip-detail container">
       {!trip ? (
         <LinearProgress color="inherit" />
       ) : (
@@ -83,10 +84,7 @@ const TripDetail = () => {
             {trip?.route.startStation.name} to {trip?.route.endStation.name}
           </Typography>
 
-          <Typography sx={{ mb: 3 }}>
-            Thanks for booking your travels with Verde Valley Rail. Here are
-            your upcoming trips!
-          </Typography>
+          <Typography sx={{ mb: 3 }}></Typography>
 
           <Box mb={2}>
             <Stack direction="row" alignItems="center" marginBottom={1} gap={1}>

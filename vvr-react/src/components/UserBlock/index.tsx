@@ -3,8 +3,8 @@ import RegistrationButton from "@/components/RegistrationButton";
 import { useAuth } from "@/context/AuthContext";
 import api from "@/services/Api";
 import { Box, Button } from "@mui/material";
-import { useEffect } from "react";
-import UserMenu from "./UserMenu";
+import { useEffect, useState } from "react";
+import UserMenu from "../UserMenu";
 import "./_user-block.scss";
 
 const UserBlock = () => {
@@ -29,7 +29,9 @@ const UserBlock = () => {
   return (
     <Box className="user-block">
       {customer ? (
-        <UserMenu />
+        <>
+          <UserMenu />
+        </>
       ) : (
         <Box className="user-block__sign-in">
           <RegistrationButton onRegistration={onLogin}>

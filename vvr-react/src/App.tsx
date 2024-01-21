@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Link, Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.css";
 import UserBlock from "./components/UserBlock";
 import { useAuth } from "./context/AuthContext";
@@ -10,6 +10,7 @@ import FindTrip from "./pages/FindTrip/FindTrip";
 import Login from "./pages/Login";
 import TripDetail from "./pages/TripDetail/TripDetail";
 import api from "./services/Api";
+import { Typography } from "@mui/material";
 
 function App() {
   const { setCustomer } = useAuth();
@@ -37,7 +38,9 @@ function App() {
           <div className="header__top-bar">
             <div className="container">
               <div className="header__logo">
-                <img src="vvr-logo.svg" />
+                <Link style={{ display: "flex" }} to="/find-trip">
+                  <img src="/public/vvr-logo.svg" />
+                </Link>
               </div>
               <div className="header__login-block">
                 <UserBlock></UserBlock>
@@ -45,16 +48,15 @@ function App() {
             </div>
           </div>
         </div>
-        <div className="container">
-          <Routes>
-            <Route path="/find-trip" element={<FindTrip />} />
-            <Route path="/trip-detail/:tripId" element={<TripDetail />} />
-            <Route path="/choose-seats" element={<ChooseSeats />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/bookings" element={<Bookings />} />
-          </Routes>
-        </div>
+
+        <Routes>
+          <Route path="/find-trip" element={<FindTrip />} />
+          <Route path="/trip-detail/:tripId" element={<TripDetail />} />
+          <Route path="/choose-seats" element={<ChooseSeats />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/bookings" element={<Bookings />} />
+        </Routes>
       </div>
     </Router>
   );
