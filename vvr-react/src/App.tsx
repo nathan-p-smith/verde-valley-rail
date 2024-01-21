@@ -39,7 +39,7 @@ function App() {
             <div className="container">
               <div className="header__logo">
                 <Link style={{ display: "flex" }} to="/find-trip">
-                  <img src="/public/vvr-logo.svg" />
+                  <img src="/vvr-logo.svg" />
                 </Link>
               </div>
               <div className="header__login-block">
