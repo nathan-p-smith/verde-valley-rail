@@ -1,7 +1,7 @@
 .header {
-  &__top-bar {
-    $header-height: 80px;
+  $header-height: 80px;
 
+  &__top-bar {
     height: $header-height;
     line-height: $header-height;
 
@@ -28,6 +28,12 @@
 
   &__logo {
     float: left;
+    display: flex;
+    align-items: center;
+    height: $header-height;
+    img {
+      width: 200px;
+    }
   }
 
   &__login-block {

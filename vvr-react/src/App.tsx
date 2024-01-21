@@ -36,7 +36,9 @@ function App() {
         <div className="header">
           <div className="header__top-bar">
             <div className="container">
-              <div className="header__logo">LOGO</div>
+              <div className="header__logo">
+                <img src="vvr-logo.svg" />
+              </div>
               <div className="header__login-block">
                 <UserBlock></UserBlock>
               </div>

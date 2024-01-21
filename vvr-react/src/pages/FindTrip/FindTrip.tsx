@@ -39,11 +39,11 @@ const FindTrip = () => {
   return (
     <div className="find-trip">
       <Typography variant="h1" className="page-header">
-        Find Trip Page
+        Trips
       </Typography>
 
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} mb={2}>
           <Grid item xs={12} md={4}>
             <DatePicker
               label="Depart On"
