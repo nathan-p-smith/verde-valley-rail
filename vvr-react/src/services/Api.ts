@@ -28,17 +28,9 @@ var api = {
     return vvrApi.post<string>(`/Authentication`, login);
   },
 
-  // getBooking: async (guid) => {
-  //     return vvrApi.get(`/Bookings/${guid}`);
-  // },
-
   getCustomerBookings: async () => {
     return vvrApi.get<Booking[]>(`/Bookings/CustomerBookings`);
   },
-
-  // createBooking: async (bookingCreate) => {
-  //     return vvrApi.post(`/Bookings`, bookingCreate);
-  // },
 
   getCustomer: async () => {
     return vvrApi.get<Customer>(`/Customers`);
@@ -78,6 +70,10 @@ var api = {
       ...r,
       departure: parseISO(r.departure),
     }));
+  },
+
+  dbReady: async () => {
+    return axios.get(`/api/Warmup/DbReady`);
   },
 };
 

@@ -70,7 +70,7 @@ const Checkout = () => {
           </Grid>
 
           {/* Second column */}
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} mb={5}>
             <Typography variant="h1" className="page-header">
               Payment Info
             </Typography>

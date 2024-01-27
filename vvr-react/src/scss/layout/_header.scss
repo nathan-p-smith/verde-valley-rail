@@ -28,6 +28,10 @@
     );
   }
 
+  .container {
+    position: relative;
+  }
+
   &__logo {
     float: left;
     display: flex;
@@ -59,8 +63,7 @@
   }
 
   &__login-block {
-    //float: right;
     position: absolute;
-    right: 10px;
+    right: 0;
   }
 }
