@@ -1,7 +1,6 @@
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import FlightClassIcon from "@mui/icons-material/FlightClass";
 import { Box, Stack, Typography } from "@mui/material";
-import { format } from "date-fns";
 import { Booking } from "../../../types/Booking";
 import { BookingSeat } from "../../../types/BookingSeat";
 import formatDateTime from "../../../utils/FormatDateTime";

@@ -1,4 +1,6 @@
 import Logout from "@mui/icons-material/Logout";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { Box, Stack } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
@@ -10,10 +12,6 @@ import * as React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import shoppingCartService from "../../services/ShoppingCartService";
-import { useEffect, useState } from "react";
-import { Box, Stack, Typography } from "@mui/material";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { UseAutocompleteParameters } from "@mui/material";
 import "./_user-menu.scss";
 
 export default function UserMenu() {

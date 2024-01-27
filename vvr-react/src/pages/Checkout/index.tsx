@@ -33,7 +33,7 @@ const Checkout = () => {
     loadInvoice();
   };
 
-  const handleSubmit: SubmitHandler<CheckoutFormSchema> = async (formData) => {
+  const handleSubmit: SubmitHandler<CheckoutFormSchema> = async () => {
     await api.payInvoice(invoice!);
     shoppingCartService.emptyCart();
     setTotalCartItems(0);
