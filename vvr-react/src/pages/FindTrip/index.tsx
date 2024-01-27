@@ -15,12 +15,14 @@ import { TripGrid } from "./TripGrid";
 import "./_find-trip.scss";
 
 const FindTrip = () => {
+  const today = dayjs().startOf("day");
+
   const navigateTo = useNavigate();
   const [trips, setTrips] = useState<TripSearchResult[]>([]);
   const [tripSearchFilter, setTripSearchFilter] = useState<TripSearchFilter>({
     startStationId: null,
     endStationId: null,
-    departure: dayjs(new Date("2023-8-2")),
+    departure: today,
   });
 
   async function searchTrips() {
@@ -55,6 +57,7 @@ const FindTrip = () => {
               <Grid item xs={12} md={4}>
                 <DatePicker
                   label="Depart On"
+                  minDate={today}
                   className="search-controls__date-picker"
                   value={tripSearchFilter.departure}
                   onChange={(departure) => {
