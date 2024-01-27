@@ -5,16 +5,16 @@ import { Box, Button, LinearProgress, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import PriceDisplay from "../../components/PriceDisplay";
-import SeatPicker from "../../components/SeatPicker";
+import SeatPicker from "./SeatPicker";
 import { useAuth } from "../../context/AuthContext";
-import { Seat } from "../../customTypes/Seat";
-import { Trip } from "../../customTypes/Trip";
-import formatDuration from "../../helpers/FormatDuration";
+import { Seat } from "../../types/Seat";
+import { Trip } from "../../types/Trip";
+import formatDuration from "../../utils/FormatDuration";
 import api from "../../services/Api";
 import cartService from "../../services/ShoppingCartService";
 import "./_trip-detail.scss";
-import { BookingCreate } from "../../customTypes/BookingCreate";
-import { BookingSeat } from "../../customTypes/BookingSeat";
+import { BookingCreate } from "../../types/BookingCreate";
+import { BookingSeat } from "../../types/BookingSeat";
 
 const TripDetail = () => {
   const { tripId } = useParams();

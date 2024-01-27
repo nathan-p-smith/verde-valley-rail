@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { Link, Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import "./App.css";
 import UserBlock from "./components/UserBlock";
 import { useAuth } from "./context/AuthContext";
 import Bookings from "./pages/Bookings";
@@ -37,7 +36,7 @@ function App() {
             <div className="container">
               <div className="header__logo">
                 <Link style={{ display: "flex" }} to="/find-trip">
-                  <img src="/vvr-logo.svg" />
+                  <img src="/images/vvr-logo.svg" />
                 </Link>
               </div>
               <div className="header__login-block">

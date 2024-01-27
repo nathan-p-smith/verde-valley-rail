@@ -19,8 +19,6 @@ const Login = () => {
   const navigateTo = useNavigate();
 
   const setCustomerState = async (jwt: string) => {
-    console.log(jwt);
-
     localStorage.setItem("vv-customer-jwt", jwt);
 
     var customer = (await api.getCustomer()).data;

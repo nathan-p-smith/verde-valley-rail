@@ -5,10 +5,9 @@ import React, {
   ReactNode,
   useEffect,
 } from "react";
-import { Customer } from "../customTypes/Customer";
+import { Customer } from "../types/Customer";
 import shoppingCartService from "@/services/ShoppingCartService";
 
-// Define the shape of the context
 interface AuthContextProps {
   customer: Customer | null;
   setCustomer: (customer: Customer | null) => void;
@@ -17,10 +16,8 @@ interface AuthContextProps {
   setTotalCartItems: (total: number) => void;
 }
 
-// Create a context with initial values
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
-// Create a provider component
 interface AuthProviderProps {
   children: ReactNode;
 }
@@ -52,7 +49,6 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   );
 };
 
-// Custom hook to consume the AuthContext
 const useAuth = (): AuthContextProps => {
   const context = useContext(AuthContext);
   if (!context) {

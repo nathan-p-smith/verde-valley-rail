@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import * as Mui from "@mui/material";
 import api from "../services/Api";
-import { StationOption } from "../customTypes/StationOption";
+import { StationOption } from "../types/StationOption";
 
 type StationSelectProps = {
   value: number | null;

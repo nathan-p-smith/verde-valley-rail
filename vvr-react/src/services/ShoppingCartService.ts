@@ -1,4 +1,4 @@
-import { BookingCreate } from "../customTypes/BookingCreate";
+import { BookingCreate } from "../types/BookingCreate";
 
 const LOCAL_STOARGE_NAME = "vv-cart";
 
@@ -25,7 +25,6 @@ var shoppingCartService = {
 
     if (existingBooking) {
       Object.assign(existingBooking, booking);
-      console.log(existingBooking);
     } else cart.push(booking);
 
     this.saveCart(cart);

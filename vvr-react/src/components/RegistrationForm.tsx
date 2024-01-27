@@ -3,8 +3,8 @@ import { Button, Grid, TextField } from "@mui/material";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import InputMask from "react-input-mask";
 import { object, z } from "zod";
-import { CustomerCreate } from "../customTypes/CustomerCreate";
-import myDebounce from "../helpers/Debounce";
+import { CustomerCreate } from "../types/CustomerCreate";
+import myDebounce from "../utils/Debounce";
 import api from "../services/Api";
 import React from "react";
 
@@ -79,9 +79,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
 
       var jwt = (await api.createCustomer(customerCreate)).data;
       onRegistration(jwt);
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
   return (

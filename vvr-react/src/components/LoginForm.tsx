@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { object, z } from "zod";
 import ErrorMessage from "../components/ErrorMessage";
-import { AuthenticateRequest } from "../customTypes/AuthenticateRequest";
+import { AuthenticateRequest } from "../types/AuthenticateRequest";
 import api from "../services/Api";
 
 type LoginFormProps = {
@@ -48,7 +48,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
       setInvalidLoginMessage(
         "The username or password you entered was not correct.  Please try again."
       );
-      console.log(e);
     }
   };
 

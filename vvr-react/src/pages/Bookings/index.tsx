@@ -1,7 +1,7 @@
 import { Box, LinearProgress, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import BookingDisplay from "./BookingDisplay";
-import { Booking } from "../../customTypes/Booking";
+import { Booking } from "../../types/Booking";
 import api from "../../services/Api";
 
 const Bookings = () => {
