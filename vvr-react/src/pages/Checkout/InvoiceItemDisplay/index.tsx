@@ -7,6 +7,7 @@ import { BookingCreate } from "../../../types/BookingCreate";
 import { InvoiceItem } from "../../../types/InvoiceItem";
 import ConfirmationDialog from "../../../components/ConfirmationDialog";
 import PriceDisplay from "../../../components/PriceDisplay";
+import formatDateTime from "../../../utils/FormatDateTime";
 import "./_invoice-item-display.scss";
 
 type InvoiceItemDisplayProps = {
@@ -45,6 +46,9 @@ export default function InvoiceItemDisplay({
       <Typography>
         <Box className="invoice-item-display__description" mb={2}>
           {getTripDescription()}
+        </Box>
+        <Box mb={2}>
+          <Typography>{formatDateTime(item.trip.departure)}</Typography>
         </Box>
         <Box mb={1}>Total Seats: {item.booking.bookingSeats?.length}</Box>
         <Box mb={1}>
