@@ -7,8 +7,10 @@
     display: table;
 
     .row {
+      white-space: nowrap;
+
       .seat {
-        $seat-size: 40px;
+        $seat-size: 30px;
         display: inline-block;
         padding: 5px;
         margin: 2px;

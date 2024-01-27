@@ -4,6 +4,8 @@
   &__top-bar {
     height: $header-height;
     line-height: $header-height;
+    position: relative;
+    min-width: 360px;
 
     margin-bottom: 20px;
 
@@ -31,9 +33,9 @@
     display: flex;
     align-items: center;
     height: $header-height;
-    margin-right: 50px;
+
     img {
-      width: 200px;
+      width: 180px;
     }
   }
 
@@ -57,6 +59,8 @@
   }
 
   &__login-block {
-    float: right;
+    //float: right;
+    position: absolute;
+    right: 10px;
   }
 }

@@ -27,6 +27,7 @@ export default function InvoiceItemDisplay({
 
   const handleDelete = () => {
     onDelete(item.booking);
+    setConfirmDeleteVisible(false);
   };
 
   const handleCancelDelete = () => {
