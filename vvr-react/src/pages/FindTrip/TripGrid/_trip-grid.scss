@@ -1,0 +1,9 @@
+.trip-grid {
+  &__row {
+    background-color: #ffffffe0;
+    &:hover {
+      cursor: pointer;
+      background-color: #d8d8d8;
+    }
+  }
+}

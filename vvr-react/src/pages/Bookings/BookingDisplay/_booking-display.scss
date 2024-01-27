@@ -1,0 +1,26 @@
+@import "../../../scss/variables";
+
+.booking-display {
+  border: solid $light-box-outline 1px;
+  border-radius: 3px;
+  padding: 10px;
+  margin-bottom: 10px;
+
+  &__info-block {
+    margin-bottom: 10px;
+  }
+
+  &__trip-description {
+    font-weight: 900 !important;
+  }
+
+  &__seat {
+    border: solid #b8b8b8 1px;
+    padding: 10px;
+    font-weight: 800;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border-radius: 3px;
+    display: inline-block;
+  }
+}
