@@ -5,12 +5,10 @@ import UserBlock from "./components/UserBlock";
 import { useAuth } from "./context/AuthContext";
 import Bookings from "./pages/Bookings";
 import Checkout from "./pages/Checkout";
-import ChooseSeats from "./pages/ChooseSeats";
-import FindTrip from "./pages/FindTrip/FindTrip";
+import FindTrip from "./pages/FindTrip";
 import Login from "./pages/Login";
-import TripDetail from "./pages/TripDetail/TripDetail";
+import TripDetail from "./pages/TripDetail";
 import api from "./services/Api";
-import { Typography } from "@mui/material";
 
 function App() {
   const { setCustomer } = useAuth();
@@ -52,7 +50,6 @@ function App() {
         <Routes>
           <Route path="/find-trip" element={<FindTrip />} />
           <Route path="/trip-detail/:tripId" element={<TripDetail />} />
-          <Route path="/choose-seats" element={<ChooseSeats />} />
           <Route path="/login" element={<Login />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/bookings" element={<Bookings />} />

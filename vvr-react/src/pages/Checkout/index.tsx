@@ -1,13 +1,15 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import CheckoutForm, { CheckoutFormSchema } from "../components/CheckoutForm";
-import InvoiceItemDisplay from "../components/InvoiceItemDisplay/InvoiceItemDisplay";
-import { useAuth } from "../context/AuthContext";
-import { BookingCreate } from "../customTypes/BookingCreate";
-import { Invoice } from "../customTypes/Invoice";
-import api from "../services/Api";
-import shoppingCartService from "../services/ShoppingCartService";
+import CheckoutForm, {
+  CheckoutFormSchema,
+} from "../../components/CheckoutForm";
+import InvoiceItemDisplay from "./InvoiceItemDisplay";
+import { useAuth } from "../../context/AuthContext";
+import { BookingCreate } from "../../customTypes/BookingCreate";
+import { Invoice } from "../../customTypes/Invoice";
+import api from "../../services/Api";
+import shoppingCartService from "../../services/ShoppingCartService";
 import { SubmitHandler } from "react-hook-form";
 import { Link } from "react-router-dom";
 

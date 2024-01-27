@@ -2,8 +2,8 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import FlightClassIcon from "@mui/icons-material/FlightClass";
 import { Box, Stack, Typography } from "@mui/material";
 import { format } from "date-fns";
-import { Booking } from "../../customTypes/Booking";
-import { BookingSeat } from "../../customTypes/BookingSeat";
+import { Booking } from "../../../customTypes/Booking";
+import { BookingSeat } from "../../../customTypes/BookingSeat";
 import "./_booking-display.scss";
 
 type BookingDisplayProps = {

@@ -8,10 +8,10 @@ import {
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import LoginForm from "../components/LoginForm";
-import RegistrationButton from "../components/RegistrationButton";
-import { useAuth } from "../context/AuthContext";
-import api from "../services/Api";
+import LoginForm from "../../components/LoginForm";
+import RegistrationButton from "../../components/RegistrationButton";
+import { useAuth } from "../../context/AuthContext";
+import api from "../../services/Api";
 
 const Login = () => {
   const { setCustomer } = useAuth();

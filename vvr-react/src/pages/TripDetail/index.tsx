@@ -4,7 +4,7 @@ import AirlineSeatReclineNormalIcon from "@mui/icons-material/AirlineSeatRecline
 import { Box, Button, LinearProgress, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import PriceDisplay from "../../components/PriceDisplay/PriceDisplay";
+import PriceDisplay from "../../components/PriceDisplay";
 import SeatPicker from "../../components/SeatPicker";
 import { useAuth } from "../../context/AuthContext";
 import { Seat } from "../../customTypes/Seat";

@@ -3,10 +3,10 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Box, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { BookingCreate } from "../../customTypes/BookingCreate";
-import { InvoiceItem } from "../../customTypes/InvoiceItem";
-import ConfirmationDialog from "../ConfirmationDialog";
-import PriceDisplay from "../PriceDisplay/PriceDisplay";
+import { BookingCreate } from "../../../customTypes/BookingCreate";
+import { InvoiceItem } from "../../../customTypes/InvoiceItem";
+import ConfirmationDialog from "../../../components/ConfirmationDialog";
+import PriceDisplay from "../../../components/PriceDisplay";
 import "./_invoice-item-display.scss";
 
 type InvoiceItemDisplayProps = {

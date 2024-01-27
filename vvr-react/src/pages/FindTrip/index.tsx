@@ -6,7 +6,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import StationSelect from "../../components/StationSelect";
-import { TripGrid } from "../../components/TripGrid";
+import { TripGrid } from "./TripGrid";
 import { TripSearchFilter } from "../../customTypes/TripSearchFilter";
 import { TripSearchResult } from "../../customTypes/TripSearchResult";
 import api from "../../services/Api";

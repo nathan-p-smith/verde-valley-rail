@@ -1,8 +1,8 @@
 import { Box, LinearProgress, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import BookingDisplay from "../components/BookingDisplay/BookingDisplay";
-import { Booking } from "../customTypes/Booking";
-import api from "../services/Api";
+import BookingDisplay from "./BookingDisplay";
+import { Booking } from "../../customTypes/Booking";
+import api from "../../services/Api";
 
 const Bookings = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);

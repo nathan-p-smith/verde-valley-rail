@@ -1,9 +1,8 @@
 import * as Mui from "@mui/material";
-import React from "react";
-import { TripSearchResult } from "../../customTypes/TripSearchResult";
-import TripDetailLink from "../TripDetailLink";
 import { format } from "date-fns";
-import formatDuration from "../../helpers/FormatDuration";
+import React from "react";
+import { TripSearchResult } from "../../../customTypes/TripSearchResult";
+import formatDuration from "../../../helpers/FormatDuration";
 import "./_trip-grid.scss";
 
 type TripGridProps = {
