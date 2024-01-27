@@ -1,4 +1,13 @@
-import { Box, LinearProgress, List, ListItem, Typography } from "@mui/material";
+import {
+  Box,
+  LinearProgress,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+} from "@mui/material";
+import CheckIcon from "@mui/icons-material/Check";
 
 const Warmup = () => {
   return (
@@ -16,11 +25,25 @@ const Warmup = () => {
         inactivity. It should load in just a moment. Here are some project
         details while you're waiting.
       </Typography>
-
-      <List>
-        <ListItem>Front End - React</ListItem>
-        <ListItem>Backend - .NET Core Web API</ListItem>
-        <ListItem>Database - Microsoft SQL Server</ListItem>
+      <List sx={{ listStyleType: "disc" }}>
+        <ListItem>
+          <ListItemIcon>
+            <CheckIcon />
+          </ListItemIcon>
+          <ListItemText>Front End - React</ListItemText>
+        </ListItem>
+        <ListItem>
+          <ListItemIcon>
+            <CheckIcon />
+          </ListItemIcon>
+          <ListItemText>Backend - .NET Core Web API</ListItemText>
+        </ListItem>
+        <ListItem>
+          <ListItemIcon>
+            <CheckIcon />
+          </ListItemIcon>
+          <ListItemText>Database - Microsoft SQL Server</ListItemText>
+        </ListItem>
       </List>
     </Box>
   );

@@ -1,17 +1,18 @@
 // FindTrip.js
-import { Box, Grid, Typography } from "@mui/material";
+import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
+import { Box, Grid, Icon, Stack, Typography } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import StationSelect from "../../components/StationSelect";
-import { TripGrid } from "./TripGrid";
+import api from "../../services/Api";
 import { TripSearchFilter } from "../../types/TripSearchFilter";
 import { TripSearchResult } from "../../types/TripSearchResult";
-import api from "../../services/Api";
+import { TripGrid } from "./TripGrid";
 import "./_find-trip.scss";
-import { useNavigate } from "react-router-dom";
 
 const FindTrip = () => {
   const navigateTo = useNavigate();
@@ -88,7 +89,16 @@ const FindTrip = () => {
         {trips.length > 0 ? (
           <TripGrid trips={trips} onRowClick={handleRowClick} />
         ) : (
-          <div>We're sorry, there are no trips for your criteria.</div>
+          <Box className="find-trip__no-results container">
+            <Stack direction="row">
+              <Box mr={2}>
+                <SentimentVeryDissatisfiedIcon />
+              </Box>
+              <Typography>
+                We're sorry, there are no trips for your criteria.
+              </Typography>
+            </Stack>
+          </Box>
         )}
       </Box>
     </div>
