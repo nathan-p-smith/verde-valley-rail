@@ -4,6 +4,7 @@ import { Box, Stack, Typography } from "@mui/material";
 import { format } from "date-fns";
 import { Booking } from "../../../types/Booking";
 import { BookingSeat } from "../../../types/BookingSeat";
+import formatDateTime from "../../../utils/FormatDateTime";
 import "./_booking-display.scss";
 
 type BookingDisplayProps = {
@@ -27,8 +28,7 @@ export default function CheckoutBooking({ booking }: BookingDisplayProps) {
         <Stack direction="row" alignItems="center" marginBottom={1} gap={1}>
           <AccessTimeIcon />
           <Typography>
-            Departure:{" "}
-            {format(new Date(booking.trip.departure), "MM/dd/yyyy h:mm aa")}
+            Departure: {formatDateTime(booking.trip.departure)}
           </Typography>
         </Stack>
         <Stack direction="row" alignItems="center" marginBottom={1} gap={1}>

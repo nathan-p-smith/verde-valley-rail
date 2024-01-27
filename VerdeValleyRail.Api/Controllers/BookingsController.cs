@@ -26,14 +26,14 @@ namespace VerdeValleyRail.Api.Controllers
         }
 
         [HttpGet("CustomerBookings")]
-        public ActionResult GetCustomerBookings()
+        public ActionResult GetCustomerBookings(DateTime minDate)
         {
             int? customerId = base.GetCustomerId();
 
             if (customerId == null)
                 return BadRequest();
 
-            var bookings = _bookingService.GetCustomerBookings((int)customerId);
+            var bookings = _bookingService.GetCustomerBookings((int)customerId, minDate.Date);
 
             return Ok(bookings);
         }

@@ -15,6 +15,8 @@ import cartService from "../../services/ShoppingCartService";
 import "./_trip-detail.scss";
 import { BookingCreate } from "../../types/BookingCreate";
 import { BookingSeat } from "../../types/BookingSeat";
+import formatDateTime from "../../utils/FormatDateTime";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 
 const TripDetail = () => {
   const { tripId } = useParams();
@@ -87,6 +89,10 @@ const TripDetail = () => {
           <Typography sx={{ mb: 3 }}></Typography>
 
           <Box mb={2}>
+            <Stack direction="row" alignItems="center" marginBottom={1} gap={1}>
+              <CalendarTodayIcon />
+              <Typography>{formatDateTime(trip.departure)}</Typography>
+            </Stack>
             <Stack direction="row" alignItems="center" marginBottom={1} gap={1}>
               <AccessTimeIcon />
               <Typography>

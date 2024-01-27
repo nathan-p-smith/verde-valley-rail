@@ -28,8 +28,10 @@ var api = {
     return vvrApi.post<string>(`/Authentication`, login);
   },
 
-  getCustomerBookings: async () => {
-    return vvrApi.get<Booking[]>(`/Bookings/CustomerBookings`);
+  getCustomerBookings: async (minDate: Date) => {
+    return vvrApi.get<Booking[]>(`/Bookings/CustomerBookings`, {
+      params: { minDate },
+    });
   },
 
   getCustomer: async () => {
